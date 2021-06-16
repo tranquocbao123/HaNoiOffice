@@ -1,21 +1,18 @@
 package com.example.cs_office.Model;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.*;
 
 import javax.persistence.*;
+import java.util.Collection;
 import java.util.Date;
 import java.util.Set;
 
-@Getter
-@Setter
+@Entity
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
 
-@Entity
-@Table(name = "Branch")
 public class Branch {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,16 +20,20 @@ public class Branch {
     private String name;
     private String address;
     @Column(name = "create_Date")
-    private Date createDate;
-    private boolean status;
-    @OneToMany
-    private Set<Staff> staff;
+    private Date createDate = new Date();
+    private boolean status = true;
+    @JsonIgnore
+    @OneToMany (mappedBy = "branch", cascade = CascadeType.ALL)
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
+    private Collection<Staff> staff;
 
-    public Branch(String name, String address, Date createDate, boolean status) {
+    public Branch(String name, String address, Date createDate, boolean status, Collection<Staff> staff) {
         this.name = name;
         this.address = address;
         this.createDate = createDate;
         this.status = status;
+        this.staff = staff;
     }
 
 }
