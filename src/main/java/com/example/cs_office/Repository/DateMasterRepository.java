@@ -18,4 +18,6 @@ public interface DateMasterRepository extends JpaRepository<DateMaster, Integer>
     //select datemaster by status
     @Query("select c from DateMaster c where c.status = ?1")
     List<DateMaster> findDateMasterByStatus(boolean status);
+
+
 }

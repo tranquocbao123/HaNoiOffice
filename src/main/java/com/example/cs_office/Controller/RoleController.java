@@ -3,6 +3,7 @@ package com.example.cs_office.Controller;
 
 import com.example.cs_office.Model.Customer;
 import com.example.cs_office.Model.Role;
+import com.example.cs_office.Model.Room;
 import com.example.cs_office.Service.CustomerService;
 import com.example.cs_office.Service.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -55,6 +56,13 @@ public class RoleController {
         return roleService.getById(roleId);
     }
 
+    //search role by name
+    @GetMapping(path = "searchname/{roleName}")
+    public List<Role> getRoleByName(
+            @PathVariable("roleName") String roleName) {
+        return roleService.getRoleByName(roleName);
+    }
+
     //delete role by id
     @DeleteMapping(path = "{roleId}")
     public void deleteRole(
@@ -63,13 +71,10 @@ public class RoleController {
     }
 
     //update role by id
-    @PutMapping(path = "{roleId}")
-    public void updateRole(
-            @PathVariable("roleId") int roleId,
-            @RequestParam(required = false) String name,
-            @RequestParam(required = false) Date createDate,
-            @RequestParam(required = false) boolean status
-    ) {
-        roleService.updateRole(roleId, name, createDate, status);
+    @PutMapping(path = "/{roleId}")
+    public Role updateRole
+    (@RequestBody Role role,
+     @PathVariable("roleId") int id) {
+        return roleService.updateRole(role, id);
     }
 }

@@ -1,6 +1,7 @@
 package com.example.cs_office.Controller;
 
 import com.example.cs_office.Model.Branch;
+import com.example.cs_office.Model.Staff;
 import com.example.cs_office.Service.BranchService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -13,6 +14,7 @@ import java.util.Optional;
 @RequestMapping("/branch")
 @CrossOrigin("*")
 public class BranchController {
+
     private final BranchService branchService;
 
     @Autowired
@@ -51,6 +53,13 @@ public class BranchController {
         return branchService.getById(branchId);
     }
 
+    //search branch by name
+    @GetMapping(path = "searchname/{bracnchName}")
+    public List<Branch> getBranchByName(
+            @PathVariable("bracnchName") String bracnchName) {
+        return branchService.getBranchByName(bracnchName);
+    }
+
     //delete branch by id
     @DeleteMapping(path = "{branchId}")
     public void deleteBranch(
@@ -59,15 +68,11 @@ public class BranchController {
     }
 
     //update branch by id
-    @PutMapping(path = "{branchId}")
-    public void updateBranch(
-            @PathVariable("branchId") int branchId,
-            @RequestParam(required = false) String name,
-            @RequestParam(required = false) String address,
-            @RequestParam(required = false) Date createDate,
-            @RequestParam(required = false) boolean status
-    ) {
-        branchService.updateBranch(branchId, name, address, createDate, status);
+    @PutMapping(path = "/{branchId}")
+    public Branch updateBranch
+    (@RequestBody Branch branch,
+     @PathVariable("branchId") int id) {
+        return branchService.updateBranch(branch, id);
     }
 
 }

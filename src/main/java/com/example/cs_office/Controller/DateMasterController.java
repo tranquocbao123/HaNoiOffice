@@ -14,9 +14,9 @@ import java.util.Optional;
 @RequestMapping("/datemaster")
 public class DateMasterController {
 
-    private DateMasterService dateMasterService;
-
     @Autowired
+    private final DateMasterService dateMasterService;
+
     public DateMasterController(DateMasterService dateMasterService) {
         this.dateMasterService = dateMasterService;
     }
@@ -49,7 +49,7 @@ public class DateMasterController {
     @GetMapping(path = "{datemasterId}")
     public Optional<DateMaster> getById(
             @PathVariable("datemasterId") int datemasterId) {
-        return dateMasterService.getById(datemasterId);
+        return dateMasterService.getDateMasterById(datemasterId);
     }
 
     //delete datemaster by id
@@ -59,20 +59,11 @@ public class DateMasterController {
         dateMasterService.deleteDateMaster(datemasterId);
     }
 
-    //update customer by id
-//    @PutMapping(path = "{customerId}")
-//    public void updateCustomer(
-//            @PathVariable("customerId") int customerId,
-//            @RequestParam(required = false) String phoneNumber,
-//            @RequestParam(required = false) String email,
-//            @RequestParam(required = false) String password,
-//            @RequestParam(required = false) String fisrtName,
-//            @RequestParam(required = false) String lastName,
-//            @RequestParam(required = false) String address,
-//            @RequestParam(required = false) Date createDate,
-//            @RequestParam(required = false) boolean status
-//    ) {
-//        customerService.updateCustomer(customerId, phoneNumber, email, password, fisrtName, lastName, address, createDate, status);
-//    }
+    @PutMapping(path = "/{datemasterId}")
+    public DateMaster updateDateMaster
+            (@RequestBody DateMaster dateMaster,
+             @PathVariable("datemasterId") int id) {
+        return dateMasterService.updateDateMaster(dateMaster, id);
+    }
 
 }

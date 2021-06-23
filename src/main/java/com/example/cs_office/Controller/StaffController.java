@@ -3,6 +3,7 @@ package com.example.cs_office.Controller;
 import com.example.cs_office.Model.Branch;
 import com.example.cs_office.Model.Role;
 import com.example.cs_office.Model.Staff;
+import com.example.cs_office.Model.TypeRoom;
 import com.example.cs_office.Service.StaffService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -53,6 +54,13 @@ public class StaffController {
         return staffService.getById(staffId);
     }
 
+    //search staff by username
+    @GetMapping(path = "searchname/{staffUsername}")
+    public List<Staff> getStaffByUserName(
+            @PathVariable("staffUsername") String staffUsername) {
+        return staffService.getStaffByUserName(staffUsername);
+    }
+
     //delete staff by id
     @DeleteMapping(path = "{staffId}")
     public void deleteStaff(
@@ -61,20 +69,10 @@ public class StaffController {
     }
 
     //update staff by id
-    @PutMapping(path = "{staffId}")
-    public void updateStaff(
-            @PathVariable("staffId") int staffId,
-            @RequestParam(required = false) String userName,
-            @RequestParam(required = false) String password,
-            @RequestParam(required = false) String phoneNumber,
-            @RequestParam(required = false) String email,
-            @RequestParam(required = false) String address,
-            @RequestParam(required = false) Branch branch,
-            @RequestParam(required = false) Role role,
-            @RequestParam(required = false) Date createDate,
-            @RequestParam(required = false) boolean status
-    ) {
-        staffService.updateStaff(staffId, userName, password, phoneNumber, email, address, branch, role, createDate, status);
+    @PutMapping(path = "/{staffId}")
+    public Staff updateStaff
+    (@RequestBody Staff staff,
+     @PathVariable("staffId") int id) {
+        return staffService.updateStaff(staff, id);
     }
-
 }

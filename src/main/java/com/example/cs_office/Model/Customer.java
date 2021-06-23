@@ -1,18 +1,16 @@
 package com.example.cs_office.Model;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-
 @Entity
 @Table(name = "Customer")
 public class Customer {
@@ -32,6 +30,12 @@ public class Customer {
     @Column(name = "create_Date")
     private Date createDate = new Date();
     private boolean status = true;
+
+    @JsonIgnore
+    @OneToMany (mappedBy = "customer",fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
+    private List<Order> orders;
 
     public Customer(String phoneNumber, String email, String password, String firstName, String lastName, String address) {
         this.phoneNumber = phoneNumber;

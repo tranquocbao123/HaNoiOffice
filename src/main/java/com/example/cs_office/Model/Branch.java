@@ -12,7 +12,6 @@ import java.util.Set;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-
 public class Branch {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,11 +21,18 @@ public class Branch {
     @Column(name = "create_Date")
     private Date createDate = new Date();
     private boolean status = true;
+
     @JsonIgnore
     @OneToMany (mappedBy = "branch", cascade = CascadeType.ALL)
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
     private Collection<Staff> staff;
+
+    @JsonIgnore
+    @OneToMany (mappedBy = "branch1", cascade = CascadeType.ALL)
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
+    private Collection<Room> rooms;
 
     public Branch(String name, String address, Date createDate, boolean status, Collection<Staff> staff) {
         this.name = name;

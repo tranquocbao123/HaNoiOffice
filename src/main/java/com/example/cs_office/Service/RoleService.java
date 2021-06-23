@@ -2,8 +2,10 @@ package com.example.cs_office.Service;
 
 import com.example.cs_office.Model.Customer;
 import com.example.cs_office.Model.Role;
+import com.example.cs_office.Model.Room;
 import com.example.cs_office.Repository.CustomerRepository;
 import com.example.cs_office.Repository.RoleRepository;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -37,6 +39,11 @@ public class RoleService {
         return role;
     }
 
+    public List<Role> getRoleByName(String roleName) {
+        List<Role> role = roleRepository.findRoleByName(roleName);
+        return role;
+    }
+
     public void addNewRole(Role role) {
         Optional<Role> roleOptional =
                 roleRepository.findRoleById(role.getId());
@@ -54,11 +61,9 @@ public class RoleService {
         roleRepository.deleteById(roleId);
     }
 
-    @Transactional
-    public void updateRole(int roleId, String name, Date create_Date, boolean status) {
-        Role role = roleRepository.findById(roleId).orElseThrow(() -> new IllegalStateException("role with id" + roleId + "does not exists"));
-//        if(fullname != null && fullname.length() > 0 && !Objects.equals(user.getFullname(),fullname)){
-//            customer.setFullname(fullname);
-//        }
+    public Role updateRole(Role role, int roleId){
+        Role role1 = this.roleRepository.getOne(roleId);
+        BeanUtils.copyProperties(role,role1);
+        return roleRepository.saveAndFlush(role1);
     }
 }

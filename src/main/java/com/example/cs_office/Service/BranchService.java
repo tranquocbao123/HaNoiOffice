@@ -2,7 +2,9 @@ package com.example.cs_office.Service;
 
 import com.example.cs_office.Model.Branch;
 import com.example.cs_office.Model.Customer;
+import com.example.cs_office.Model.Staff;
 import com.example.cs_office.Repository.BranchRepotitory;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -34,6 +36,11 @@ public class BranchService {
         return branch;
     }
 
+    public List<Branch> getBranchByName(String branchName) {
+        List<Branch> branch = branchRepotitory.findBranchByName(branchName);
+        return branch;
+    }
+
     public void addNewBranch(Branch branch) {
         Optional<Branch> branchOptional =
                 branchRepotitory.findBranchById(branch.getId());
@@ -51,11 +58,9 @@ public class BranchService {
         branchRepotitory.deleteById(branchId);
     }
 
-    @Transactional
-    public void updateBranch(int branchId, String name, String address, Date create_Date, boolean status) {
-        Branch branch = branchRepotitory.findById(branchId).orElseThrow(() -> new IllegalStateException("branch with id" + branchId + "does not exists"));
-//        if(fullname != null && fullname.length() > 0 && !Objects.equals(user.getFullname(),fullname)){
-//            customer.setFullname(fullname);
-//        }
+    public Branch updateBranch(Branch branch, int branchId){
+        Branch branch1 = this.branchRepotitory.getOne(branchId);
+        BeanUtils.copyProperties(branch,branch1);
+        return branchRepotitory.saveAndFlush(branch1);
     }
 }

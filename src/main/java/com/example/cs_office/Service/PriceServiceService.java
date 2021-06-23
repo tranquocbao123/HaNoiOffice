@@ -3,6 +3,7 @@ package com.example.cs_office.Service;
 import com.example.cs_office.Model.Branch;
 import com.example.cs_office.Model.PriceService;
 import com.example.cs_office.Repository.PriceServiceRepository;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -10,12 +11,12 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class PriceServiceSercice {
+public class PriceServiceService {
 
     @Autowired
     private  final PriceServiceRepository priceServiceRepository;
 
-    public PriceServiceSercice(PriceServiceRepository priceServiceRepository) {
+    public PriceServiceService(PriceServiceRepository priceServiceRepository) {
         this.priceServiceRepository = priceServiceRepository;
     }
 
@@ -48,5 +49,11 @@ public class PriceServiceSercice {
             throw new IllegalStateException("price service with id " + priceServiceId + " does not exists");
         }
         priceServiceRepository.deleteById(priceServiceId);
+    }
+
+    public PriceService updatePriceServiceService(PriceService priceService, int priceserserId){
+        PriceService priceService1 = this.priceServiceRepository.getOne(priceserserId);
+        BeanUtils.copyProperties(priceService,priceService1);
+        return priceServiceRepository.saveAndFlush(priceService1);
     }
 }
