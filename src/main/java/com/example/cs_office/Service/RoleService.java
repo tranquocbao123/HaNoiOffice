@@ -55,10 +55,15 @@ public class RoleService {
     }
 
     @Transactional
-    public void updateRole(int roleId, String name, Date create_Date, boolean status) {
-        Role role = roleRepository.findById(roleId).orElseThrow(() -> new IllegalStateException("role with id" + roleId + "does not exists"));
-//        if(fullname != null && fullname.length() > 0 && !Objects.equals(user.getFullname(),fullname)){
-//            customer.setFullname(fullname);
-//        }
+    public void updateRole(Role role ) {
+        role.setStatus(false);
+        roleRepository.save(role);
     }
+
+    @Transactional
+    public void updateRoleBlack(Role role ) {
+        role.setStatus(true);
+        roleRepository.save(role);
+    }
+
 }

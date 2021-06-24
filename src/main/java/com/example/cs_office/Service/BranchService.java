@@ -52,10 +52,15 @@ public class BranchService {
     }
 
     @Transactional
-    public void updateBranch(int branchId, String name, String address, Date create_Date, boolean status) {
-        Branch branch = branchRepotitory.findById(branchId).orElseThrow(() -> new IllegalStateException("branch with id" + branchId + "does not exists"));
-//        if(fullname != null && fullname.length() > 0 && !Objects.equals(user.getFullname(),fullname)){
-//            customer.setFullname(fullname);
-//        }
+    public Branch updateBranch(Branch branch) {
+        branch.setStatus(false);
+        return branchRepotitory.save(branch);
     }
+
+    @Transactional
+    public Branch updateBranchBlack(Branch branch) {
+        branch.setStatus(true);
+        return branchRepotitory.save(branch);
+    }
+
 }

@@ -54,7 +54,15 @@ public class DateMasterService {
     }
 
     @Transactional
-    public void updateDateMaster(int id, Date date, String desc, Date create_Date, boolean status) {
-        DateMaster dateMaster = dateMasterRepository.findById(id).orElseThrow(() -> new IllegalStateException("dateMaster with id" + id + "does not exists"));
+    public void updateDateMaster(DateMaster dateMaster) {
+        dateMaster.setStatus(false);
+        dateMasterRepository.save(dateMaster);
     }
+
+    @Transactional
+    public void updateDateMasterBlack(DateMaster dateMaster) {
+        dateMaster.setStatus(true);
+        dateMasterRepository.save(dateMaster);
+    }
+
 }

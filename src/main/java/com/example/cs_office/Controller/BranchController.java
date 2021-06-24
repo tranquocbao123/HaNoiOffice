@@ -1,6 +1,7 @@
 package com.example.cs_office.Controller;
 
 import com.example.cs_office.Model.Branch;
+import com.example.cs_office.Model.Customer;
 import com.example.cs_office.Service.BranchService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -38,17 +39,17 @@ public class BranchController {
         return branchService.getBranchByStatus(true);
     }
 
-    // insert branch
-    @PostMapping
-    public void insertBranch(@RequestBody Branch branch) {
-        branchService.addNewBranch(branch);
-    }
-
     //search branch by id
     @GetMapping(path = "{branchId}")
     public Optional<Branch> getById(
             @PathVariable("branchId") int branchId) {
         return branchService.getById(branchId);
+    }
+
+    // insert branch
+    @PostMapping
+    public void insertBranch(@RequestBody Branch branch) {
+        branchService.addNewBranch(branch);
     }
 
     //delete branch by id
@@ -59,15 +60,19 @@ public class BranchController {
     }
 
     //update branch by id
-    @PutMapping(path = "{branchId}")
-    public void updateBranch(
-            @PathVariable("branchId") int branchId,
-            @RequestParam(required = false) String name,
-            @RequestParam(required = false) String address,
-            @RequestParam(required = false) Date createDate,
-            @RequestParam(required = false) boolean status
+    @PutMapping()
+    public Branch updateBranch(
+            @RequestBody Branch branch
     ) {
-        branchService.updateBranch(branchId, name, address, createDate, status);
+        return branchService.updateBranch(branch);
+    }
+
+    //update branch black by id
+    @PutMapping("/black")
+    public Branch updateBranchBlack(
+            @RequestBody Branch branch
+    ) {
+        return branchService.updateBranchBlack(branch);
     }
 
 }

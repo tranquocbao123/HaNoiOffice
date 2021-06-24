@@ -42,17 +42,17 @@ public class RoleController {
         return roleService.getRoleByStatus(true);
     }
 
-    // insert role
-    @PostMapping
-    public void insertRole(@RequestBody Role role) {
-        roleService.addNewRole(role);
-    }
-
     //search role by id
     @GetMapping(path = "{roleId}")
     public Optional<Role> getById(
             @PathVariable("roleId") int roleId) {
         return roleService.getById(roleId);
+    }
+    
+    // insert role
+    @PostMapping
+    public void insertRole(@RequestBody Role role) {
+        roleService.addNewRole(role);
     }
 
     //delete role by id
@@ -63,13 +63,19 @@ public class RoleController {
     }
 
     //update role by id
-    @PutMapping(path = "{roleId}")
+    @PutMapping()
     public void updateRole(
-            @PathVariable("roleId") int roleId,
-            @RequestParam(required = false) String name,
-            @RequestParam(required = false) Date createDate,
-            @RequestParam(required = false) boolean status
+            @RequestBody Role role
     ) {
-        roleService.updateRole(roleId, name, createDate, status);
+        roleService.updateRole(role);
     }
+
+    //update role black by id
+    @PutMapping(path = "/black")
+    public void updateRoleBlack(
+            @RequestBody Role role
+    ) {
+        roleService.updateRoleBlack(role);
+    }
+
 }

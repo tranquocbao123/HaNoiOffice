@@ -39,17 +39,17 @@ public class DateMasterController {
         return dateMasterService.getDateMasterByStatus(true);
     }
 
-    // insert dateMaster
-    @PostMapping
-    public void insertDateMaster(@RequestBody DateMaster dateMaster) {
-        dateMasterService.addNewdateMaster(dateMaster);
-    }
-
     //search dateMaster by id
     @GetMapping(path = "{datemasterId}")
     public Optional<DateMaster> getById(
             @PathVariable("datemasterId") int datemasterId) {
         return dateMasterService.getById(datemasterId);
+    }
+
+    // insert dateMaster
+    @PostMapping
+    public void insertDateMaster(@RequestBody DateMaster dateMaster) {
+        dateMasterService.addNewdateMaster(dateMaster);
     }
 
     //delete datemaster by id
@@ -60,19 +60,19 @@ public class DateMasterController {
     }
 
     //update customer by id
-//    @PutMapping(path = "{customerId}")
-//    public void updateCustomer(
-//            @PathVariable("customerId") int customerId,
-//            @RequestParam(required = false) String phoneNumber,
-//            @RequestParam(required = false) String email,
-//            @RequestParam(required = false) String password,
-//            @RequestParam(required = false) String fisrtName,
-//            @RequestParam(required = false) String lastName,
-//            @RequestParam(required = false) String address,
-//            @RequestParam(required = false) Date createDate,
-//            @RequestParam(required = false) boolean status
-//    ) {
-//        customerService.updateCustomer(customerId, phoneNumber, email, password, fisrtName, lastName, address, createDate, status);
-//    }
+    @PutMapping()
+    public void updateCustomer(
+            @RequestBody DateMaster dateMaster
+    ) {
+        dateMasterService.updateDateMaster(dateMaster);
+    }
+
+    //update customer black by id
+    @PutMapping()
+    public void updateCustomerBlack(
+            @RequestBody DateMaster dateMaster
+    ) {
+        dateMasterService.updateDateMasterBlack(dateMaster);
+    }
 
 }

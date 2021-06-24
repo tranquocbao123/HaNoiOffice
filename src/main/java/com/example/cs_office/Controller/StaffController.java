@@ -40,17 +40,17 @@ public class StaffController {
         return staffService.getStaffByStatus(true);
     }
 
-    // insert staff
-    @PostMapping
-    public void insertStaff(@RequestBody Staff staff) {
-        staffService.addNewStaff(staff);
-    }
-
     //search staff by id
     @GetMapping(path = "{staffId}")
     public Optional<Staff> getById(
             @PathVariable("staffId") int staffId) {
         return staffService.getById(staffId);
+    }
+
+    // insert staff
+    @PostMapping
+    public void insertStaff(@RequestBody Staff staff) {
+        staffService.addNewStaff(staff);
     }
 
     //delete staff by id
@@ -61,20 +61,19 @@ public class StaffController {
     }
 
     //update staff by id
-    @PutMapping(path = "{staffId}")
+    @PutMapping()
     public void updateStaff(
-            @PathVariable("staffId") int staffId,
-            @RequestParam(required = false) String userName,
-            @RequestParam(required = false) String password,
-            @RequestParam(required = false) String phoneNumber,
-            @RequestParam(required = false) String email,
-            @RequestParam(required = false) String address,
-            @RequestParam(required = false) Branch branch,
-            @RequestParam(required = false) Role role,
-            @RequestParam(required = false) Date createDate,
-            @RequestParam(required = false) boolean status
+            @RequestBody Staff staff
     ) {
-        staffService.updateStaff(staffId, userName, password, phoneNumber, email, address, branch, role, createDate, status);
+        staffService.updateStaff(staff);
+    }
+
+    //update staff black by id
+    @PutMapping(path = "/black")
+    public void updateStaffBlack(
+            @RequestBody Staff staff
+    ) {
+        staffService.updateStaff(staff);
     }
 
 }

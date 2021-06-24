@@ -13,12 +13,12 @@ import java.util.Optional;
 @RequestMapping("/customer")
 @CrossOrigin("*")
 public class CustomerController {
-        private final CustomerService customerService;
+    private final CustomerService customerService;
 
-        @Autowired
-        public CustomerController(CustomerService customerService) {
-            this.customerService = customerService;
-        }
+    @Autowired
+    public CustomerController(CustomerService customerService) {
+        this.customerService = customerService;
+    }
 
     //list customer
     @GetMapping()
@@ -38,17 +38,17 @@ public class CustomerController {
         return customerService.getCustomerByStatus(true);
     }
 
-    // insert customer
-    @PostMapping
-    public void insertCustomer(@RequestBody Customer customer) {
-        customerService.addNewCustomer(customer);
-    }
-
     //search customer by id
     @GetMapping(path = "{customerId}")
     public Optional<Customer> getById(
             @PathVariable("customerId") int customerId) {
         return customerService.getById(customerId);
+    }
+
+    // insert customer
+    @PostMapping
+    public void insertCustomer(@RequestBody Customer customer) {
+        customerService.addNewCustomer(customer);
     }
 
     //delete customer by id
@@ -63,8 +63,9 @@ public class CustomerController {
     public Customer updateCustomer(
             @RequestBody Customer customer
     ) {
-      return customerService.updateCustomer(customer);
+        return customerService.updateCustomer(customer);
     }
+
     //update customer black by id
     @PutMapping("/black")
     public Customer updateCustomerBlack(
@@ -75,7 +76,7 @@ public class CustomerController {
 
     //login customer by id
     @PostMapping("login")
-    public Customer loginCustomer (Customer customer){
+    public Customer loginCustomer(Customer customer) {
         return customerService.loginCustomer(customer);
     }
 

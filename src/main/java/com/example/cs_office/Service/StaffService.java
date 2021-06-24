@@ -56,8 +56,15 @@ public class StaffService {
     }
 
     @Transactional
-    public void updateStaff(int staffId, String userName, String password, String phoneNumber, String email, String address, Branch branch, Role role, Date create_Date, boolean status) {
-        Staff staff = staffRepository.findById(staffId).orElseThrow(() -> new IllegalStateException("role with id" + staffId + "does not exists"));
+    public void updateStaff(Staff staff) {
+        staff.setStatus(false);
+        staffRepository.save(staff);
+    }
+
+    @Transactional
+    public void updateStaffBlack(Staff staff) {
+        staff.setStatus(true);
+        staffRepository.save(staff);
     }
 
 }
