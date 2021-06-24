@@ -14,19 +14,19 @@ public class OrderHistory {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    @Column(name = "room_Old")
+    @Column(name = "roomOld")
     private String roomOld;
-    @Column(name = "start_Time_Old")
+    @Column(name = "startTimeOld")
     private String startTimeOld;
-    @Column(name = "end_Time_Old")
+    @Column(name = "endTimeOld")
     private String endTimeOld;
     private Date date;
-    @Column(name = "create_Date")
+    @Column(name = "createDate")
     private Date createDate = new Date();
     private boolean status = true;
 
     @ManyToOne
-    @JoinColumn(name = "id_Order_Detail")
+    @JoinColumn(name = "idOrderDetail")
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
     private OrderDetail orderDetail2;

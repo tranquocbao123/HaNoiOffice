@@ -16,7 +16,7 @@ public class DateMaster {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private int id;
-    @Column(name = "create_Date")
+    @Column(name = "createDate")
     private Date createDate = new Date();
     @Column(name = "date1")
     private Date date1;

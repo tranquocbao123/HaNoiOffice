@@ -16,24 +16,24 @@ public class Scheduledetail {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private Date date;
-    @Column(name = "start_Time")
+    @Column(name = "startTime")
     private String startTime;
-    @Column(name = "end_Time")
+    @Column(name = "endTime")
     private String endTime;
-    @Column(name = "create_Date")
+    @Column(name = "createDate")
     private Date createDate = new Date();
     private boolean status = true;
-    @Column(name = "edit_Date")
+    @Column(name = "editDate")
     private Date editdate;
 
     @ManyToOne
-    @JoinColumn(name = "id_Order_Detail")
+    @JoinColumn(name = "idOrderDetail")
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
     private OrderDetail orderDetail1;
 
     @ManyToOne
-    @JoinColumn(name = "id_Shedule")
+    @JoinColumn(name = "idShedule")
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
     private Schedule schedule ;

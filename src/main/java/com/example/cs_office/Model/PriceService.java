@@ -15,12 +15,12 @@ public class PriceService {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private double value;
-    @Column(name = "create_Date")
+    @Column(name = "createDate")
     private Date createDate = new Date();
     private boolean status = true;
 
     @ManyToOne
-    @JoinColumn(name = "id_Service")
+    @JoinColumn(name = "idService")
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
     private Service service;

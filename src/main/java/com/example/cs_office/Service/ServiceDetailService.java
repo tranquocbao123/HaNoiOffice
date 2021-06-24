@@ -53,7 +53,7 @@ public class ServiceDetailService {
 
     public ServiceDetail updateServiceDetail(ServiceDetail serviceDetail, int serviceDetailId){
         ServiceDetail serviceDetail11 = this.serviceDetailRepository.getOne(serviceDetailId);
-        BeanUtils.copyProperties(serviceDetailId,serviceDetail11);
+        BeanUtils.copyProperties(serviceDetail,serviceDetail11);
         return serviceDetailRepository.saveAndFlush(serviceDetail11);
     }
 }

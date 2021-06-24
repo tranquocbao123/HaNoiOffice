@@ -15,17 +15,17 @@ public class Evaluate {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    @Column(name = "id_User_Create")
+    @Column(name = "idUserCreate")
     private int idUserCreate;
     private int level;
     private String content;
     private boolean status = true;
-    @Column(name = "create_Date")
+    @Column(name = "createDate")
     private Date createDate = new Date();
 
     @ManyToOne
-    @JoinColumn(name = "id_order")
+    @JoinColumn(name = "idorder")
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
-    private Order order1;
+    private Orders orders1;
 }

@@ -18,7 +18,7 @@ public class Branch {
     private int id;
     private String name;
     private String address;
-    @Column(name = "create_Date")
+    @Column(name = "createDate")
     private Date createDate = new Date();
     private boolean status = true;
 

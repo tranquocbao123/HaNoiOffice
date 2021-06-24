@@ -17,7 +17,7 @@ public class Room {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String name;
-    @Column(name = "create_Date")
+    @Column(name = "createDate")
     private Date createDate = new Date();
     private boolean status = true;
 
@@ -28,13 +28,13 @@ public class Room {
     private Collection<OrderDetail> orderDetails;
 
     @ManyToOne
-    @JoinColumn(name = "id_Type_Room")
+    @JoinColumn(name = "idTypeRoom")
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
     private TypeRoom typeRoom;
 
     @ManyToOne
-    @JoinColumn(name = "id_Branch")
+    @JoinColumn(name = "idBranch")
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
     private Branch branch1;

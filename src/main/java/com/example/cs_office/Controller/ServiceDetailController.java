@@ -60,7 +60,6 @@ public class ServiceDetailController {
         serviceDetailService.deleteServiceDetail(servicedetailId);
     }
     //update service detail by id
-    //update staff by id
     @PutMapping(path = "/{serviceDetailId}")
     public ServiceDetail updateServiceDetail
     (@RequestBody ServiceDetail serviceDetail,

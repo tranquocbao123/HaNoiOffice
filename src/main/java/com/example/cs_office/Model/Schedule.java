@@ -17,11 +17,11 @@ public class Schedule {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    @Column(name = "start_Date")
+    @Column(name = "startDate")
     private Date startDate;
-    @Column(name = "end_Date")
+    @Column(name = "endDate")
     private Date endDate;
-    @Column(name = "create_Date")
+    @Column(name = "createDate")
     private Date createDate = new Date();
     private boolean status = true;
 

@@ -12,22 +12,21 @@ import java.util.Date;
 @NoArgsConstructor
 @Table(name = "servicedetail")
 public class ServiceDetail {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    @Column(name = "create_Date")
+    @Column(name = "createDate")
     private Date createDate = new Date();
     private boolean status = true;
 
     @ManyToOne
-    @JoinColumn(name = "id_Service")
+    @JoinColumn(name = "idService")
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
     private Service service1;
 
     @ManyToOne
-    @JoinColumn(name = "id_order_detail")
+    @JoinColumn(name = "idorderdetail")
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
     private OrderDetail orderDetail;

@@ -17,17 +17,17 @@ public class Customer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    @Column(name = "phone_Number")
+    @Column(name = "phoneNumber")
     private String phoneNumber;
     private String email;
-    @Column(name = "pass_Word")
+    @Column(name = "passWord")
     private String password;
-    @Column(name = "first_Name")
+    @Column(name = "firstName")
     private String firstName;
-    @Column(name = "last_Name")
+    @Column(name = "lastName")
     private String lastName;
     private String address;
-    @Column(name = "create_Date")
+    @Column(name = "createDate")
     private Date createDate = new Date();
     private boolean status = true;
 
@@ -35,7 +35,7 @@ public class Customer {
     @OneToMany (mappedBy = "customer",fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
-    private List<Order> orders;
+    private List<Orders> orders;
 
     public Customer(String phoneNumber, String email, String password, String firstName, String lastName, String address) {
         this.phoneNumber = phoneNumber;

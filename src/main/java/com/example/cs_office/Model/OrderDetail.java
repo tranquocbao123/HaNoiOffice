@@ -18,18 +18,18 @@ public class OrderDetail {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    @Column(name = "create_Date")
+    @Column(name = "createDate")
     private Date createDate = new Date();
     private boolean status = true;
 
     @ManyToOne
-    @JoinColumn(name = "id_order")
+    @JoinColumn(name = "idorder")
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
-    private Order order;
+    private Orders orders2;
 
     @ManyToOne
-    @JoinColumn(name = "id_Room")
+    @JoinColumn(name = "idRoom")
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
     private Room room;

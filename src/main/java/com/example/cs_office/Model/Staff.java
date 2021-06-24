@@ -14,24 +14,24 @@ public class Staff {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    @Column(name = "user_name")
+    @Column(name = "username")
     private String userName;
-    @Column(name = "pass_word")
+    @Column(name = "password")
     private String password;
-    @Column(name = "phone_Number")
+    @Column(name = "phoneNumber")
     private String phoneNumber;
     private String email;
     private String address;
-    @Column(name = "create_Date")
+    @Column(name = "createDate")
     private Date createDate = new Date();
     private boolean status = true;
     @ManyToOne
-    @JoinColumn(name = "id_Branch")
+    @JoinColumn(name = "idBranch")
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
     private Branch branch;
     @ManyToOne
-    @JoinColumn(name = "id_Role")
+    @JoinColumn(name = "idRole")
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
     private Role role;
