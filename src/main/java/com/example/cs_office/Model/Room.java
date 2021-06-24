@@ -1,2 +1,41 @@
-package com.example.cs_office.Model;public class Room {
+package com.example.cs_office.Model;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.*;
+
+import javax.persistence.*;
+import java.util.Collection;
+import java.util.Date;
+
+@Entity
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Table(name = "room")
+public class Room {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
+    private String name;
+    @Column(name = "create_Date")
+    private Date createDate = new Date();
+    private boolean status = true;
+
+    @JsonIgnore
+    @OneToMany (mappedBy = "room", cascade = CascadeType.ALL)
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
+    private Collection<OrderDetail> orderDetails;
+
+    @ManyToOne
+    @JoinColumn(name = "id_Type_Room")
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
+    private TypeRoom typeRoom;
+
+    @ManyToOne
+    @JoinColumn(name = "id_Branch")
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
+    private Branch branch1;
 }

@@ -1,2 +1,36 @@
-package com.example.cs_office.Model;public class PriceTypeRoom {
+package com.example.cs_office.Model;
+
+import lombok.*;
+import org.springframework.data.repository.cdi.Eager;
+
+import javax.persistence.*;
+import java.util.Date;
+
+@Entity
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@Table(name = "pricetyperoom")
+public class PriceTypeRoom {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
+    private double value;
+    @Column(name = "create_Date")
+    private Date createDate = new Date();
+    private boolean status = true;
+
+    @ManyToOne
+    @JoinColumn(name = "id_Type_Room")
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
+    private TypeRoom typeRoom1;
+
+    public PriceTypeRoom(double value, Date createDate, boolean status, TypeRoom typeRoom1) {
+        this.value = value;
+        this.createDate = createDate;
+        this.status = status;
+        this.typeRoom1 = typeRoom1;
+    }
 }
