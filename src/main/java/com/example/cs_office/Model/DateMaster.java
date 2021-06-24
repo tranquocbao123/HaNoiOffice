@@ -1,38 +1,34 @@
 package com.example.cs_office.Model;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.Date;
 
-@Getter
-@Setter
-@NoArgsConstructor
-@AllArgsConstructor
 
 @Entity
-@Table(name = "Date_Master")
+@NoArgsConstructor
+@AllArgsConstructor
+@Data
+@Table(name = "datemasters")
 public class DateMaster {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private int id;
-    @Column(name = "date")
-    private Date date;
-    @Column(name = "desc")
+    @Column(name = "createDate")
+    private Date createDate = new Date();
+    @Column(name = "date1")
+    private Date date1;
+    @Column(name = "description")
     private String desc;
     @Column(name = "status")
-    private boolean status;
-    @Column(name = "create_Date")
-    private Date createDate;
+    private boolean status = true;
 
-    public DateMaster(Date date, String desc, boolean status, Date createDate) {
-        this.date = date;
+    public DateMaster(Date createDate, Date date1, String desc, boolean status) {
+        this.createDate = createDate;
+        this.date1 = date1;
         this.desc = desc;
         this.status = status;
-        this.createDate = createDate;
     }
 }

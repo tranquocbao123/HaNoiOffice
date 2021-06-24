@@ -14,9 +14,9 @@ import java.util.Optional;
 @RequestMapping("/datemaster")
 public class DateMasterController {
 
-    private DateMasterService dateMasterService;
-
     @Autowired
+    private final DateMasterService dateMasterService;
+
     public DateMasterController(DateMasterService dateMasterService) {
         this.dateMasterService = dateMasterService;
     }
@@ -43,7 +43,7 @@ public class DateMasterController {
     @GetMapping(path = "{datemasterId}")
     public Optional<DateMaster> getById(
             @PathVariable("datemasterId") int datemasterId) {
-        return dateMasterService.getById(datemasterId);
+        return dateMasterService.getDateMasterById(datemasterId);
     }
 
     // insert dateMaster
@@ -59,6 +59,7 @@ public class DateMasterController {
         dateMasterService.deleteDateMaster(datemasterId);
     }
 
+<<<<<<< HEAD
     //update customer by id
     @PutMapping()
     public void updateCustomer(
@@ -73,6 +74,13 @@ public class DateMasterController {
             @RequestBody DateMaster dateMaster
     ) {
         dateMasterService.updateDateMasterBlack(dateMaster);
+=======
+    @PutMapping(path = "/{datemasterId}")
+    public DateMaster updateDateMaster
+            (@RequestBody DateMaster dateMaster,
+             @PathVariable("datemasterId") int id) {
+        return dateMasterService.updateDateMaster(dateMaster, id);
+>>>>>>> origin/vannh
     }
 
 }

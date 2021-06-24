@@ -1,37 +1,41 @@
 package com.example.cs_office.Model;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-
 @Entity
 @Table(name = "Customer")
 public class Customer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    @Column(name = "phone_Number")
+    @Column(name = "phoneNumber")
     private String phoneNumber;
     private String email;
-    @Column(name = "pass_Word")
+    @Column(name = "passWord")
     private String password;
-    @Column(name = "first_Name")
+    @Column(name = "firstName")
     private String firstName;
-    @Column(name = "last_Name")
+    @Column(name = "lastName")
     private String lastName;
     private String address;
-    @Column(name = "create_Date")
+    @Column(name = "createDate")
     private Date createDate = new Date();
     private boolean status = true;
+
+    @JsonIgnore
+    @OneToMany (mappedBy = "customer",fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
+    private List<Orders> orders;
 
     public Customer(String phoneNumber, String email, String password, String firstName, String lastName, String address) {
         this.phoneNumber = phoneNumber;

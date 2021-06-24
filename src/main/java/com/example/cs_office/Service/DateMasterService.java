@@ -3,6 +3,7 @@ package com.example.cs_office.Service;
 import com.example.cs_office.Model.Customer;
 import com.example.cs_office.Model.DateMaster;
 import com.example.cs_office.Repository.DateMasterRepository;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -31,7 +32,7 @@ public class DateMasterService {
         return dateMasterRepository.findDateMasterByStatus(status);
     }
 
-    public Optional<DateMaster> getById(int Id) {
+    public Optional<DateMaster> getDateMasterById(int Id) {
         Optional<DateMaster> dateMaster = dateMasterRepository.findById(Id);
         return dateMaster;
     }
@@ -53,6 +54,7 @@ public class DateMasterService {
         dateMasterRepository.deleteById(Id);
     }
 
+<<<<<<< HEAD
     @Transactional
     public void updateDateMaster(DateMaster dateMaster) {
         dateMaster.setStatus(false);
@@ -63,6 +65,12 @@ public class DateMasterService {
     public void updateDateMasterBlack(DateMaster dateMaster) {
         dateMaster.setStatus(true);
         dateMasterRepository.save(dateMaster);
+=======
+    public DateMaster updateDateMaster(DateMaster dateMaster, int datemasterId){
+        DateMaster dateMaster1 = this.dateMasterRepository.getOne(datemasterId);
+        BeanUtils.copyProperties(dateMaster,dateMaster1);
+        return dateMasterRepository.saveAndFlush(dateMaster1);
+>>>>>>> origin/vannh
     }
 
 }

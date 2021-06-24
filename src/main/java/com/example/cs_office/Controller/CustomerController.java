@@ -1,5 +1,6 @@
 package com.example.cs_office.Controller;
 
+import com.example.cs_office.Model.Branch;
 import com.example.cs_office.Model.Customer;
 import com.example.cs_office.Service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,10 +46,18 @@ public class CustomerController {
         return customerService.getById(customerId);
     }
 
+<<<<<<< HEAD
     // insert customer
     @PostMapping
     public void insertCustomer(@RequestBody Customer customer) {
         customerService.addNewCustomer(customer);
+=======
+    //search customer by name
+    @GetMapping(path = "searchname/{firstname}/{lastname}")
+    public List<Customer> getCustomerByName(
+            @PathVariable("firstname") String firstname,@PathVariable("lastname") String lastname) {
+        return customerService.getCustomerByName(firstname,lastname);
+>>>>>>> origin/vannh
     }
 
     //delete customer by id
@@ -58,7 +67,23 @@ public class CustomerController {
         customerService.deleteCustomer(customerId);
     }
 
+//    //update customer by id
+//    @PutMapping
+//    public Customer updateCustomer(
+//            @RequestBody Customer customer
+//    ) {
+//      return customerService.updateCustomer(customer);
+//    }
+//    //update customer black by id
+//    @PutMapping("/black")
+//    public Customer updateCustomerBlack(
+//            @RequestBody Customer customer
+//    ) {
+//        return customerService.updateCustomerBlack(customer);
+//    }
+
     //update customer by id
+<<<<<<< HEAD
     @PutMapping
     public Customer updateCustomer(
             @RequestBody Customer customer
@@ -72,6 +97,13 @@ public class CustomerController {
             @RequestBody Customer customer
     ) {
         return customerService.updateCustomerBlack(customer);
+=======
+    @PutMapping(path = "/{customerId}")
+    public Customer updateCustomer
+    (@RequestBody Customer customer,
+     @PathVariable("customerId") int id) {
+        return customerService.updateCustomer(customer, id);
+>>>>>>> origin/vannh
     }
 
     //login customer by id

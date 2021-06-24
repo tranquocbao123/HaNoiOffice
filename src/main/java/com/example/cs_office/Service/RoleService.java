@@ -2,8 +2,10 @@ package com.example.cs_office.Service;
 
 import com.example.cs_office.Model.Customer;
 import com.example.cs_office.Model.Role;
+import com.example.cs_office.Model.Room;
 import com.example.cs_office.Repository.CustomerRepository;
 import com.example.cs_office.Repository.RoleRepository;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -37,6 +39,11 @@ public class RoleService {
         return role;
     }
 
+    public List<Role> getRoleByName(String roleName) {
+        List<Role> role = roleRepository.findRoleByName(roleName);
+        return role;
+    }
+
     public void addNewRole(Role role) {
         Optional<Role> roleOptional =
                 roleRepository.findRoleById(role.getId());
@@ -54,6 +61,7 @@ public class RoleService {
         roleRepository.deleteById(roleId);
     }
 
+<<<<<<< HEAD
     @Transactional
     public void updateRole(Role role ) {
         role.setStatus(false);
@@ -64,6 +72,12 @@ public class RoleService {
     public void updateRoleBlack(Role role ) {
         role.setStatus(true);
         roleRepository.save(role);
+=======
+    public Role updateRole(Role role, int roleId){
+        Role role1 = this.roleRepository.getOne(roleId);
+        BeanUtils.copyProperties(role,role1);
+        return roleRepository.saveAndFlush(role1);
+>>>>>>> origin/vannh
     }
 
 }

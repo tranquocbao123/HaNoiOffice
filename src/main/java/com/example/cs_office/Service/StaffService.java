@@ -3,8 +3,10 @@ package com.example.cs_office.Service;
 import com.example.cs_office.Model.Branch;
 import com.example.cs_office.Model.Role;
 import com.example.cs_office.Model.Staff;
+import com.example.cs_office.Model.TypeRoom;
 import com.example.cs_office.Repository.RoleRepository;
 import com.example.cs_office.Repository.StaffRepository;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -34,8 +36,13 @@ public class StaffService {
     }
 
     public Optional<Staff> getById(int staffId) {
-        Optional<Staff> role = staffRepository.findById(staffId);
-        return role;
+        Optional<Staff> staff = staffRepository.findById(staffId);
+        return staff;
+    }
+
+    public List<Staff> getStaffByUserName(String staffUserName) {
+        List<Staff> staff = staffRepository.findStaffByUserName(staffUserName);
+        return staff;
     }
 
     public void addNewStaff(Staff staff) {
@@ -50,11 +57,12 @@ public class StaffService {
     public void deleteStaff(int staffId) {
         boolean exists = staffRepository.existsById(staffId);
         if (!exists) {
-            throw new IllegalStateException("role with id " + staffId + " does not exists");
+            throw new IllegalStateException("staff with id " + staffId + " does not exists");
         }
         staffRepository.deleteById(staffId);
     }
 
+<<<<<<< HEAD
     @Transactional
     public void updateStaff(Staff staff) {
         staff.setStatus(false);
@@ -65,6 +73,12 @@ public class StaffService {
     public void updateStaffBlack(Staff staff) {
         staff.setStatus(true);
         staffRepository.save(staff);
+=======
+    public Staff updateStaff(Staff staff, int staffId){
+        Staff staff1 = this.staffRepository.getOne(staffId);
+        BeanUtils.copyProperties(staff,staff1);
+        return staffRepository.saveAndFlush(staff1);
+>>>>>>> origin/vannh
     }
 
 }

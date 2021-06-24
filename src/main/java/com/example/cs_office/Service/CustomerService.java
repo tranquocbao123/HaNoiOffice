@@ -1,7 +1,9 @@
 package com.example.cs_office.Service;
 
 import com.example.cs_office.Model.Customer;
+import com.example.cs_office.Model.Role;
 import com.example.cs_office.Repository.CustomerRepository;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -35,6 +37,11 @@ public class CustomerService {
         return customer;
     }
 
+    public List<Customer> getCustomerByName(String firstname,String lastName) {
+        List<Customer> customer = customerRepository.findCustomerByName(firstname,lastName);
+        return customer;
+    }
+
     public void addNewCustomer(Customer customer) {
         Optional<Customer> customerOptional =
                 customerRepository.findCustomerById(customer.getId());
@@ -52,16 +59,22 @@ public class CustomerService {
         customerRepository.deleteById(customerId);
     }
 
-    @Transactional
-    public Customer updateCustomer(Customer customer) {
-        customer.setStatus(false);
-        return customerRepository.save(customer);
-    }
+//    @Transactional
+//    public Customer updateCustomer(Customer customer) {
+//        customer.setStatus(false);
+//        return customerRepository.save(customer);
+//    }
+//
+//    @Transactional
+//    public Customer updateCustomerBlack(Customer customer) {
+//        customer.setStatus(true);
+//        return customerRepository.save(customer);
+//    }
 
-    @Transactional
-    public Customer updateCustomerBlack(Customer customer) {
-        customer.setStatus(true);
-        return customerRepository.save(customer);
+    public Customer updateCustomer(Customer customer, int customerId){
+        Customer customer1 = this.customerRepository.getOne(customerId);
+        BeanUtils.copyProperties(customer,customer1);
+        return customerRepository.saveAndFlush(customer1);
     }
 
     @Transactional
