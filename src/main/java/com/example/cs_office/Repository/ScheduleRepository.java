@@ -17,4 +17,5 @@ public interface ScheduleRepository extends JpaRepository<Schedule,Integer> {
     //select schedule by status
     @Query("select c from Schedule c where c.status = ?1")
     List<Schedule> findScheduleByStatus(boolean status);
+
 }

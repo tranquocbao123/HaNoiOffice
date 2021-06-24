@@ -17,9 +17,9 @@ public class Role {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String name;
-    @Column(name = "createDate")
     private Date createDate = new Date();
     private boolean status = true;
+
     @JsonIgnore
     @OneToMany (mappedBy = "role", cascade = CascadeType.ALL)
     @EqualsAndHashCode.Exclude

@@ -9,19 +9,14 @@ import java.util.Date;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "orderhistory")
 public class OrderHistory {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    @Column(name = "roomOld")
     private String roomOld;
-    @Column(name = "startTimeOld")
     private String startTimeOld;
-    @Column(name = "endTimeOld")
     private String endTimeOld;
     private Date date;
-    @Column(name = "createDate")
     private Date createDate = new Date();
     private boolean status = true;
 

@@ -61,23 +61,17 @@ public class RoleService {
         roleRepository.deleteById(roleId);
     }
 
-<<<<<<< HEAD
     @Transactional
-    public void updateRole(Role role ) {
-        role.setStatus(false);
+    public void updateRoleBlack(Role role) {
+        role.setStatus(true);
         roleRepository.save(role);
     }
 
     @Transactional
-    public void updateRoleBlack(Role role ) {
-        role.setStatus(true);
-        roleRepository.save(role);
-=======
-    public Role updateRole(Role role, int roleId){
+    public Role updateRole(Role role, int roleId) {
         Role role1 = this.roleRepository.getOne(roleId);
-        BeanUtils.copyProperties(role,role1);
+        BeanUtils.copyProperties(role, role1);
         return roleRepository.saveAndFlush(role1);
->>>>>>> origin/vannh
     }
 
 }

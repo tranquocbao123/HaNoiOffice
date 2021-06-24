@@ -68,4 +68,5 @@ public class EvaluateController {
      @PathVariable("evaluateId") int id) {
         return evaluateService.updateEvaluate(evaluate, id);
     }
+
 }

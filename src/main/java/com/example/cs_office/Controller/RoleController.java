@@ -70,20 +70,11 @@ public class RoleController {
         roleService.deleteRole(roleId);
     }
 
-    //update role by id
-<<<<<<< HEAD
-    @PutMapping()
-    public void updateRole(
-            @RequestBody Role role
-    ) {
-        roleService.updateRole(role);
-=======
     @PutMapping(path = "/{roleId}")
     public Role updateRole
     (@RequestBody Role role,
      @PathVariable("roleId") int id) {
         return roleService.updateRole(role, id);
->>>>>>> origin/vannh
     }
 
     //update role black by id

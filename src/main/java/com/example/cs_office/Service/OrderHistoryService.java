@@ -6,6 +6,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 
@@ -49,6 +50,8 @@ public class OrderHistoryService {
         }
         orderHistoryRepository.deleteById(orderHistoryId);
     }
+
+    @Transactional
     public OrderHistory updateOrderHistory(OrderHistory orderHistory, int orderHistoryId){
         OrderHistory orderHistory1 = this.orderHistoryRepository.getOne(orderHistoryId);
         BeanUtils.copyProperties(orderHistory,orderHistory1);

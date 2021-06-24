@@ -6,6 +6,7 @@ import com.example.cs_office.Repository.OrderDetailRepository;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 
@@ -49,6 +50,7 @@ public class OrderDetailService {
         orderDetailRepository.deleteById(orderDetailId);
     }
 
+    @Transactional
     public OrderDetail updateOrderDetail(OrderDetail orderDetail, int orderDetailId){
         OrderDetail orderDetail1 = this.orderDetailRepository.getOne(orderDetailId);
         BeanUtils.copyProperties(orderDetail,orderDetail1);

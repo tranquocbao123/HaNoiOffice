@@ -11,17 +11,13 @@ import java.util.Date;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "schedule")
 public class Schedule {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    @Column(name = "startDate")
     private Date startDate;
-    @Column(name = "endDate")
     private Date endDate;
-    @Column(name = "createDate")
     private Date createDate = new Date();
     private boolean status = true;
 

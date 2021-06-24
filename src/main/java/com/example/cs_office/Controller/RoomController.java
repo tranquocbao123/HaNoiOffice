@@ -73,4 +73,5 @@ public class RoomController {
      @PathVariable("roomId") int id) {
         return roomService.updateRoom(room, id);
     }
+
 }

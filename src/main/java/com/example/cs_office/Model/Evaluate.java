@@ -10,17 +10,14 @@ import java.util.Date;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "evaluate")
 public class Evaluate {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    @Column(name = "idUserCreate")
     private int idUserCreate;
     private int level;
     private String content;
     private boolean status = true;
-    @Column(name = "createDate")
     private Date createDate = new Date();
 
     @ManyToOne

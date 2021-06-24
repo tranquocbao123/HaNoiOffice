@@ -12,15 +12,12 @@ import java.util.Date;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "service")
 public class Service {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String name;
-    @Column(name = "idPriceService")
     private int idPriceService;
-    @Column(name = "createDate")
     private Date createDate = new Date();
     private boolean status = true;
 

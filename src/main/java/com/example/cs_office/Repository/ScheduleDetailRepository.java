@@ -18,4 +18,5 @@ public interface ScheduleDetailRepository extends JpaRepository<Scheduledetail,I
     //select schedule detail by status
     @Query("select c from Scheduledetail c where c.status = ?1")
     List<Scheduledetail> findScheduledetailByStatus(boolean status);
+
 }

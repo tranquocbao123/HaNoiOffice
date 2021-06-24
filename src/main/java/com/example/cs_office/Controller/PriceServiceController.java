@@ -67,4 +67,5 @@ public class PriceServiceController {
      @PathVariable("priceServiceId") int id) {
         return priceServiceService.updatePriceServiceService(priceService, id);
     }
+
 }

@@ -10,12 +10,10 @@ import java.util.Date;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "servicedetail")
 public class ServiceDetail {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    @Column(name = "createDate")
     private Date createDate = new Date();
     private boolean status = true;
 

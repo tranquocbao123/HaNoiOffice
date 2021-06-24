@@ -72,4 +72,5 @@ public class TypeRoomController {
      @PathVariable("typeroomId") int id) {
         return typeRoomService.updateTyperoom(typeRoom, id);
     }
+
 }

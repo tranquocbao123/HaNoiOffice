@@ -7,6 +7,7 @@ import com.example.cs_office.Repository.ServiceRepository;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import javax.transaction.Transactional;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -56,6 +57,7 @@ public class SerService {
         serviceRepository.deleteById(serviceId);
     }
 
+    @Transactional
     public Service updateService(Service service, int serviceId){
         Service service1 = this.serviceRepository.getOne(serviceId);
         BeanUtils.copyProperties(service,service1);

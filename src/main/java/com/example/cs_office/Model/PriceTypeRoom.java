@@ -10,14 +10,12 @@ import java.util.Date;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "pricetyperoom")
 public class PriceTypeRoom {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private double value;
-    @Column(name = "createDate")
     private Date createDate = new Date();
     private boolean status = true;
 

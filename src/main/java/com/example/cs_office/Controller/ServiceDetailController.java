@@ -66,4 +66,5 @@ public class ServiceDetailController {
      @PathVariable("serviceDetailId") int id) {
         return serviceDetailService.updateServiceDetail(serviceDetail, id);
     }
+
 }

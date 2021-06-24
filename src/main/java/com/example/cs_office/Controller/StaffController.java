@@ -48,18 +48,17 @@ public class StaffController {
         return staffService.getById(staffId);
     }
 
-<<<<<<< HEAD
     // insert staff
     @PostMapping
     public void insertStaff(@RequestBody Staff staff) {
         staffService.addNewStaff(staff);
-=======
+    }
+
     //search staff by username
     @GetMapping(path = "searchname/{staffUsername}")
     public List<Staff> getStaffByUserName(
             @PathVariable("staffUsername") String staffUsername) {
         return staffService.getStaffByUserName(staffUsername);
->>>>>>> origin/vannh
     }
 
     //delete staff by id
@@ -70,7 +69,6 @@ public class StaffController {
     }
 
     //update staff by id
-<<<<<<< HEAD
     @PutMapping()
     public void updateStaff(
             @RequestBody Staff staff
@@ -84,12 +82,13 @@ public class StaffController {
             @RequestBody Staff staff
     ) {
         staffService.updateStaff(staff);
-=======
+    }
+
     @PutMapping(path = "/{staffId}")
     public Staff updateStaff
-    (@RequestBody Staff staff,
-     @PathVariable("staffId") int id) {
+            (@RequestBody Staff staff,
+             @PathVariable("staffId") int id) {
         return staffService.updateStaff(staff, id);
->>>>>>> origin/vannh
     }
+
 }

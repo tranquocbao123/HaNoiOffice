@@ -17,4 +17,5 @@ public interface ServiceDetailRepository extends JpaRepository<ServiceDetail,Int
     //select ServiceDetail by status
     @Query("select c from ServiceDetail c where c.status = ?1")
     List<ServiceDetail> findServiceDetailByStatus(boolean status);
+
 }

@@ -68,4 +68,5 @@ public class PriceTypeRoomController {
              @PathVariable("priceTypeRoomId") int id) {
         return priceTypeRoomService.updatePriceTypeRoom(priceTypeRoom, id);
     }
+
 }

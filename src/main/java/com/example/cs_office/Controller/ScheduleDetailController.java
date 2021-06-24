@@ -65,4 +65,5 @@ public class ScheduleDetailController {
      @PathVariable("scheduledetailId") int id) {
         return scheduleDetailService.updateScheduledetail(scheduledetail, id);
     }
+
 }
