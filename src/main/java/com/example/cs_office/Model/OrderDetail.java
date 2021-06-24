@@ -26,7 +26,7 @@ public class OrderDetail {
     @JoinColumn(name = "idorder")
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
-    private Orders orders2;
+    private Order order2;
 
     @ManyToOne
     @JoinColumn(name = "idRoom")

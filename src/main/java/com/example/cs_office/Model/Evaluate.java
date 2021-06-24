@@ -27,5 +27,5 @@ public class Evaluate {
     @JoinColumn(name = "idorder")
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
-    private Orders orders1;
+    private Order order1;
 }

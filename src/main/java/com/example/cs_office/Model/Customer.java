@@ -32,10 +32,10 @@ public class Customer {
     private boolean status = true;
 
     @JsonIgnore
-    @OneToMany (mappedBy = "customer",fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @OneToMany (mappedBy = "customer",fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
-    private List<Orders> orders;
+    private List<Order> order;
 
     public Customer(String phoneNumber, String email, String password, String firstName, String lastName, String address) {
         this.phoneNumber = phoneNumber;

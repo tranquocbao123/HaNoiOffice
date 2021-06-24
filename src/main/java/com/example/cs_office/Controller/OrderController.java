@@ -1,6 +1,6 @@
 package com.example.cs_office.Controller;
 
-import com.example.cs_office.Model.Orders;
+import com.example.cs_office.Model.Order;
 import com.example.cs_office.Service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -9,43 +9,43 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/orders")
+@RequestMapping("/order")
 @CrossOrigin("*")
 public class OrderController {
+    @Autowired
     private final OrderService orderService;
 
-    @Autowired
     public OrderController(OrderService orderService) {
         this.orderService = orderService;
     }
 
     //list order
     @GetMapping()
-    public List<Orders> getOrder() {
+    public List<Order> getOrder() {
         return orderService.getOrder();
     }
 
     //list order by status == fasle
     @GetMapping("/false")
-    public List<Orders> getOrderByStatusFalse() {
+    public List<Order> getOrderByStatusFalse() {
         return orderService.getOrderByStatus(false);
     }
 
     //list order by status == true
     @GetMapping("/true")
-    public List<Orders> getOrderByStatusTrue() {
+    public List<Order> getOrderByStatusTrue() {
         return orderService.getOrderByStatus(true);
     }
 
     // insert order
     @PostMapping
-    public void insertOrder(@RequestBody Orders orders) {
-        orderService.addNewOrder(orders);
+    public void insertOrder(@RequestBody Order order) {
+        orderService.addNewOrder(order);
     }
 
     //search order by id
     @GetMapping(path = "{orderId}")
-    public Optional<Orders> getOrderById(
+    public Optional<Order> getOrderById(
             @PathVariable("orderId") int orderId) {
         return orderService.getOrderById(orderId);
     }
@@ -58,9 +58,9 @@ public class OrderController {
 
     //update order by id
     @PutMapping(path = "/{orderId}")
-    public Orders updateOrder
-    (@RequestBody Orders orders,
+    public Order updateOrder
+    (@RequestBody Order order,
      @PathVariable("orderId") int id) {
-        return orderService.updateOrder(orders, id);
+        return orderService.updateOrder(order, id);
     }
 }
