@@ -2,6 +2,8 @@ package com.example.cs_office.Model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -21,6 +23,7 @@ public class Order {
     private Date createDate = new Date();
 
     @ManyToOne
+    @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "id_customer")
     @EqualsAndHashCode.Exclude
     @ToString.Exclude

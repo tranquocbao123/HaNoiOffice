@@ -3,8 +3,10 @@ package com.example.cs_office.Service;
 import com.example.cs_office.Model.Branch;
 import com.example.cs_office.Model.Role;
 import com.example.cs_office.Model.Staff;
+import com.example.cs_office.Model.TypeRoom;
 import com.example.cs_office.Repository.RoleRepository;
 import com.example.cs_office.Repository.StaffRepository;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -50,14 +52,18 @@ public class StaffService {
     public void deleteStaff(int staffId) {
         boolean exists = staffRepository.existsById(staffId);
         if (!exists) {
-            throw new IllegalStateException("role with id " + staffId + " does not exists");
+            throw new IllegalStateException("staff with id " + staffId + " does not exists");
         }
         staffRepository.deleteById(staffId);
     }
 
-    @Transactional
-    public void updateStaff(int staffId, String userName, String password, String phoneNumber, String email, String address, Branch branch, Role role, Date create_Date, boolean status) {
-        Staff staff = staffRepository.findById(staffId).orElseThrow(() -> new IllegalStateException("role with id" + staffId + "does not exists"));
+    public Staff updateStaff(Staff staff, int staffId){
+        Staff staff1 = this.staffRepository.getOne(staffId);
+        BeanUtils.copyProperties(staff,staff1);
+        return staffRepository.saveAndFlush(staff1);
     }
 
+    public List<Staff> getStaffByname(String name) {
+        return staffRepository.findByname(name);
+    }
 }

@@ -2,6 +2,7 @@ package com.example.cs_office.Controller;
 
 import com.example.cs_office.Model.Customer;
 import com.example.cs_office.Model.DateMaster;
+import com.example.cs_office.Model.Schedule;
 import com.example.cs_office.Service.DateMasterService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -14,9 +15,9 @@ import java.util.Optional;
 @RequestMapping("/datemaster")
 public class DateMasterController {
 
-    private DateMasterService dateMasterService;
-
     @Autowired
+    private final DateMasterService dateMasterService;
+
     public DateMasterController(DateMasterService dateMasterService) {
         this.dateMasterService = dateMasterService;
     }
@@ -49,7 +50,7 @@ public class DateMasterController {
     @GetMapping(path = "{datemasterId}")
     public Optional<DateMaster> getById(
             @PathVariable("datemasterId") int datemasterId) {
-        return dateMasterService.getById(datemasterId);
+        return dateMasterService.getDateMasterById(datemasterId);
     }
 
     //delete datemaster by id
@@ -60,19 +61,11 @@ public class DateMasterController {
     }
 
     //update customer by id
-//    @PutMapping(path = "{customerId}")
-//    public void updateCustomer(
-//            @PathVariable("customerId") int customerId,
-//            @RequestParam(required = false) String phoneNumber,
-//            @RequestParam(required = false) String email,
-//            @RequestParam(required = false) String password,
-//            @RequestParam(required = false) String fisrtName,
-//            @RequestParam(required = false) String lastName,
-//            @RequestParam(required = false) String address,
-//            @RequestParam(required = false) Date createDate,
-//            @RequestParam(required = false) boolean status
-//    ) {
-//        customerService.updateCustomer(customerId, phoneNumber, email, password, fisrtName, lastName, address, createDate, status);
-//    }
+    @PutMapping(path = "/{dateMasterId}")
+    public DateMaster updateDateMaster
+    (@RequestBody DateMaster dateMaster,
+     @PathVariable("dateMasterId") int id) {
+        return dateMasterService.updateDateMaster(dateMaster, id);
+    }
 
 }

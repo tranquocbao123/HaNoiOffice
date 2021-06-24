@@ -1,7 +1,9 @@
 package com.example.cs_office.Service;
 
 import com.example.cs_office.Model.Customer;
+import com.example.cs_office.Model.Role;
 import com.example.cs_office.Repository.CustomerRepository;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -52,16 +54,22 @@ public class CustomerService {
         customerRepository.deleteById(customerId);
     }
 
-    @Transactional
-    public Customer updateCustomer(Customer customer) {
-        customer.setStatus(false);
-        return customerRepository.save(customer);
-    }
+//    @Transactional
+//    public Customer updateCustomer(Customer customer) {
+//        customer.setStatus(false);
+//        return customerRepository.save(customer);
+//    }
+//
+//    @Transactional
+//    public Customer updateCustomerBlack(Customer customer) {
+//        customer.setStatus(true);
+//        return customerRepository.save(customer);
+//    }
 
-    @Transactional
-    public Customer updateCustomerBlack(Customer customer) {
-        customer.setStatus(true);
-        return customerRepository.save(customer);
+    public Customer updateCustomer(Customer customer, int customerId){
+        Customer customer1 = this.customerRepository.getOne(customerId);
+        BeanUtils.copyProperties(customer,customer1);
+        return customerRepository.saveAndFlush(customer1);
     }
 
     @Transactional
@@ -86,5 +94,17 @@ public class CustomerService {
                 return user;
             }
         }
+    }
+
+    public List<Customer> getCustomerByName(String email) {
+        return customerRepository.findCustomerByname(email);
+    }
+
+    public List<Customer> getCustomerByAddress(String address) {
+        return customerRepository.findaddress(address);
+    }
+
+    public List<Customer> getCustomerfirstname(String firstname) {
+    return customerRepository.findfirtname(firstname);
     }
 }

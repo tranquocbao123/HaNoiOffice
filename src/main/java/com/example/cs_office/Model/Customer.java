@@ -32,7 +32,7 @@ public class Customer {
     private boolean status = true;
 
     @JsonIgnore
-    @OneToMany (mappedBy = "customer",fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @OneToMany (mappedBy = "customer",fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
     private List<Order> orders;
