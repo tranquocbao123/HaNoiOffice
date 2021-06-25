@@ -50,7 +50,7 @@ public class StaffService {
                 staffRepository.findStaffById(staff.getId());
         if (staffOptional.isPresent()) {
             throw new IllegalStateException("Id taken");
-        }   
+        }
         staffRepository.save(staff);
     }
 
@@ -62,9 +62,22 @@ public class StaffService {
         staffRepository.deleteById(staffId);
     }
 
-    public Staff updateStaff(Staff staff, int staffId){
+    @Transactional
+    public void updateStaffStatus(Staff staff) {
+        staff.setStatus(false);
+        staffRepository.save(staff);
+    }
+
+    @Transactional
+    public void updateStaffBlack(Staff staff) {
+        staff.setStatus(true);
+        staffRepository.save(staff);
+    }
+
+    @Transactional
+    public Staff updateStaff(Staff staff, int staffId) {
         Staff staff1 = this.staffRepository.getOne(staffId);
-        BeanUtils.copyProperties(staff,staff1);
+        BeanUtils.copyProperties(staff, staff1);
         return staffRepository.saveAndFlush(staff1);
     }
 

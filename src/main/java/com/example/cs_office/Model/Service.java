@@ -12,17 +12,15 @@ import java.util.Date;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "service")
 public class Service {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+    private String codeService;
     private String name;
-    @Column(name = "idPriceService")
-    private int idPriceService;
-    @Column(name = "createDate")
     private Date createDate = new Date();
     private boolean status = true;
+    private String description;
 
     @JsonIgnore
     @OneToMany (mappedBy = "service", cascade = CascadeType.ALL)
@@ -36,58 +34,4 @@ public class Service {
     @ToString.Exclude
     private Collection<ServiceDetail> serviceDetails;
 
-    public Service( String name,int idPriceService, Date createDate, boolean status) {
-        this.name = name;
-        this.idPriceService = idPriceService;
-        this.createDate = createDate;
-        this.status = status;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public int getIdPriceService() {
-        return idPriceService;
-    }
-
-    public void setIdPriceService(int idPriceService) {
-        this.idPriceService = idPriceService;
-    }
-
-    public Date getCreateDate() {
-        return createDate;
-    }
-
-    public void setCreateDate(Date createDate) {
-        this.createDate = createDate;
-    }
-
-    public boolean isStatus() {
-        return status;
-    }
-
-    public void setStatus(boolean status) {
-        this.status = status;
-    }
-
-    public Collection<PriceService> getPriceServices() {
-        return priceServices;
-    }
-
-    public void setPriceServices(Collection<PriceService> priceServices) {
-        this.priceServices = priceServices;
-    }
 }

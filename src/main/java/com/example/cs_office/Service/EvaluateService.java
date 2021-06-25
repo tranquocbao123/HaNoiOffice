@@ -1,11 +1,13 @@
 package com.example.cs_office.Service;
 
+import com.example.cs_office.Model.DateMasters;
 import com.example.cs_office.Model.Evaluate;
 import com.example.cs_office.Repository.EvaluateRepository;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 
@@ -50,6 +52,19 @@ public class EvaluateService {
         evaluateRepository.deleteById(evaluateId);
     }
 
+    @Transactional
+    public Evaluate updateEvaluateStatus(Evaluate evaluate) {
+        evaluate.setStatus(false);
+        return evaluateRepository.save(evaluate);
+    }
+
+    @Transactional
+    public Evaluate updateEvaluateBlack(Evaluate evaluate) {
+        evaluate.setStatus(true);
+        return evaluateRepository.save(evaluate);
+    }
+
+    @Transactional
     public Evaluate updateEvaluate(Evaluate evaluate, int evaluateId){
         Evaluate evaluate1 = this.evaluateRepository.getOne(evaluateId);
         BeanUtils.copyProperties(evaluate,evaluate1);

@@ -7,6 +7,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 
@@ -51,6 +52,19 @@ public class ScheduleService {
         scheduleRepository.deleteById(scheduleId);
     }
 
+    @Transactional
+    public Schedule updateScheduleStatus(Schedule schedule) {
+        schedule.setStatus(false);
+        return scheduleRepository.save(schedule);
+    }
+
+    @Transactional
+    public Schedule updateScheduleBlack(Schedule schedule) {
+        schedule.setStatus(true);
+        return scheduleRepository.save(schedule);
+    }
+
+    @Transactional
     public Schedule updateSchedule(Schedule schedule, int scheduleId){
         Schedule schedule1 = this.scheduleRepository.getOne(scheduleId);
         BeanUtils.copyProperties(schedule,schedule1);

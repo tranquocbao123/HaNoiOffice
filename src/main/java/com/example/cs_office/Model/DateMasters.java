@@ -10,25 +10,21 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-@Table(name = "datemasters")
-public class DateMaster {
+public class DateMasters {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
     private int id;
-    @Column(name = "createDate")
+    private Date dateMater;
+    private String event;
+    private String description;
     private Date createDate = new Date();
-    @Column(name = "date1")
-    private Date date1;
-    @Column(name = "description")
-    private String desc;
-    @Column(name = "status")
     private boolean status = true;
 
-    public DateMaster(Date createDate, Date date1, String desc, boolean status) {
+    public DateMasters(Date dateMater, String event, String description, Date createDate, boolean status) {
+        this.dateMater = dateMater;
+        this.event = event;
+        this.description = description;
         this.createDate = createDate;
-        this.date1 = date1;
-        this.desc = desc;
         this.status = status;
     }
 }

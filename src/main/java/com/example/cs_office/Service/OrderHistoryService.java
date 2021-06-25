@@ -1,11 +1,13 @@
 package com.example.cs_office.Service;
 
 import com.example.cs_office.Model.OrderHistory;
+import com.example.cs_office.Model.Orders;
 import com.example.cs_office.Repository.OrderHistoryRepository;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 
@@ -49,6 +51,20 @@ public class OrderHistoryService {
         }
         orderHistoryRepository.deleteById(orderHistoryId);
     }
+
+    @Transactional
+    public OrderHistory updateOrderHistoryStatus(OrderHistory orderHistory) {
+        orderHistory.setStatus(false);
+        return orderHistoryRepository.save(orderHistory);
+    }
+
+    @Transactional
+    public OrderHistory updateOrderHistoryBlack(OrderHistory orderHistory) {
+        orderHistory.setStatus(true);
+        return orderHistoryRepository.save(orderHistory);
+    }
+
+    @Transactional
     public OrderHistory updateOrderHistory(OrderHistory orderHistory, int orderHistoryId){
         OrderHistory orderHistory1 = this.orderHistoryRepository.getOne(orderHistoryId);
         BeanUtils.copyProperties(orderHistory,orderHistory1);

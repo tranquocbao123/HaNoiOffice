@@ -12,13 +12,11 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "orderdetail")
 public class OrderDetail {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    @Column(name = "createDate")
     private Date createDate = new Date();
     private boolean status = true;
 
@@ -26,7 +24,7 @@ public class OrderDetail {
     @JoinColumn(name = "idorder")
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
-    private Order order2;
+    private Orders orders2;
 
     @ManyToOne
     @JoinColumn(name = "idRoom")

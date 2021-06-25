@@ -2,10 +2,12 @@ package com.example.cs_office.Controller;
 
 
 import com.example.cs_office.Model.Customer;
+import com.example.cs_office.Model.Orders;
 import com.example.cs_office.Model.Role;
 import com.example.cs_office.Model.Room;
 import com.example.cs_office.Service.CustomerService;
 import com.example.cs_office.Service.RoleService;
+import com.example.cs_office.Util.PathResources;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,7 +16,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/role")
+@RequestMapping(PathResources.ROLE)
 @CrossOrigin("*")
 public class RoleController {
 
@@ -26,55 +28,71 @@ public class RoleController {
     }
 
     //list role
-    @GetMapping()
+    @GetMapping(PathResources.FIND_ALL)
     public List<Role> getRole() {
         return roleService.getRole();
     }
 
     //list role by status == fasle
-    @GetMapping("/false")
+    @GetMapping(PathResources.FIND_BY_STATUSFALSE)
     public List<Role> getRoleByStatusFalse() {
         return roleService.getRoleByStatus(false);
     }
 
     //list role by status == true
-    @GetMapping("/true")
+    @GetMapping(PathResources.FIND_BY_STATUSTRUE)
     public List<Role> getRoleByStatusTrue() {
         return roleService.getRoleByStatus(true);
     }
 
+    //search role by id
+    @GetMapping(path = PathResources.FIND_BY_ID)
+    public Optional<Role> getById(
+            @PathVariable("id") int roleId) {
+        return roleService.getById(roleId);
+    }
+    
     // insert role
-    @PostMapping
+    @PostMapping(PathResources.SAVE)
     public void insertRole(@RequestBody Role role) {
         roleService.addNewRole(role);
     }
 
-    //search role by id
-    @GetMapping(path = "{roleId}")
-    public Optional<Role> getById(
-            @PathVariable("roleId") int roleId) {
-        return roleService.getById(roleId);
-    }
-
     //search role by name
-    @GetMapping(path = "searchname/{roleName}")
+    @GetMapping(path = PathResources.FIND_BY_NAME)
     public List<Role> getRoleByName(
-            @PathVariable("roleName") String roleName) {
+            @PathVariable("name") String roleName) {
         return roleService.getRoleByName(roleName);
     }
 
     //delete role by id
-    @DeleteMapping(path = "{roleId}")
+    @DeleteMapping(path = PathResources.DELETEBYID)
     public void deleteRole(
-            @PathVariable("roleId") int roleId) {
+            @PathVariable("id") int roleId) {
         roleService.deleteRole(roleId);
     }
 
-    //update role by id
-    @PutMapping(path = "/{roleId}")
+    //update role by status
+    @PutMapping(PathResources.UPDATESTATUSFALSE)
+    public void updateRoleStatus(
+            @RequestBody Role role
+    ) {
+        roleService.updateRoleStatus(role);
+    }
+
+    //update role black by id
+    @PutMapping(path = PathResources.UPDATESTATUSTRUE)
+    public void updateRoleBlack(
+            @RequestBody Role role
+    ) {
+        roleService.updateRoleBlack(role);
+    }
+
+    @PutMapping(path = PathResources.UPDATEBYID)
     public Role updateRole
     (@RequestBody Role role,
-     @PathVariable("roleId") int id) {
-        return roleService.updateRole(role, id);
+     @PathVariable("id") int roleId) {
+        return roleService.updateRole(role, roleId);
     }
+
 }

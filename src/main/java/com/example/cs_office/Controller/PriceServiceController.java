@@ -1,8 +1,10 @@
 package com.example.cs_office.Controller;
 
+import com.example.cs_office.Model.OrderHistory;
 import com.example.cs_office.Model.PriceService;
 import com.example.cs_office.Model.Service;
 import com.example.cs_office.Service.PriceServiceService;
+import com.example.cs_office.Util.PathResources;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -10,7 +12,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/priceservice")
+@RequestMapping(PathResources.PRICESERVICE)
 @CrossOrigin("*")
 public class PriceServiceController {
 
@@ -23,48 +25,65 @@ public class PriceServiceController {
 
 
     //list priceservice
-    @GetMapping()
+    @GetMapping(PathResources.FIND_ALL)
     public List<PriceService> getPriceService() {
         return priceServiceService.getPriceService();
     }
 
     //list priceservice by status == fasle
-    @GetMapping("/false")
+    @GetMapping(PathResources.FIND_BY_STATUSFALSE)
     public List<PriceService> getServiceByStatusFalse() {
         return priceServiceService.getPriceServiceByStatus(false);
     }
 
     //list priceservice by status == true
-    @GetMapping("/true")
+    @GetMapping(PathResources.FIND_BY_STATUSTRUE)
     public List<PriceService> getServiceByStatusTrue() {
         return priceServiceService.getPriceServiceByStatus(true);
     }
 
     // insert priceservice
-    @PostMapping
+    @PostMapping(PathResources.SAVE)
     public void insertService(@RequestBody PriceService priceService) {
         priceServiceService.addNewpriceService(priceService);
     }
 
     //search priceservice by id
-    @GetMapping(path = "{priceServiceId}")
+    @GetMapping(path = PathResources.FIND_BY_ID)
     public Optional<PriceService> getServiceById(
-            @PathVariable("priceServiceId") int priceServiceId) {
+            @PathVariable("id") int priceServiceId) {
         return priceServiceService.getpriceServiceById(priceServiceId);
     }
 
     //delete priceservice by id
-    @DeleteMapping(path = "{priceServiceId}")
+    @DeleteMapping(path = PathResources.DELETEBYID)
     public void deleteService(
-            @PathVariable("priceServiceId") int priceServiceId) {
+            @PathVariable("id") int priceServiceId) {
         priceServiceService.deletepriceService(priceServiceId);
     }
 
+    //update price service by status
+    @PutMapping(PathResources.UPDATESTATUSFALSE)
+    public void updatePriceServiceStatus(
+            @RequestBody PriceService priceService
+    ) {
+        priceServiceService.updatePriceServiceStatus(priceService);
+    }
+
+    //update price service black by status
+    @PutMapping(path = PathResources.UPDATESTATUSTRUE)
+    public void updatePriceServiceBlack(
+            @RequestBody PriceService priceService
+    ) {
+        priceServiceService.updatePriceServiceBlack(priceService);
+    }
+
     //update priceservice by id
-    @PutMapping(path = "/{priceServiceId}")
+    @PutMapping(path = PathResources.UPDATEBYID)
     public PriceService updateService
     (@RequestBody PriceService priceService,
-     @PathVariable("priceServiceId") int id) {
-        return priceServiceService.updatePriceServiceService(priceService, id);
+     @PathVariable("id") int priceServiceId) {
+        return priceServiceService.updatePriceServiceService(priceService, priceServiceId);
     }
+
 }

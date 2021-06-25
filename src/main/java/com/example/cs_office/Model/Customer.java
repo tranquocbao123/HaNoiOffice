@@ -12,22 +12,19 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "Customer")
 public class Customer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    @Column(name = "phoneNumber")
-    private String phoneNumber;
-    private String email;
-    @Column(name = "passWord")
-    private String password;
-    @Column(name = "firstName")
+    private String codeCustomer;
     private String firstName;
-    @Column(name = "lastName")
     private String lastName;
+    private String email;
     private String address;
-    @Column(name = "createDate")
+    private String phoneNumber;
+    private boolean gender;
+    private Date  birthDay;
+    private String password;
     private Date createDate = new Date();
     private boolean status = true;
 
@@ -35,14 +32,6 @@ public class Customer {
     @OneToMany (mappedBy = "customer",fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
-    private List<Order> order;
+    private List<Orders> orders;
 
-    public Customer(String phoneNumber, String email, String password, String firstName, String lastName, String address) {
-        this.phoneNumber = phoneNumber;
-        this.email = email;
-        this.password = password;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.address = address;
-    }
 }

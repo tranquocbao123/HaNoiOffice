@@ -13,13 +13,11 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "orders")
-public class Order {
+public class Orders {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private boolean status = true;
-    @Column(name = "createDate")
     private Date createDate = new Date();
 
     @ManyToOne
@@ -30,13 +28,13 @@ public class Order {
     private Customer customer;
 
     @JsonIgnore
-    @OneToMany (mappedBy = "order2", cascade = CascadeType.ALL)
+    @OneToMany (mappedBy = "orders2", cascade = CascadeType.ALL)
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
     private List<OrderDetail> orderDetails;
 
     @JsonIgnore
-    @OneToMany (mappedBy = "order1", cascade = CascadeType.ALL)
+    @OneToMany (mappedBy = "orders1", cascade = CascadeType.ALL)
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
     private List<Evaluate> evaluates;

@@ -4,6 +4,7 @@ import com.example.cs_office.Model.Branch;
 import com.example.cs_office.Model.Customer;
 import com.example.cs_office.Model.Staff;
 import com.example.cs_office.Repository.BranchRepotitory;
+import com.example.cs_office.Validate.Check;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -58,9 +59,23 @@ public class BranchService {
         branchRepotitory.deleteById(branchId);
     }
 
+    @Transactional
+    public Branch updateBranchStatus(Branch branch) {
+        branch.setStatus(false);
+        return branchRepotitory.save(branch);
+    }
+
+    @Transactional
+    public Branch updateBranchBlack(Branch branch) {
+        branch.setStatus(true);
+        return branchRepotitory.save(branch);
+    }
+
+    @Transactional
     public Branch updateBranch(Branch branch, int branchId){
         Branch branch1 = this.branchRepotitory.getOne(branchId);
         BeanUtils.copyProperties(branch,branch1);
         return branchRepotitory.saveAndFlush(branch1);
     }
+
 }

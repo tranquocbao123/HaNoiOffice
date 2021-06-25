@@ -22,4 +22,5 @@ public interface BranchRepotitory extends JpaRepository<Branch, Integer> {
     //select branch by name
     @Query("select c from Branch c where c.name like %:name% ")
     List<Branch> findBranchByName(@Param("name") String name);
+
 }

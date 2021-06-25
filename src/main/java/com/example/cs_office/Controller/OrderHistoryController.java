@@ -1,7 +1,9 @@
 package com.example.cs_office.Controller;
 
+import com.example.cs_office.Model.OrderDetail;
 import com.example.cs_office.Model.OrderHistory;
 import com.example.cs_office.Service.OrderHistoryService;
+import com.example.cs_office.Util.PathResources;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -9,7 +11,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/orderhistory")
+@RequestMapping(PathResources.ORDERHISTORY)
 @CrossOrigin("*")
 public class OrderHistoryController {
 
@@ -22,48 +24,65 @@ public class OrderHistoryController {
 
 
     //list order history
-    @GetMapping()
+    @GetMapping(PathResources.FIND_ALL)
     public List<OrderHistory> getOrderHistory() {
         return orderHistoryService.getOrderHistory();
     }
 
     //list order history by status == fasle
-    @GetMapping("/false")
+    @GetMapping(PathResources.FIND_BY_STATUSFALSE)
     public List<OrderHistory> getOrderHistoryByStatusFalse() {
         return orderHistoryService.getOrderHistoryByStatus(false);
     }
 
     //list order history by status == true
-    @GetMapping("/true")
+    @GetMapping(PathResources.FIND_BY_STATUSTRUE)
     public List<OrderHistory> getOrderHistoryByStatusTrue() {
         return orderHistoryService.getOrderHistoryByStatus(true);
     }
 
     // insert order history
-    @PostMapping
+    @PostMapping(PathResources.SAVE)
     public void insertOrderHistory(@RequestBody OrderHistory orderHistory) {
         orderHistoryService.addNewOrderHistory(orderHistory);
     }
 
     //search order history by id
-    @GetMapping(path = "{orderhistoryId}")
+    @GetMapping(path = PathResources.FIND_BY_ID)
     public Optional<OrderHistory> getOrderDetailById(
-            @PathVariable("orderhistoryId") int orderhistoryId) {
+            @PathVariable("id") int orderhistoryId) {
         return orderHistoryService.getOrderHistoryById(orderhistoryId);
     }
 
     //delete order history by id
-    @DeleteMapping(path = "{orderhistoryId}")
+    @DeleteMapping(path = PathResources.DELETEBYID)
     public void deleteOrderHistory(
-            @PathVariable("orderhistoryId") int orderhistoryId) {
+            @PathVariable("id") int orderhistoryId) {
         orderHistoryService.deleteOrderHistory(orderhistoryId);
     }
 
+    //update order history by status
+    @PutMapping(PathResources.UPDATESTATUSFALSE)
+    public void updateOrderHistoryStatus(
+            @RequestBody OrderHistory orderHistory
+    ) {
+        orderHistoryService.updateOrderHistoryStatus(orderHistory);
+    }
+
+    //update order history black by status
+    @PutMapping(path = PathResources.UPDATESTATUSTRUE)
+    public void updateOrderHistoryBlack(
+            @RequestBody OrderHistory orderHistory
+    ) {
+        orderHistoryService.updateOrderHistoryBlack(orderHistory);
+    }
+
     //update order history by id
-    @PutMapping(path = "/{orderHistoryId}")
+    @PutMapping(path = PathResources.UPDATEBYID)
     public OrderHistory updateOrderHistory
     (@RequestBody OrderHistory orderHistory,
-     @PathVariable("orderHistoryId") int id) {
-        return orderHistoryService.updateOrderHistory(orderHistory, id);
+     @PathVariable("id") int orderHistoryId) {
+        return orderHistoryService.updateOrderHistory(orderHistory, orderHistoryId);
     }
+
 }

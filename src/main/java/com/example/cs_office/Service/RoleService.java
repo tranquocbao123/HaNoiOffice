@@ -1,6 +1,7 @@
 package com.example.cs_office.Service;
 
 import com.example.cs_office.Model.Customer;
+import com.example.cs_office.Model.Orders;
 import com.example.cs_office.Model.Role;
 import com.example.cs_office.Model.Room;
 import com.example.cs_office.Repository.CustomerRepository;
@@ -61,9 +62,24 @@ public class RoleService {
         roleRepository.deleteById(roleId);
     }
 
-    public Role updateRole(Role role, int roleId){
+
+    @Transactional
+    public Role updateRoleStatus(Role role) {
+        role.setStatus(false);
+        return roleRepository.save(role);
+    }
+
+    @Transactional
+    public Role updateRoleBlack(Role role) {
+        role.setStatus(true);
+        return roleRepository.save(role);
+    }
+
+    @Transactional
+    public Role updateRole(Role role, int roleId) {
         Role role1 = this.roleRepository.getOne(roleId);
-        BeanUtils.copyProperties(role,role1);
+        BeanUtils.copyProperties(role, role1);
         return roleRepository.saveAndFlush(role1);
     }
+
 }

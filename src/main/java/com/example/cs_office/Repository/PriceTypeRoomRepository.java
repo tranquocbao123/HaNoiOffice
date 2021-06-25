@@ -19,4 +19,5 @@ public interface PriceTypeRoomRepository extends JpaRepository<PriceTypeRoom,Int
     //select price type room by status
     @Query("select c from PriceTypeRoom c where c.status = ?1")
     List<PriceTypeRoom> findPriceTypeRoomByStatus(boolean status);
+
 }

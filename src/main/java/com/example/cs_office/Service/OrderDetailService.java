@@ -1,11 +1,13 @@
 package com.example.cs_office.Service;
 
 
+import com.example.cs_office.Model.Evaluate;
 import com.example.cs_office.Model.OrderDetail;
 import com.example.cs_office.Repository.OrderDetailRepository;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 
@@ -49,6 +51,19 @@ public class OrderDetailService {
         orderDetailRepository.deleteById(orderDetailId);
     }
 
+    @Transactional
+    public OrderDetail updateOrderDetailStatus(OrderDetail orderDetail) {
+        orderDetail.setStatus(false);
+        return orderDetailRepository.save(orderDetail);
+    }
+
+    @Transactional
+    public OrderDetail updateOrderDetailBlack(OrderDetail orderDetail) {
+        orderDetail.setStatus(true);
+        return orderDetailRepository.save(orderDetail);
+    }
+
+    @Transactional
     public OrderDetail updateOrderDetail(OrderDetail orderDetail, int orderDetailId){
         OrderDetail orderDetail1 = this.orderDetailRepository.getOne(orderDetailId);
         BeanUtils.copyProperties(orderDetail,orderDetail1);

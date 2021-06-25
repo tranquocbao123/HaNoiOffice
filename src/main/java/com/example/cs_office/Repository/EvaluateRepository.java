@@ -18,4 +18,5 @@ public interface EvaluateRepository extends JpaRepository<Evaluate,Integer> {
     //select evaluate by status
     @Query("select c from Evaluate c where c.status = ?1")
     List<Evaluate> findEvaluateByStatus(boolean status);
+
 }

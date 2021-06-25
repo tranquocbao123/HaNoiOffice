@@ -1,5 +1,6 @@
 package com.example.cs_office.Service;
 
+import com.example.cs_office.Model.Role;
 import com.example.cs_office.Model.Room;
 import com.example.cs_office.Model.Staff;
 import com.example.cs_office.Repository.RoomRepository;
@@ -7,6 +8,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 
@@ -56,6 +58,19 @@ public class RoomService {
         roomRepository.deleteById(roomId);
     }
 
+    @Transactional
+    public Room updateRoomStatus(Room room) {
+        room.setStatus(false);
+        return roomRepository.save(room);
+    }
+
+    @Transactional
+    public Room updateRoomBlack(Room room) {
+        room.setStatus(true);
+        return roomRepository.save(room);
+    }
+
+    @Transactional
     public Room updateRoom(Room room, int roomId){
         Room room1 = this.roomRepository.getOne(roomId);
         BeanUtils.copyProperties(room,room1);

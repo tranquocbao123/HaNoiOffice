@@ -23,4 +23,5 @@ public interface ServiceRepository extends JpaRepository<Service,Integer> {
     //select service by name
     @Query("select c from Service c where c.name like %:name% ")
     List<Service> findServiceByName(@Param("name") String name);
+
 }

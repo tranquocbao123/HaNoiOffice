@@ -1,5 +1,6 @@
 package com.example.cs_office.Service;
 
+import com.example.cs_office.Model.PriceService;
 import com.example.cs_office.Model.PriceTypeRoom;
 import com.example.cs_office.Model.Room;
 import com.example.cs_office.Repository.PriceTypeRoomRepository;
@@ -7,6 +8,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 
@@ -51,6 +53,19 @@ public class PriceTypeRoomService {
         priceTypeRoomRepository.deleteById(priceTypeRoomId);
     }
 
+    @Transactional
+    public PriceTypeRoom updatePriceTypeRoomStatus(PriceTypeRoom priceTypeRoom) {
+        priceTypeRoom.setStatus(false);
+        return priceTypeRoomRepository.save(priceTypeRoom);
+    }
+
+    @Transactional
+    public PriceTypeRoom updatePriceTypeRoomBlack(PriceTypeRoom priceTypeRoom) {
+        priceTypeRoom.setStatus(true);
+        return priceTypeRoomRepository.save(priceTypeRoom);
+    }
+
+    @Transactional
     public PriceTypeRoom updatePriceTypeRoom(PriceTypeRoom priceTypeRoom, int priceTypeRoomId){
         PriceTypeRoom priceTypeRoom1 = this.priceTypeRoomRepository.getOne(priceTypeRoomId);
         BeanUtils.copyProperties(priceTypeRoom,priceTypeRoom1);

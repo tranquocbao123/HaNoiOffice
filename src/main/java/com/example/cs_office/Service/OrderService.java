@@ -1,45 +1,47 @@
 package com.example.cs_office.Service;
 
-import com.example.cs_office.Model.Order;
+import com.example.cs_office.Model.OrderDetail;
+import com.example.cs_office.Model.Orders;
 import com.example.cs_office.Repository.OrderRepository;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 
 @Service
 public class OrderService {
 
-    @Autowired
     private final OrderRepository orderRepository;
 
+    @Autowired
     public OrderService(OrderRepository orderRepository) {
         this.orderRepository = orderRepository;
     }
 
-    public List<Order> getOrder() {
+    public List<Orders> getOrder() {
         return orderRepository.findAll();
     }
 
-    public List<Order> getOrderByStatus(boolean status) {
+    public List<Orders> getOrderByStatus(boolean status) {
 
         return orderRepository.findOrderByStatus(status);
     }
 
-    public Optional<Order> getOrderById(int orderId) {
-        Optional<Order> order = orderRepository.findOrderById(orderId);
+    public Optional<Orders> getOrderById(int orderId) {
+        Optional<Orders> order = orderRepository.findOrderById(orderId);
         return order;
     }
 
-    public void addNewOrder(Order order) {
-        Optional<Order> orderOptional =
-                orderRepository.findOrderById(order.getId());
+    public void addNewOrder(Orders orders) {
+        Optional<Orders> orderOptional =
+                orderRepository.findOrderById(orders.getId());
         if (orderOptional.isPresent()) {
             throw new IllegalStateException("Id taken");
         }
-        orderRepository.save(order);
+        orderRepository.save(orders);
     }
 
     public void deleteOrder(int orderId) {
@@ -51,9 +53,22 @@ public class OrderService {
         System.out.println(orderId);
     }
 
-    public Order updateOrder(Order order, int orderId){
-        Order order1 = this.orderRepository.getOne(orderId);
-        BeanUtils.copyProperties(order, order1);
-        return orderRepository.saveAndFlush(order1);
+    @Transactional
+    public Orders updateOrdersStatus(Orders orders) {
+        orders.setStatus(false);
+        return orderRepository.save(orders);
+    }
+
+    @Transactional
+    public Orders updateOrdersBlack(Orders orders) {
+        orders.setStatus(true);
+        return orderRepository.save(orders);
+    }
+
+    @Transactional
+    public Orders updateOrder(Orders orders, int orderId){
+        Orders orders1 = this.orderRepository.getOne(orderId);
+        BeanUtils.copyProperties(orders, orders1);
+        return orderRepository.saveAndFlush(orders1);
     }
 }

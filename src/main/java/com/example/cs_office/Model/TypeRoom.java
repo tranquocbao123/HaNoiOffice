@@ -12,13 +12,13 @@ import java.util.Date;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "typeroom")
 public class TypeRoom {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+    private String codeTypeRoom;
     private String name;
-    @Column(name = "createDate")
+    private String description;
     private Date createDate = new Date();
     private boolean status = true;
 

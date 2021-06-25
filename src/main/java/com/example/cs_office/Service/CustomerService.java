@@ -1,5 +1,6 @@
 package com.example.cs_office.Service;
 
+import com.example.cs_office.Model.Branch;
 import com.example.cs_office.Model.Customer;
 import com.example.cs_office.Model.Role;
 import com.example.cs_office.Repository.CustomerRepository;
@@ -59,45 +60,23 @@ public class CustomerService {
         customerRepository.deleteById(customerId);
     }
 
-//    @Transactional
-//    public Customer updateCustomer(Customer customer) {
-//        customer.setStatus(false);
-//        return customerRepository.save(customer);
-//    }
-//
-//    @Transactional
-//    public Customer updateCustomerBlack(Customer customer) {
-//        customer.setStatus(true);
-//        return customerRepository.save(customer);
-//    }
+    @Transactional
+    public Customer updateCustomerStatus(Customer customer) {
+        customer.setStatus(false);
+        return customerRepository.save(customer);
+    }
 
+    @Transactional
+    public Customer updateCustomerBlack(Customer customer) {
+        customer.setStatus(true);
+        return customerRepository.save(customer);
+    }
+
+    @Transactional
     public Customer updateCustomer(Customer customer, int customerId){
         Customer customer1 = this.customerRepository.getOne(customerId);
         BeanUtils.copyProperties(customer,customer1);
         return customerRepository.saveAndFlush(customer1);
     }
 
-    @Transactional
-    public String forgotPassword(String email) {
-        Customer customer = customerRepository.findCustomerByEmail(email);
-        if (customer == null) {
-            return "Customer not exist";
-        } else {
-            return customer.getPassword();
-        }
-    }
-
-    @Transactional
-    public Customer loginCustomer(Customer customer) {
-        Customer user = customerRepository.findCustomerByEmail(customer.getEmail());
-        if (user == null) {
-            throw new IllegalStateException("customer with id " + customer + " does not exists");
-        } else {
-            if (user.getPassword() != customer.getPassword()) {
-                throw new IllegalStateException("pass customer with id " + customer + " does not exists");
-            }else{
-                return user;
-            }
-        }
-    }
 }

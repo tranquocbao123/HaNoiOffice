@@ -16,9 +16,14 @@ public class Branch {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+    private String codeBranch;
     private String name;
+    private String phoneNumber;
     private String address;
-    @Column(name = "createDate")
+    private int numberStaff;
+    private String branchManager;
+    private String phoneNumberManager;
+    private String description;
     private Date createDate = new Date();
     private boolean status = true;
 

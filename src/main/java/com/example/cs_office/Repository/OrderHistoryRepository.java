@@ -18,4 +18,5 @@ public interface OrderHistoryRepository extends JpaRepository<OrderHistory,Integ
     //select order history by status
     @Query("select c from OrderHistory c where c.status = ?1")
     List<OrderHistory> findOrderHistoryByStatus(boolean status);
+
 }

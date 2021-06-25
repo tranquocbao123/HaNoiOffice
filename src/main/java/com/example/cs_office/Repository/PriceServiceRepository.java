@@ -18,4 +18,5 @@ public interface PriceServiceRepository extends JpaRepository<PriceService,Integ
     //select priceservice by status
     @Query("select c from PriceService c where c.status = ?1")
     List<PriceService> findPriceServiceByStatus(boolean status);
+
 }

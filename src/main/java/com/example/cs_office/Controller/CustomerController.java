@@ -3,15 +3,15 @@ package com.example.cs_office.Controller;
 import com.example.cs_office.Model.Branch;
 import com.example.cs_office.Model.Customer;
 import com.example.cs_office.Service.CustomerService;
+import com.example.cs_office.Util.PathResources;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/customer")
+@RequestMapping(PathResources.CUSTOMER)
 @CrossOrigin("*")
 public class CustomerController {
     private final CustomerService customerService;
@@ -22,84 +22,72 @@ public class CustomerController {
     }
 
     //list customer
-    @GetMapping()
+    @GetMapping(PathResources.FIND_ALL)
     public List<Customer> getCustomer() {
         return customerService.getCustomer();
     }
 
     //list customer by status == fasle
-    @GetMapping("/false")
+    @GetMapping(PathResources.FIND_BY_STATUSFALSE)
     public List<Customer> getCustomerByStatusFalse() {
         return customerService.getCustomerByStatus(false);
     }
 
     //list customer by status == true
-    @GetMapping("/true")
+    @GetMapping(PathResources.FIND_BY_STATUSTRUE)
     public List<Customer> getCustomerByStatusTrue() {
         return customerService.getCustomerByStatus(true);
     }
 
+    //search customer by id
+    @GetMapping(path = PathResources.FIND_BY_ID)
+    public Optional<Customer> getById(
+            @PathVariable("id") int customerId) {
+        return customerService.getById(customerId);
+    }
+
     // insert customer
-    @PostMapping
+    @PostMapping(PathResources.SAVE)
     public void insertCustomer(@RequestBody Customer customer) {
         customerService.addNewCustomer(customer);
     }
 
-    //search customer by id
-    @GetMapping(path = "{customerId}")
-    public Optional<Customer> getById(
-            @PathVariable("customerId") int customerId) {
-        return customerService.getById(customerId);
-    }
-
     //search customer by name
-    @GetMapping(path = "searchname/{firstname}/{lastname}")
+    @GetMapping(path = PathResources.FIND_BY_FLNAME)
     public List<Customer> getCustomerByName(
-            @PathVariable("firstname") String firstname,@PathVariable("lastname") String lastname) {
-        return customerService.getCustomerByName(firstname,lastname);
+            @PathVariable("firstname") String firstname, @PathVariable("lastname") String lastname) {
+        return customerService.getCustomerByName(firstname, lastname);
     }
 
     //delete customer by id
-    @DeleteMapping(path = "{customerId}")
+    @DeleteMapping(path = PathResources.DELETEBYID)
     public void deleteCustomer(
-            @PathVariable("customerId") int customerId) {
+            @PathVariable("id") int customerId) {
         customerService.deleteCustomer(customerId);
     }
 
-//    //update customer by id
-//    @PutMapping
-//    public Customer updateCustomer(
-//            @RequestBody Customer customer
-//    ) {
-//      return customerService.updateCustomer(customer);
-//    }
-//    //update customer black by id
-//    @PutMapping("/black")
-//    public Customer updateCustomerBlack(
-//            @RequestBody Customer customer
-//    ) {
-//        return customerService.updateCustomerBlack(customer);
-//    }
+    //update customer by status
+    @PutMapping(PathResources.UPDATESTATUSFALSE)
+    public void updateCustomerStatus(
+            @RequestBody Customer customer
+    ) {
+        customerService.updateCustomerStatus(customer);
+    }
+
+    //update customer black by status
+    @PutMapping(path = PathResources.UPDATESTATUSTRUE)
+    public void updateCustomerBlack(
+            @RequestBody Customer customer
+    ) {
+        customerService.updateCustomerBlack(customer);
+    }
 
     //update customer by id
-    @PutMapping(path = "/{customerId}")
+    @PutMapping(path = PathResources.UPDATEBYID)
     public Customer updateCustomer
     (@RequestBody Customer customer,
-     @PathVariable("customerId") int id) {
-        return customerService.updateCustomer(customer, id);
+     @PathVariable("id") int customerId) {
+        return customerService.updateCustomer(customer, customerId);
     }
 
-    //login customer by id
-    @PostMapping("login")
-    public Customer loginCustomer(Customer customer) {
-        return customerService.loginCustomer(customer);
-    }
-
-    //forgot password customer by id
-    @GetMapping("/forgot")
-    public void forgotPassword(
-            @RequestParam(required = false) String email
-    ) {
-        customerService.forgotPassword(email);
-    }
 }

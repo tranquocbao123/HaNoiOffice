@@ -23,4 +23,5 @@ public interface RoleRepository extends JpaRepository<Role, Integer> {
     //select role by name
     @Query("select c from Role c where c.name like %:name% ")
     List<Role> findRoleByName(@Param("name") String name);
+
 }

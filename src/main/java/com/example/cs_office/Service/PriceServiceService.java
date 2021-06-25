@@ -1,12 +1,14 @@
 package com.example.cs_office.Service;
 
 import com.example.cs_office.Model.Branch;
+import com.example.cs_office.Model.Orders;
 import com.example.cs_office.Model.PriceService;
 import com.example.cs_office.Repository.PriceServiceRepository;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 
@@ -51,6 +53,19 @@ public class PriceServiceService {
         priceServiceRepository.deleteById(priceServiceId);
     }
 
+    @Transactional
+    public PriceService updatePriceServiceStatus(PriceService priceService) {
+        priceService.setStatus(false);
+        return priceServiceRepository.save(priceService);
+    }
+
+    @Transactional
+    public PriceService updatePriceServiceBlack(PriceService priceService) {
+        priceService.setStatus(true);
+        return priceServiceRepository.save(priceService);
+    }
+
+    @Transactional
     public PriceService updatePriceServiceService(PriceService priceService, int priceserserId){
         PriceService priceService1 = this.priceServiceRepository.getOne(priceserserId);
         BeanUtils.copyProperties(priceService,priceService1);

@@ -23,4 +23,5 @@ public interface TypeRoomRepository extends JpaRepository<TypeRoom,Integer> {
     //select Type Room by name
     @Query("select c from TypeRoom c where c.name like %:name% ")
     List<TypeRoom> findTypeRoomByName(@Param("name") String name);
+
 }

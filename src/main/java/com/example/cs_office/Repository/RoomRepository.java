@@ -25,4 +25,5 @@ public interface RoomRepository extends JpaRepository<Room,Integer> {
     //select room by name
     @Query("select c from Room c where c.name like %:name% ")
     List<Room> findRoomByName(@Param("name") String name);
+
 }
