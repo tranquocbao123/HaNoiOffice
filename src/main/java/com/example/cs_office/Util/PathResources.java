@@ -24,7 +24,7 @@ public class PathResources {
     public static final String ORDERHISTORY = "/orderhistory";
     public static final String ORDER = "/order";
     public static final String PRICESERVICE = "/priceservice";
-    public static final String PRICETYPEROOM = "/pricetyroom";
+    public static final String PRICETYPEROOM = "/pricetyperoom";
     public static final String ROLE = "/role";
     public static final String ROOM = "/room";
     public static final String SCHEDULEDETAIL = "/scheduledetail";
