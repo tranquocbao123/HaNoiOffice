@@ -22,4 +22,7 @@ public interface StaffRepository extends JpaRepository<Staff, Integer> {
     @Query("select c from Staff c where c.userName like %:username% ")
     List<Staff> findStaffByUserName(@Param("username") String username);
 
+    //select staff by idRole,idBranch
+//    @Query(select s from Staff s where s.idBranch = :idBranch and s.idRole = 1)
+
 }
