@@ -10,5 +10,4 @@ public class CsOfficeApplication {
         SpringApplication.run(CsOfficeApplication.class, args);
     }
 
-
 }
