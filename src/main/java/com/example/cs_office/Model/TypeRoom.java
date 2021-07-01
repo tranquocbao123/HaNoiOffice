@@ -12,6 +12,7 @@ import java.util.Date;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Table(name = "typeroom")
 public class TypeRoom {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

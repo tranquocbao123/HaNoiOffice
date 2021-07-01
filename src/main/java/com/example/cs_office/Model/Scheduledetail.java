@@ -10,6 +10,7 @@ import java.util.Date;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Table(name = "scheduledetail")
 public class Scheduledetail {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

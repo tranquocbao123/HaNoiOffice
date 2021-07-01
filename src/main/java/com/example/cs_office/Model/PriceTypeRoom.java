@@ -9,6 +9,7 @@ import java.util.Date;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Table(name = "pricetyperoom")
 public class PriceTypeRoom {
 
     @Id
