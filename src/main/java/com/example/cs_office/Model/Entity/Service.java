@@ -1,4 +1,4 @@
-package com.example.cs_office.Model;
+package com.example.cs_office.Model.Entity;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -12,26 +12,27 @@ import java.util.Date;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "typeroom")
-public class TypeRoom {
+@Table(name = "service")
+public class Service {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    private String codeTypeRoom;
+    private String codeService;
     private String name;
-    private String description;
     private Date createDate = new Date();
     private boolean status = true;
+    private String description;
 
     @JsonIgnore
-    @OneToMany (mappedBy = "typeRoom", cascade = CascadeType.ALL)
+    @OneToMany (mappedBy = "service", cascade = CascadeType.ALL)
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
-    private Collection<Room> rooms;
+    private Collection<PriceService> priceServices;
 
     @JsonIgnore
-    @OneToMany (mappedBy = "typeRoom1", cascade = CascadeType.ALL)
+    @OneToMany (mappedBy = "service1", cascade = CascadeType.ALL)
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
-    private Collection<PriceTypeRoom> priceTypeRooms;
+    private Collection<ServiceDetail> serviceDetails;
+
 }

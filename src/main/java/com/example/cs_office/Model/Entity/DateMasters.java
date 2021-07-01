@@ -1,4 +1,4 @@
-package com.example.cs_office.Model;
+package com.example.cs_office.Model.Entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

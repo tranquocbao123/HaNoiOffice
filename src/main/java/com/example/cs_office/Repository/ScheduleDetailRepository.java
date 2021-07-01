@@ -1,6 +1,6 @@
 package com.example.cs_office.Repository;
 
-import com.example.cs_office.Model.Scheduledetail;
+import com.example.cs_office.Model.Entity.Scheduledetail;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;

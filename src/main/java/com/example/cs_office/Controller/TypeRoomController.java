@@ -1,6 +1,6 @@
 package com.example.cs_office.Controller;
 
-import com.example.cs_office.Model.TypeRoom;
+import com.example.cs_office.Model.Entity.TypeRoom;
 import com.example.cs_office.Service.TypeRoomService;
 import com.example.cs_office.Util.PathResources;
 import org.springframework.beans.factory.annotation.Autowired;

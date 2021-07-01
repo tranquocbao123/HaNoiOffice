@@ -1,6 +1,6 @@
 package com.example.cs_office.Repository;
 
-import com.example.cs_office.Model.Customer;
+import com.example.cs_office.Model.Entity.Customer;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -21,6 +21,9 @@ public interface CustomerRepository extends JpaRepository<Customer, Integer> {
     //select customer by email
     @Query("select c from Customer c where c.email = ?1")
     Customer findCustomerByEmail(String email);
+
+    //select customer by email
+    Customer findByEmail(String email);
 
     //select customer by name
     @Query("select c from Customer c where c.firstName like %:firstname% and c.lastName like %:lastname%")

@@ -1,4 +1,4 @@
-package com.example.cs_office.Model;
+package com.example.cs_office.Model.Entity;
 
 
 import lombok.*;
@@ -10,24 +10,27 @@ import java.util.Date;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "servicedetail")
-public class ServiceDetail {
+@Table(name = "scheduledetail")
+public class Scheduledetail {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+    private Date date;
+    private String startTime;
+    private String endTime;
     private Date createDate = new Date();
     private boolean status = true;
+    private Date editdate;
 
     @ManyToOne
-    @JoinColumn(name = "idService")
+    @JoinColumn(name = "idOrderDetail")
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
-    private Service service1;
+    private OrderDetail orderDetail1;
 
     @ManyToOne
-    @JoinColumn(name = "idorderdetail")
+    @JoinColumn(name = "idShedule")
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
-    private OrderDetail orderDetail;
-
+    private Schedule schedule;
 }

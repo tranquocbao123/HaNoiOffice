@@ -1,6 +1,6 @@
 package com.example.cs_office.Service;
 
-import com.example.cs_office.Model.Role;
+import com.example.cs_office.Model.Entity.Role;
 import com.example.cs_office.Repository.RoleRepository;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;

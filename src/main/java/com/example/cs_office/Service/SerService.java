@@ -1,6 +1,6 @@
 package com.example.cs_office.Service;
 
-import com.example.cs_office.Model.Service;
+import com.example.cs_office.Model.Entity.Service;
 import com.example.cs_office.Repository.ServiceRepository;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,7 +1,7 @@
 package com.example.cs_office.Controller;
 
 
-import com.example.cs_office.Model.ServiceDetail;
+import com.example.cs_office.Model.Entity.ServiceDetail;
 import com.example.cs_office.Service.ServiceDetailService;
 import com.example.cs_office.Util.PathResources;
 import org.springframework.beans.factory.annotation.Autowired;
