@@ -1,6 +1,6 @@
 package com.example.cs_office.Service;
 
-import com.example.cs_office.Model.Entity.OrderHistory;
+import com.example.cs_office.Model.OrderHistory;
 import com.example.cs_office.Repository.OrderHistoryRepository;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;

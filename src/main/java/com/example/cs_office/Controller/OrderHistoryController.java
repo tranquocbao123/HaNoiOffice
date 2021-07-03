@@ -1,6 +1,6 @@
 package com.example.cs_office.Controller;
 
-import com.example.cs_office.Model.Entity.OrderHistory;
+import com.example.cs_office.Model.OrderHistory;
 import com.example.cs_office.Service.OrderHistoryService;
 import com.example.cs_office.Util.PathResources;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,6 +1,6 @@
 package com.example.cs_office.Controller;
 
-import com.example.cs_office.Model.Entity.Branch;
+import com.example.cs_office.Model.Branch;
 import com.example.cs_office.Service.BranchService;
 import com.example.cs_office.Util.PathResources;
 import org.springframework.beans.factory.annotation.Autowired;

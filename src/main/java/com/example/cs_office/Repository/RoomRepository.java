@@ -1,6 +1,6 @@
 package com.example.cs_office.Repository;
 
-import com.example.cs_office.Model.Entity.Room;
+import com.example.cs_office.Model.Room;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;

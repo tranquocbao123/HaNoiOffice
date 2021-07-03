@@ -1,6 +1,6 @@
 package com.example.cs_office.Controller;
 
-import com.example.cs_office.Model.Entity.Customer;
+import com.example.cs_office.Model.Customer;
 import com.example.cs_office.Service.CustomerService;
 import com.example.cs_office.Util.PathResources;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,6 +43,12 @@ public class CustomerController {
     public Optional<Customer> getById(
             @PathVariable("id") int customerId) {
         return customerService.getById(customerId);
+    }
+
+    // insert customer
+    @PostMapping(PathResources.SAVE)
+    public void insertCustomer(@RequestBody Customer customer) {
+        customerService.addNewCustomer(customer);
     }
 
     //search customer by name

@@ -1,7 +1,7 @@
 package com.example.cs_office.Service;
 
 
-import com.example.cs_office.Model.Entity.OrderDetail;
+import com.example.cs_office.Model.OrderDetail;
 import com.example.cs_office.Repository.OrderDetailRepository;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
