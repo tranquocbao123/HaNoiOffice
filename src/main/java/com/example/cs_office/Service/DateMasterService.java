@@ -53,6 +53,18 @@ public class DateMasterService {
     }
 
     @Transactional
+    public DateMasters updateDateMastersStatus(DateMasters dateMasters) {
+        dateMasters.setStatus(false);
+        return dateMasterRepository.save(dateMasters);
+    }
+
+    @Transactional
+    public DateMasters updateDateMastersBlack(DateMasters dateMasters) {
+        dateMasters.setStatus(true);
+        return dateMasterRepository.save(dateMasters);
+    }
+
+    @Transactional
     public DateMasters updateDateMaster(DateMasters dateMasters, int datemasterId){
         DateMasters dateMasters1 = this.dateMasterRepository.getOne(datemasterId);
         BeanUtils.copyProperties(dateMasters, dateMasters1);

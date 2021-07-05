@@ -16,7 +16,9 @@ public class TypeRoom {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+    private String codeTypeRoom;
     private String name;
+    private String description;
     private Date createDate = new Date();
     private boolean status = true;
 

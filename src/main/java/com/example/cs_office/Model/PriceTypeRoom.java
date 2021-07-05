@@ -1,7 +1,6 @@
 package com.example.cs_office.Model;
 
 import lombok.*;
-import org.springframework.data.repository.cdi.Eager;
 
 import javax.persistence.*;
 import java.util.Date;

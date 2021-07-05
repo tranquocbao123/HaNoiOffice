@@ -52,6 +52,18 @@ public class EvaluateService {
     }
 
     @Transactional
+    public Evaluate updateEvaluateStatus(Evaluate evaluate) {
+        evaluate.setStatus(false);
+        return evaluateRepository.save(evaluate);
+    }
+
+    @Transactional
+    public Evaluate updateEvaluateBlack(Evaluate evaluate) {
+        evaluate.setStatus(true);
+        return evaluateRepository.save(evaluate);
+    }
+
+    @Transactional
     public Evaluate updateEvaluate(Evaluate evaluate, int evaluateId){
         Evaluate evaluate1 = this.evaluateRepository.getOne(evaluateId);
         BeanUtils.copyProperties(evaluate,evaluate1);

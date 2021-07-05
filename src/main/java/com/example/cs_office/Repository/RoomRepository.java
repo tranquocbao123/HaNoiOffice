@@ -1,7 +1,5 @@
 package com.example.cs_office.Repository;
 
-import com.example.cs_office.Model.PriceTypeRoom;
-import com.example.cs_office.Model.Role;
 import com.example.cs_office.Model.Room;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;

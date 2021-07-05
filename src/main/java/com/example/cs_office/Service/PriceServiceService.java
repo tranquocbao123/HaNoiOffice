@@ -1,6 +1,5 @@
 package com.example.cs_office.Service;
 
-import com.example.cs_office.Model.Branch;
 import com.example.cs_office.Model.PriceService;
 import com.example.cs_office.Repository.PriceServiceRepository;
 import org.springframework.beans.BeanUtils;
@@ -50,6 +49,18 @@ public class PriceServiceService {
             throw new IllegalStateException("price service with id " + priceServiceId + " does not exists");
         }
         priceServiceRepository.deleteById(priceServiceId);
+    }
+
+    @Transactional
+    public PriceService updatePriceServiceStatus(PriceService priceService) {
+        priceService.setStatus(false);
+        return priceServiceRepository.save(priceService);
+    }
+
+    @Transactional
+    public PriceService updatePriceServiceBlack(PriceService priceService) {
+        priceService.setStatus(true);
+        return priceServiceRepository.save(priceService);
     }
 
     @Transactional

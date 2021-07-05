@@ -1,16 +1,12 @@
 package com.example.cs_office.Service;
 
-import com.example.cs_office.Model.Customer;
 import com.example.cs_office.Model.Role;
-import com.example.cs_office.Model.Room;
-import com.example.cs_office.Repository.CustomerRepository;
 import com.example.cs_office.Repository.RoleRepository;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -61,10 +57,17 @@ public class RoleService {
         roleRepository.deleteById(roleId);
     }
 
+
     @Transactional
-    public void updateRoleBlack(Role role) {
+    public Role updateRoleStatus(Role role) {
+        role.setStatus(false);
+        return roleRepository.save(role);
+    }
+
+    @Transactional
+    public Role updateRoleBlack(Role role) {
         role.setStatus(true);
-        roleRepository.save(role);
+        return roleRepository.save(role);
     }
 
     @Transactional

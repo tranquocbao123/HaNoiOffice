@@ -1,6 +1,5 @@
 package com.example.cs_office.Service;
 
-import com.example.cs_office.Model.Room;
 import com.example.cs_office.Model.Schedule;
 import com.example.cs_office.Repository.ScheduleRepository;
 import org.springframework.beans.BeanUtils;
@@ -50,6 +49,18 @@ public class ScheduleService {
             throw new IllegalStateException("schedule with id " + scheduleId + " does not exists");
         }
         scheduleRepository.deleteById(scheduleId);
+    }
+
+    @Transactional
+    public Schedule updateScheduleStatus(Schedule schedule) {
+        schedule.setStatus(false);
+        return scheduleRepository.save(schedule);
+    }
+
+    @Transactional
+    public Schedule updateScheduleBlack(Schedule schedule) {
+        schedule.setStatus(true);
+        return scheduleRepository.save(schedule);
     }
 
     @Transactional

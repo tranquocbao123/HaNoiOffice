@@ -3,7 +3,6 @@ package com.example.cs_office.Model;
 import lombok.*;
 
 import javax.persistence.*;
-import java.util.Collection;
 import java.util.Date;
 
 @Entity
@@ -14,11 +13,19 @@ public class Staff {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+    private String codeStaff;
+    private String fullName;
+    private boolean gender;
+    private Date birthDay;
+    private String phoneNumber;
+    private String address;
+    private String email;
     private String userName;
     private String password;
-    private String phoneNumber;
-    private String email;
-    private String address;
+    private String queQuan;
+    private String hktt;
+    private String image;
+    private String description;
     private Date createDate = new Date();
     private boolean status = true;
 
@@ -33,17 +40,5 @@ public class Staff {
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
     private Role role;
-
-    public Staff(String userName, String password, String phoneNumber, String email, String address, Date createDate, boolean status, Branch branch, Role role) {
-        this.userName = userName;
-        this.password = password;
-        this.phoneNumber = phoneNumber;
-        this.email = email;
-        this.address = address;
-        this.createDate = createDate;
-        this.status = status;
-        this.branch = branch;
-        this.role = role;
-    }
 
 }

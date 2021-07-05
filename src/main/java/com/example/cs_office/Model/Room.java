@@ -15,7 +15,10 @@ public class Room {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+    private String codeRoom;
     private String name;
+    private int soChoNgoi;
+    private String description;
     private Date createDate = new Date();
     private boolean status = true;
 

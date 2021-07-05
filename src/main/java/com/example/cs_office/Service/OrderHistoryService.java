@@ -52,6 +52,18 @@ public class OrderHistoryService {
     }
 
     @Transactional
+    public OrderHistory updateOrderHistoryStatus(OrderHistory orderHistory) {
+        orderHistory.setStatus(false);
+        return orderHistoryRepository.save(orderHistory);
+    }
+
+    @Transactional
+    public OrderHistory updateOrderHistoryBlack(OrderHistory orderHistory) {
+        orderHistory.setStatus(true);
+        return orderHistoryRepository.save(orderHistory);
+    }
+
+    @Transactional
     public OrderHistory updateOrderHistory(OrderHistory orderHistory, int orderHistoryId){
         OrderHistory orderHistory1 = this.orderHistoryRepository.getOne(orderHistoryId);
         BeanUtils.copyProperties(orderHistory,orderHistory1);

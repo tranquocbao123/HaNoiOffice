@@ -1,8 +1,6 @@
 package com.example.cs_office.Service;
 
-import com.example.cs_office.Model.Scheduledetail;
 import com.example.cs_office.Model.ServiceDetail;
-import com.example.cs_office.Model.Staff;
 import com.example.cs_office.Repository.ServiceDetailRepository;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,6 +48,18 @@ public class ServiceDetailService {
             throw new IllegalStateException("service detail with id " + serviceDetailId + " does not exists");
         }
         serviceDetailRepository.deleteById(serviceDetailId);
+    }
+
+    @Transactional
+    public ServiceDetail updateServiceDetailStatus(ServiceDetail serviceDetail) {
+        serviceDetail.setStatus(false);
+        return serviceDetailRepository.save(serviceDetail);
+    }
+
+    @Transactional
+    public ServiceDetail updateServiceDetailBlack(ServiceDetail serviceDetail) {
+        serviceDetail.setStatus(true);
+        return serviceDetailRepository.save(serviceDetail);
     }
 
     @Transactional

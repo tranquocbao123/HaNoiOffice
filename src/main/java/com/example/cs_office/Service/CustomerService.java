@@ -1,14 +1,12 @@
 package com.example.cs_office.Service;
 
 import com.example.cs_office.Model.Customer;
-import com.example.cs_office.Model.Role;
 import com.example.cs_office.Repository.CustomerRepository;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -57,6 +55,18 @@ public class CustomerService {
             throw new IllegalStateException("customer with id " + customerId + " does not exists");
         }
         customerRepository.deleteById(customerId);
+    }
+
+    @Transactional
+    public Customer updateCustomerStatus(Customer customer) {
+        customer.setStatus(false);
+        return customerRepository.save(customer);
+    }
+
+    @Transactional
+    public Customer updateCustomerBlack(Customer customer) {
+        customer.setStatus(true);
+        return customerRepository.save(customer);
     }
 
     @Transactional

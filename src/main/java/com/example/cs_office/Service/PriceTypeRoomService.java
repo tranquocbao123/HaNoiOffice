@@ -1,7 +1,6 @@
 package com.example.cs_office.Service;
 
 import com.example.cs_office.Model.PriceTypeRoom;
-import com.example.cs_office.Model.Room;
 import com.example.cs_office.Repository.PriceTypeRoomRepository;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,6 +49,18 @@ public class PriceTypeRoomService {
             throw new IllegalStateException("price type room with id " + priceTypeRoomId + " does not exists");
         }
         priceTypeRoomRepository.deleteById(priceTypeRoomId);
+    }
+
+    @Transactional
+    public PriceTypeRoom updatePriceTypeRoomStatus(PriceTypeRoom priceTypeRoom) {
+        priceTypeRoom.setStatus(false);
+        return priceTypeRoomRepository.save(priceTypeRoom);
+    }
+
+    @Transactional
+    public PriceTypeRoom updatePriceTypeRoomBlack(PriceTypeRoom priceTypeRoom) {
+        priceTypeRoom.setStatus(true);
+        return priceTypeRoomRepository.save(priceTypeRoom);
     }
 
     @Transactional

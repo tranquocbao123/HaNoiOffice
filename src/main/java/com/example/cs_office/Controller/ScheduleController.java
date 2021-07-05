@@ -1,8 +1,8 @@
 package com.example.cs_office.Controller;
 
-import com.example.cs_office.Model.Room;
 import com.example.cs_office.Model.Schedule;
 import com.example.cs_office.Service.ScheduleService;
+import com.example.cs_office.Util.PathResources;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/schedule")
+@RequestMapping(PathResources.SCHEDULE)
 @CrossOrigin("*")
 public class ScheduleController {
     @Autowired
@@ -21,49 +21,65 @@ public class ScheduleController {
     }
 
     //list schedule
-    @GetMapping()
+    @GetMapping(PathResources.FIND_ALL)
     public List<Schedule> getSchedule() {
         return scheduleService.getSchedule();
     }
 
     //list schedule by status == fasle
-    @GetMapping("/false")
+    @GetMapping(PathResources.FIND_BY_STATUSFALSE)
     public List<Schedule> getScheduleByStatusFalse() {
         return scheduleService.getScheduleByStatus(false);
     }
 
     //list schedule by status == true
-    @GetMapping("/true")
+    @GetMapping(PathResources.FIND_BY_STATUSTRUE)
     public List<Schedule> getScheduleByStatusTrue() {
         return scheduleService.getScheduleByStatus(true);
     }
 
     // insert schedule
-    @PostMapping
+    @PostMapping(PathResources.SAVE)
     public void insertSchedule(@RequestBody Schedule schedule) {
         scheduleService.addNewSchedule(schedule);
     }
 
     //search schedule by id
-    @GetMapping(path = "{scheduleId}")
+    @GetMapping(path = PathResources.FIND_BY_ID)
     public Optional<Schedule> getScheduleById(
-            @PathVariable("scheduleId") int scheduleId) {
+            @PathVariable("id") int scheduleId) {
         return scheduleService.getScheduleById(scheduleId);
     }
 
     //delete schedule by id
-    @DeleteMapping(path = "{scheduleId}")
+    @DeleteMapping(path = PathResources.DELETEBYID)
     public void deleteSchedule(
-            @PathVariable("scheduleId") int scheduleId) {
+            @PathVariable("id") int scheduleId) {
         scheduleService.deleteSchedule(scheduleId);
     }
 
+    //update schedule by status
+    @PutMapping(PathResources.UPDATESTATUSFALSE)
+    public void updateScheduleStatus(
+            @RequestBody Schedule schedule
+    ) {
+        scheduleService.updateScheduleStatus(schedule);
+    }
+
+    //update schedule black by status
+    @PutMapping(path = PathResources.UPDATESTATUSTRUE)
+    public void updateScheduleBlack(
+            @RequestBody Schedule schedule
+    ) {
+        scheduleService.updateScheduleBlack(schedule);
+    }
+
     //update schedule by id
-    @PutMapping(path = "/{scheduleId}")
+    @PutMapping(path = PathResources.UPDATEBYID)
     public Schedule updateSchedule
     (@RequestBody Schedule schedule,
-     @PathVariable("scheduleId") int id) {
-        return scheduleService.updateSchedule(schedule, id);
+     @PathVariable("id") int scheduleId) {
+        return scheduleService.updateSchedule(schedule, scheduleId);
     }
 
 }

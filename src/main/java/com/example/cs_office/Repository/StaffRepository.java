@@ -1,6 +1,5 @@
 package com.example.cs_office.Repository;
 
-import com.example.cs_office.Model.Service;
 import com.example.cs_office.Model.Staff;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;

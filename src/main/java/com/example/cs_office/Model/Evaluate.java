@@ -14,9 +14,9 @@ public class Evaluate {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    private int idUserCreate;
     private int level;
     private String content;
+    private int idUserCreate;
     private boolean status = true;
     private Date createDate = new Date();
 

@@ -1,17 +1,12 @@
 package com.example.cs_office.Service;
 
-import com.example.cs_office.Model.Branch;
-import com.example.cs_office.Model.Role;
 import com.example.cs_office.Model.Staff;
-import com.example.cs_office.Model.TypeRoom;
-import com.example.cs_office.Repository.RoleRepository;
 import com.example.cs_office.Repository.StaffRepository;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -63,7 +58,7 @@ public class StaffService {
     }
 
     @Transactional
-    public void updateStaff(Staff staff) {
+    public void updateStaffStatus(Staff staff) {
         staff.setStatus(false);
         staffRepository.save(staff);
     }

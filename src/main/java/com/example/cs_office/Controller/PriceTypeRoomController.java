@@ -1,8 +1,8 @@
 package com.example.cs_office.Controller;
 
 import com.example.cs_office.Model.PriceTypeRoom;
-import com.example.cs_office.Model.Room;
 import com.example.cs_office.Service.PriceTypeRoomService;
+import com.example.cs_office.Util.PathResources;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,7 +11,7 @@ import java.util.Optional;
 
 
 @RestController
-@RequestMapping("/pricetyperoom")
+@RequestMapping(PathResources.PRICETYPEROOM)
 @CrossOrigin("*")
 public class PriceTypeRoomController {
     @Autowired
@@ -23,50 +23,66 @@ public class PriceTypeRoomController {
 
 
     //list price type room
-    @GetMapping()
+    @GetMapping(PathResources.FIND_ALL)
     public List<PriceTypeRoom> getPriceTypeRoom() {
         return priceTypeRoomService.getPriceTypeRoom();
     }
 
     //list price type room by status == fasle
-    @GetMapping("/false")
+    @GetMapping(PathResources.FIND_BY_STATUSFALSE)
     public List<PriceTypeRoom> getPriceTypeRoomByStatusFalse() {
         return priceTypeRoomService.getPriceTypeRoomByStatus(false);
     }
 
     //list price type room by status == true
-    @GetMapping("/true")
+    @GetMapping(PathResources.FIND_BY_STATUSTRUE)
     public List<PriceTypeRoom> getPriceTypeRoomByStatusTrue() {
         return priceTypeRoomService.getPriceTypeRoomByStatus(true);
     }
 
     // insert price type room
-    @PostMapping
+    @PostMapping(PathResources.SAVE)
     public void insertStaff(@RequestBody PriceTypeRoom priceTypeRoom) {
         priceTypeRoomService.addNewPriceTypeRoom(priceTypeRoom);
     }
 
     //search price type room by id
-    @GetMapping(path = "{pricetyperoomId}")
+    @GetMapping(path = PathResources.FIND_BY_ID)
     public Optional<PriceTypeRoom> getPriceTypeRoomById(
-            @PathVariable("pricetyperoomId") int pricetyperoomId) {
+            @PathVariable("id") int pricetyperoomId) {
         return priceTypeRoomService.getPriceTypeRoomById(pricetyperoomId);
     }
 
     //delete price type room by id
-    @DeleteMapping(path = "{pricetyperoomId}")
+    @DeleteMapping(path = PathResources.DELETEBYID)
     public void deletePriceTypeRoom(
-            @PathVariable("pricetyperoomId") int pricetyperoomId) {
+            @PathVariable("id") int pricetyperoomId) {
         priceTypeRoomService.deletePriceTypeRoom(pricetyperoomId);
+    }
+
+    //update price typeroom by status
+    @PutMapping(PathResources.UPDATESTATUSFALSE)
+    public void updatePriceTypeRoomStatus(
+            @RequestBody PriceTypeRoom priceTypeRoom
+    ) {
+        priceTypeRoomService.updatePriceTypeRoomStatus(priceTypeRoom);
+    }
+
+    //update price typeroom black by status
+    @PutMapping(path = PathResources.UPDATESTATUSTRUE)
+    public void updatePriceTypeRoomBlack(
+            @RequestBody PriceTypeRoom priceTypeRoom
+    ) {
+        priceTypeRoomService.updatePriceTypeRoomBlack(priceTypeRoom);
     }
 
     //update price type room by id
 
-    @PutMapping(path = "/{priceTypeRoomId}")
+    @PutMapping(path = PathResources.UPDATEBYID)
     public PriceTypeRoom updatePriceTypeRoom
             (@RequestBody PriceTypeRoom priceTypeRoom,
-             @PathVariable("priceTypeRoomId") int id) {
-        return priceTypeRoomService.updatePriceTypeRoom(priceTypeRoom, id);
+             @PathVariable("id") int priceTypeRoomId) {
+        return priceTypeRoomService.updatePriceTypeRoom(priceTypeRoom, priceTypeRoomId);
     }
 
 }

@@ -51,6 +51,18 @@ public class OrderDetailService {
     }
 
     @Transactional
+    public OrderDetail updateOrderDetailStatus(OrderDetail orderDetail) {
+        orderDetail.setStatus(false);
+        return orderDetailRepository.save(orderDetail);
+    }
+
+    @Transactional
+    public OrderDetail updateOrderDetailBlack(OrderDetail orderDetail) {
+        orderDetail.setStatus(true);
+        return orderDetailRepository.save(orderDetail);
+    }
+
+    @Transactional
     public OrderDetail updateOrderDetail(OrderDetail orderDetail, int orderDetailId){
         OrderDetail orderDetail1 = this.orderDetailRepository.getOne(orderDetailId);
         BeanUtils.copyProperties(orderDetail,orderDetail1);

@@ -1,7 +1,5 @@
 package com.example.cs_office.Service;
 
-import com.example.cs_office.Model.Evaluate;
-import com.example.cs_office.Model.Staff;
 import com.example.cs_office.Model.TypeRoom;
 import com.example.cs_office.Repository.TypeRoomRepository;
 import org.springframework.beans.BeanUtils;
@@ -56,6 +54,18 @@ public class TypeRoomService {
             throw new IllegalStateException("type room with id " + typeRoomId + " does not exists");
         }
         typeRoomRepository.deleteById(typeRoomId);
+    }
+
+    @Transactional
+    public TypeRoom updateTypeRoomStatus(TypeRoom typeRoom) {
+        typeRoom.setStatus(false);
+        return typeRoomRepository.save(typeRoom);
+    }
+
+    @Transactional
+    public TypeRoom updateTypeRoomBlack(TypeRoom typeRoom) {
+        typeRoom.setStatus(true);
+        return typeRoomRepository.save(typeRoom);
     }
 
     @Transactional

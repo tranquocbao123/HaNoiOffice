@@ -1,16 +1,12 @@
 package com.example.cs_office.Service;
 
 import com.example.cs_office.Model.Branch;
-import com.example.cs_office.Model.Customer;
-import com.example.cs_office.Model.Staff;
 import com.example.cs_office.Repository.BranchRepotitory;
-import com.example.cs_office.Validate.Check;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -60,7 +56,7 @@ public class BranchService {
     }
 
     @Transactional
-    public Branch updateBranch(Branch branch) {
+    public Branch updateBranchStatus(Branch branch) {
         branch.setStatus(false);
         return branchRepotitory.save(branch);
     }

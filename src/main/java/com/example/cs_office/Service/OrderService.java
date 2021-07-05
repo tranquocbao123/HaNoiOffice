@@ -53,6 +53,18 @@ public class OrderService {
     }
 
     @Transactional
+    public Orders updateOrdersStatus(Orders orders) {
+        orders.setStatus(false);
+        return orderRepository.save(orders);
+    }
+
+    @Transactional
+    public Orders updateOrdersBlack(Orders orders) {
+        orders.setStatus(true);
+        return orderRepository.save(orders);
+    }
+
+    @Transactional
     public Orders updateOrder(Orders orders, int orderId){
         Orders orders1 = this.orderRepository.getOne(orderId);
         BeanUtils.copyProperties(orders, orders1);

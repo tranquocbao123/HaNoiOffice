@@ -31,5 +31,5 @@ public class Scheduledetail {
     @JoinColumn(name = "idShedule")
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
-    private Schedule schedule ;
+    private Schedule schedule;
 }

@@ -1,14 +1,11 @@
 package com.example.cs_office.Service;
 
-import com.example.cs_office.Model.Room;
 import com.example.cs_office.Model.Service;
-import com.example.cs_office.Model.Staff;
 import com.example.cs_office.Repository.ServiceRepository;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.transaction.Transactional;
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -55,6 +52,18 @@ public class SerService {
             throw new IllegalStateException("service with id " + serviceId + " does not exists");
         }
         serviceRepository.deleteById(serviceId);
+    }
+
+    @Transactional
+    public Service updateServiceStatus(Service service) {
+        service.setStatus(false);
+        return serviceRepository.save(service);
+    }
+
+    @Transactional
+    public Service updateServiceBlack(Service service) {
+        service.setStatus(true);
+        return serviceRepository.save(service);
     }
 
     @Transactional
