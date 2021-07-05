@@ -2,6 +2,7 @@ package com.example.cs_office.Service;
 
 import com.example.cs_office.Model.Entity.Customer;
 import com.example.cs_office.Repository.CustomerRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -11,6 +12,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
+@Slf4j
 public class CustomerService {
     private final CustomerRepository customerRepository;
 
@@ -35,8 +37,8 @@ public class CustomerService {
         return customer;
     }
 
-    public List<Customer> getCustomerByName(String firstname,String lastName) {
-        List<Customer> customer = customerRepository.findCustomerByName(firstname,lastName);
+    public List<Customer> getCustomerByName(String firstname, String lastName) {
+        List<Customer> customer = customerRepository.findCustomerByName(firstname, lastName);
         return customer;
     }
 
@@ -70,9 +72,9 @@ public class CustomerService {
     }
 
     @Transactional
-    public Customer updateCustomer(Customer customer, int customerId){
+    public Customer updateCustomer(Customer customer, int customerId) {
         Customer customer1 = this.customerRepository.getOne(customerId);
-        BeanUtils.copyProperties(customer,customer1);
+        BeanUtils.copyProperties(customer, customer1);
         return customerRepository.saveAndFlush(customer1);
     }
 

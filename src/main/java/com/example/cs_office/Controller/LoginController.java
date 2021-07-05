@@ -28,7 +28,7 @@ public class LoginController {
     @Autowired
     private JwtUserDetailsService userDetailsService;
 
-    @RequestMapping(value = PathResources.LOGIN, method = RequestMethod.GET)
+    @RequestMapping(value = PathResources.CUSTOMERLOGIN, method = RequestMethod.POST)
     public ResponseEntity<?> createAuthenticationToken(@RequestBody JwtRequest authenticationRequest) throws Exception {
 
         authenticate(authenticationRequest.getEmail(), authenticationRequest.getPassword());
