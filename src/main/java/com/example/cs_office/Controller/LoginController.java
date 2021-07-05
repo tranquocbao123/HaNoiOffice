@@ -5,6 +5,7 @@ import com.example.cs_office.Model.Dto.CustomerDto;
 import com.example.cs_office.Model.Jwt.JwtRequest;
 import com.example.cs_office.Model.Jwt.JwtResponse;
 import com.example.cs_office.Service.JwtUserDetailsService;
+import com.example.cs_office.Util.PathResources;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -27,8 +28,9 @@ public class LoginController {
     @Autowired
     private JwtUserDetailsService userDetailsService;
 
-    @RequestMapping(value = "/authenticate", method = RequestMethod.POST)
+    @RequestMapping(value = PathResources.LOGIN, method = RequestMethod.GET)
     public ResponseEntity<?> createAuthenticationToken(@RequestBody JwtRequest authenticationRequest) throws Exception {
+
         authenticate(authenticationRequest.getEmail(), authenticationRequest.getPassword());
 
         final UserDetails userDetails = userDetailsService.loadUserByUsername(authenticationRequest.getEmail());
@@ -38,7 +40,7 @@ public class LoginController {
         return ResponseEntity.ok(new JwtResponse(token));
     }
 
-    @RequestMapping(value = "/register", method = RequestMethod.POST)
+    @RequestMapping(value = PathResources.REGISTER, method = RequestMethod.POST)
     public ResponseEntity<?> saveUser(@RequestBody CustomerDto customerDto) throws Exception {
         return ResponseEntity.ok(userDetailsService.save(customerDto));
     }

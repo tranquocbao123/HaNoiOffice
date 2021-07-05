@@ -1,18 +1,21 @@
-package com.example.cs_office.Model;
+package com.example.cs_office.Model.Entity;
 
 import lombok.*;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import java.util.Date;
 
 @Entity
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Table(name = "priceservice")
 public class PriceService {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+    @NotBlank(message = "Value may not be blank")
     private double value;
     private Date createDate = new Date();
     private boolean status = true;

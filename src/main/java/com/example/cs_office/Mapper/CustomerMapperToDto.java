@@ -1,9 +1,7 @@
 package com.example.cs_office.Mapper;
 
-import com.example.cs_office.Model.Customer;
+import com.example.cs_office.Model.Entity.Customer;
 import com.example.cs_office.Model.Dto.CustomerDto;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.Date;
 

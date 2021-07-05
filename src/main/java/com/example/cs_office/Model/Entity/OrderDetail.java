@@ -1,4 +1,4 @@
-package com.example.cs_office.Model;
+package com.example.cs_office.Model.Entity;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -12,6 +12,7 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Table(name = "orderdetail")
 public class OrderDetail {
 
     @Id

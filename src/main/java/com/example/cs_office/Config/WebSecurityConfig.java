@@ -54,7 +54,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         httpSecurity.csrf().disable()
                 .authorizeRequests().antMatchers(PathResources.LOGIN, PathResources.REGISTER).permitAll().
                 anyRequest().authenticated().and()
-                .formLogin().loginPage(PathResources.LOGIN).permitAll().and().
+                .formLogin().loginPage(PathResources.LOGIN).permitAll()
+                .and().
                 exceptionHandling().authenticationEntryPoint(jwtAuthenticationEntryPoint).and().sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 

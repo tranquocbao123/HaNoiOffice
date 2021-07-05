@@ -1,6 +1,6 @@
 package com.example.cs_office.Service;
 
-import com.example.cs_office.Model.PriceTypeRoom;
+import com.example.cs_office.Model.Entity.PriceTypeRoom;
 import com.example.cs_office.Repository.PriceTypeRoomRepository;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;

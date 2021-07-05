@@ -1,6 +1,6 @@
 package com.example.cs_office.Service;
 
-import com.example.cs_office.Model.TypeRoom;
+import com.example.cs_office.Model.Entity.TypeRoom;
 import com.example.cs_office.Repository.TypeRoomRepository;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;

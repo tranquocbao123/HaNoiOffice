@@ -1,13 +1,12 @@
-package com.example.cs_office.Model;
+package com.example.cs_office.Model.Entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 
 
@@ -15,12 +14,16 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
+@Table(name = "datemasters")
 public class DateMasters {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+    @NotBlank(message = "Date master may not be blank")
     private Date dateMater;
+    @NotBlank(message = "Event may not be blank")
     private String event;
+    @NotNull(message = "Date master may not be null")
     private String description;
     private Date createDate = new Date();
     private boolean status = true;

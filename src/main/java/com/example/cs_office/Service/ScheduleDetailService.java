@@ -1,7 +1,7 @@
 package com.example.cs_office.Service;
 
 
-import com.example.cs_office.Model.Scheduledetail;
+import com.example.cs_office.Model.Entity.Scheduledetail;
 import com.example.cs_office.Repository.ScheduleDetailRepository;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;

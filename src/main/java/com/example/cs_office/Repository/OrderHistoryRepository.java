@@ -1,6 +1,6 @@
 package com.example.cs_office.Repository;
 
-import com.example.cs_office.Model.OrderHistory;
+import com.example.cs_office.Model.Entity.OrderHistory;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;

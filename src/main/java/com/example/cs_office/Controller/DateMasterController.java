@@ -1,6 +1,6 @@
 package com.example.cs_office.Controller;
 
-import com.example.cs_office.Model.DateMasters;
+import com.example.cs_office.Model.Entity.DateMasters;
 import com.example.cs_office.Service.DateMasterService;
 import com.example.cs_office.Util.PathResources;
 import org.springframework.beans.factory.annotation.Autowired;
