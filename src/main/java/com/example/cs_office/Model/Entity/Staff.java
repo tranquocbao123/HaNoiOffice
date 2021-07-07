@@ -22,9 +22,9 @@ public class Staff {
     private String codeStaff;
     @NotBlank(message = "Full name may not be blank")
     private String fullName;
-    @NotBlank(message = "Gender may not be blank")
+    @NotNull(message = "Gender may not be null")
     private boolean gender;
-    @NotBlank(message = "Birthday may not be blank")
+    @NotNull(message = "Birthday may not be null")
     private Date birthDay;
     @NotBlank(message = "Phone number may not be blank")
     @Size(min = 10, max = 11, message = "Phone number must be between 10 and 11 characters")

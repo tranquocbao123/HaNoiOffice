@@ -24,6 +24,8 @@ public class StaffMapperToDto {
         staff.setDescription(staffDto.getDescription());
         staff.setCreateDate(new Date());
         staff.setStatus(true);
+        staff.setBranch(staffDto.getBranch());
+        staff.setRole(staffDto.getRole());
         return staff;
     }
 }

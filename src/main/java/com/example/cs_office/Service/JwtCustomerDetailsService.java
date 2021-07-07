@@ -14,9 +14,9 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 
-@Service
+@Service("JwtCustomerDetailsService")
 @Slf4j
-public class JwtUserDetailsService implements UserDetailsService {
+public class JwtCustomerDetailsService implements UserDetailsService {
     @Autowired
     private CustomerRepository customerRepository;
 

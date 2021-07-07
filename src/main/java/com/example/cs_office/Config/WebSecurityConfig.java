@@ -2,6 +2,7 @@ package com.example.cs_office.Config;
 
 import com.example.cs_office.Util.PathResources;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -24,6 +25,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
 
+    @Qualifier("JwtCustomerDetailsService")
     @Autowired
     private UserDetailsService jwtUserDetailsService;
 
@@ -32,9 +34,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-        // configure AuthenticationManager so that it knows from where to load
-        // user for matching credentials
-        // Use BCryptPasswordEncoder
         auth.userDetailsService(jwtUserDetailsService).passwordEncoder(passwordEncoder());
     }
 
@@ -52,7 +51,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity httpSecurity) throws Exception {
         httpSecurity.csrf().disable()
-                .authorizeRequests().antMatchers(PathResources.CUSTOMERLOGIN, PathResources.REGISTER).permitAll().
+                .authorizeRequests().antMatchers(PathResources.CUSTOMERLOGIN, PathResources.REGISTER, PathResources.STAFFLOGIN, PathResources.INSERTSTAFF).permitAll().
                 anyRequest().authenticated().and()
                 .formLogin().loginPage(PathResources.LOGIN).permitAll()
                 .and().
@@ -60,6 +59,5 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
         httpSecurity.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
-
     }
 }
