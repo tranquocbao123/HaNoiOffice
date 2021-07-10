@@ -1,4 +1,4 @@
-package com.example.cs_office.Config;
+package com.example.cs_office.config;
 
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.AuthenticationEntryPoint;

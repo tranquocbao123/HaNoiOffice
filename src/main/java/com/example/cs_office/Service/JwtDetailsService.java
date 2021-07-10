@@ -26,41 +26,23 @@ public class JwtDetailsService implements UserDetailsService {
     private CustomerRepository customerRepository;
 
     @Autowired
-    private StaffRepository staffRepository;
-
-    @Autowired
     private PasswordEncoder bcryptEncoder;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Staff staff = staffRepository.findStaffByEmail(username);
-        if (staff == null) {
-            throw new UsernameNotFoundException("Staff not found with email: " + username);
+        Customer user = customerRepository.findCustomerByEmail(username);
+        if (user == null) {
+            throw new UsernameNotFoundException("Customer not found with email: " + username);
         }
-        return new org.springframework.security.core.userdetails.User(staff.getEmail(), staff.getPassword(),
+        return new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPassword(),
                 new ArrayList<>());
     }
 
-    public UserDetails loadUserByUsernameCustomer(String username) throws UsernameNotFoundException {
-        Customer customer = customerRepository.findCustomerByEmail(username);
-        if (customer == null) {
-            throw new UsernameNotFoundException("customer not found with email: " + username);
-        }
-        return new org.springframework.security.core.userdetails.User(customer.getEmail(), customer.getPassword(),
-                new ArrayList<>());
-    }
-
-    public Staff saveStaff(StaffDto staffDto) {
-        StaffMapperToDto staffMapperToDto = new StaffMapperToDto();
-        staffDto.setPassword(bcryptEncoder.encode(staffDto.getPassword()));
-        Staff staff = staffMapperToDto.staffMapperToDto(staffDto);
-        return staffRepository.save(staff);
-    }
-
-    public Customer saveCustomer(CustomerDto customerDto) {
+    public Customer save(CustomerDto user) {
+        Customer newUser = new Customer();
+        newUser.setPassword(bcryptEncoder.encode(user.getPassword()));
         CustomerMapperToDto customerMapperToDto = new CustomerMapperToDto();
-        customerDto.setPassword(bcryptEncoder.encode(customerDto.getPassword()));
-        Customer customer = customerMapperToDto.customerMapperToDto(customerDto);
-        return customerRepository.save(customer);
+        newUser = customerMapperToDto.customerMapperToDto(user);
+        return customerRepository.save(newUser);
     }
 }

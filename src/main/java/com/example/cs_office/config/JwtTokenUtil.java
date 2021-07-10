@@ -1,4 +1,4 @@
-package com.example.cs_office.Config;
+package com.example.cs_office.config;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;

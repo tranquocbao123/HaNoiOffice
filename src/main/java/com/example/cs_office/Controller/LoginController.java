@@ -1,12 +1,10 @@
 package com.example.cs_office.Controller;
 
-import com.example.cs_office.Config.JwtTokenUtil;
 import com.example.cs_office.Model.Dto.CustomerDto;
-import com.example.cs_office.Model.Dto.StaffDto;
 import com.example.cs_office.Model.Jwt.JwtRequest;
 import com.example.cs_office.Model.Jwt.JwtResponse;
 import com.example.cs_office.Service.JwtDetailsService;
-import com.example.cs_office.Util.PathResources;
+import com.example.cs_office.config.JwtTokenUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -28,20 +26,8 @@ public class LoginController {
     @Autowired
     private JwtDetailsService jwtDetailsService;
 
-    @RequestMapping(value = PathResources.CUSTOMERLOGIN, method = RequestMethod.POST)
-    public ResponseEntity<?> customerLoginToken(@RequestBody JwtRequest authenticationRequest) throws Exception {
-
-        authenticate(authenticationRequest.getEmail(), authenticationRequest.getPassword());
-
-        final UserDetails userDetails = jwtDetailsService.loadUserByUsernameCustomer(authenticationRequest.getEmail());
-
-        final String token = jwtTokenUtil.generateToken(userDetails);
-
-        return ResponseEntity.ok(new JwtResponse(token, authenticationRequest.getEmail()));
-    }
-
-    @RequestMapping(value = PathResources.STAFFLOGIN, method = RequestMethod.POST)
-    public ResponseEntity<?> staffLoginToken(@RequestBody JwtRequest authenticationRequest) throws Exception {
+    @RequestMapping(value = "/authenticate", method = RequestMethod.POST)
+    public ResponseEntity<?> createAuthenticationToken(@RequestBody JwtRequest authenticationRequest) throws Exception {
 
         authenticate(authenticationRequest.getEmail(), authenticationRequest.getPassword());
 
@@ -49,22 +35,17 @@ public class LoginController {
 
         final String token = jwtTokenUtil.generateToken(userDetails);
 
-        return ResponseEntity.ok(new JwtResponse(token, authenticationRequest.getEmail()));
+        return ResponseEntity.ok(new JwtResponse(token,authenticationRequest.getEmail()));
     }
 
-    @RequestMapping(value = PathResources.REGISTER, method = RequestMethod.POST)
-    public ResponseEntity<?> saveUser(@RequestBody CustomerDto customerDto) throws Exception {
-        return ResponseEntity.ok(jwtDetailsService.saveCustomer(customerDto));
-    }
-
-    @RequestMapping(value = PathResources.INSERTSTAFF, method = RequestMethod.POST)
-    public ResponseEntity<?> saveStaff(@RequestBody StaffDto staffDto) throws Exception {
-        return ResponseEntity.ok(jwtDetailsService.saveStaff(staffDto));
+    @RequestMapping(value = "/register", method = RequestMethod.POST)
+    public ResponseEntity<?> saveUser(@RequestBody CustomerDto user) throws Exception {
+        return ResponseEntity.ok(jwtDetailsService.save(user));
     }
 
     private void authenticate(String username, String password) throws Exception {
         try {
-             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
+            authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
         } catch (DisabledException e) {
             throw new Exception("USER_DISABLED", e);
         } catch (BadCredentialsException e) {
