@@ -25,16 +25,15 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
 
-    @Qualifier("JwtCustomerDetailsService")
     @Autowired
-    private UserDetailsService jwtUserDetailsService;
+    private UserDetailsService getJwtUserDetailsService;
 
     @Autowired
     private JwtRequestFilter jwtRequestFilter;
 
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(jwtUserDetailsService).passwordEncoder(passwordEncoder());
+        auth.userDetailsService(getJwtUserDetailsService).passwordEncoder(passwordEncoder());
     }
 
     @Bean
