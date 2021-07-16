@@ -4,6 +4,8 @@ package com.example.cs_office.Repository;
 import com.example.cs_office.Model.Entity.OrderDetail;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.jpa.repository.query.Procedure;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -19,4 +21,6 @@ public interface OrderDetailRepository extends JpaRepository<OrderDetail,Integer
     @Query("select c from OrderDetail c where c.status = ?1")
     List<OrderDetail> findOrderDetailByStatus(boolean status);
 
+    @Procedure(name = "OrderDetail.getCountOrderDetailEntity")
+    int getCountOrderDetail();
 }

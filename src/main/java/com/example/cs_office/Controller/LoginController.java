@@ -1,9 +1,13 @@
 package com.example.cs_office.Controller;
 
 import com.example.cs_office.Model.Dto.CustomerDto;
+import com.example.cs_office.Model.Dto.StaffDto;
+import com.example.cs_office.Model.Jwt.UserChangePassword;
 import com.example.cs_office.Model.Jwt.JwtRequest;
 import com.example.cs_office.Model.Jwt.JwtResponse;
-import com.example.cs_office.Service.JwtDetailsService;
+import com.example.cs_office.Service.JwtUserDetailsService;
+import com.example.cs_office.Service.OrderDetailService;
+import com.example.cs_office.Util.PathResources;
 import com.example.cs_office.config.JwtTokenUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -24,24 +28,52 @@ public class LoginController {
     private JwtTokenUtil jwtTokenUtil;
 
     @Autowired
-    private JwtDetailsService jwtDetailsService;
+    private JwtUserDetailsService jwtUserDetailsService;
 
-    @RequestMapping(value = "/authenticate", method = RequestMethod.POST)
-    public ResponseEntity<?> createAuthenticationToken(@RequestBody JwtRequest authenticationRequest) throws Exception {
+    @RequestMapping(value = PathResources.LOGIN, method = RequestMethod.POST)
+    public ResponseEntity<?> login(@RequestBody JwtRequest authenticationRequest) throws Exception {
 
         authenticate(authenticationRequest.getEmail(), authenticationRequest.getPassword());
 
-        final UserDetails userDetails = jwtDetailsService.loadUserByUsername(authenticationRequest.getEmail());
+        final UserDetails userDetails = jwtUserDetailsService.loadUserByUsername(authenticationRequest.getEmail());
 
         final String token = jwtTokenUtil.generateToken(userDetails);
 
-        return ResponseEntity.ok(new JwtResponse(token,authenticationRequest.getEmail()));
+        return ResponseEntity.ok(new JwtResponse(token, authenticationRequest.getEmail()));
     }
 
-    @RequestMapping(value = "/register", method = RequestMethod.POST)
-    public ResponseEntity<?> saveUser(@RequestBody CustomerDto user) throws Exception {
-        return ResponseEntity.ok(jwtDetailsService.save(user));
+    @RequestMapping(value = PathResources.CUSTOMERCHANGEPASSWORD, method = RequestMethod.PUT)
+    public ResponseEntity<?> customerChangePassword(@RequestBody UserChangePassword userChangePassword, @PathVariable("customerId") int customerId) throws Exception {
+
+        authenticate(userChangePassword.getEmail(), userChangePassword.getPasswordOld());
+
+        return ResponseEntity.ok(jwtUserDetailsService.cutomerChangePassword(customerId, userChangePassword.getPasswordOld(), userChangePassword.getPasswordNew()));
     }
+
+    @RequestMapping(value = PathResources.STAFFCHANGEPASSWORD, method = RequestMethod.PUT)
+    public ResponseEntity<?> staffChangePassword(@RequestBody UserChangePassword userChangePassword, @PathVariable("staffId") int customerId) throws Exception {
+
+        authenticate(userChangePassword.getEmail(), userChangePassword.getPasswordOld());
+
+        return ResponseEntity.ok(jwtUserDetailsService.staffChangePassword(customerId, userChangePassword.getPasswordOld(), userChangePassword.getPasswordNew()));
+    }
+
+    @RequestMapping(value = PathResources.REGISTER, method = RequestMethod.POST)
+    public ResponseEntity<?> saveCustomer(@RequestBody CustomerDto customerDto) throws Exception {
+        return ResponseEntity.ok(jwtUserDetailsService.saveCustomer(customerDto));
+    }
+
+    @RequestMapping(value = PathResources.INSERTSTAFF, method = RequestMethod.POST)
+    public ResponseEntity<?> saveStaff(@RequestBody StaffDto staffDto) throws Exception {
+        return ResponseEntity.ok(jwtUserDetailsService.saveStaff(staffDto));
+    }
+
+//    @RequestMapping(value = PathResources.LOGOUT, method = RequestMethod.POST)
+//    public ResponseEntity<?> logout() throws Exception {
+//        jwtTokenUtil.generateToken(null);
+//        System.out.println("jwtTokenUtil " + jwtTokenUtil );
+//        return ResponseEntity.ok(jwtUserDetailsService.logout());
+//    }
 
     private void authenticate(String username, String password) throws Exception {
         try {

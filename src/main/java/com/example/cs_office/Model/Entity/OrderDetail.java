@@ -13,6 +13,9 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "orderdetail")
+@NamedStoredProcedureQuery(name = "OrderDetail.getCountOrderDetailEntity",
+procedureName = "count_orderdetail",parameters = {
+@StoredProcedureParameter(mode = ParameterMode.OUT, name = "count_out", type = Integer.class)})
 public class OrderDetail {
 
     @Id

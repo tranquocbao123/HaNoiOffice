@@ -45,11 +45,11 @@ public class StaffController {
         return staffService.getById(staffId);
     }
 
-    // insert staff
+    /*// insert staff
     @PostMapping(PathResources.SAVE)
     public void insertStaff(@RequestBody Staff staff) {
         staffService.addNewStaff(staff);
-    }
+    }*/
 
     //search staff by username
     @GetMapping(path = PathResources.FIND_BY_NAME)

@@ -83,4 +83,8 @@ public class OrderDetailController {
         return orderDetailService.updateOrderDetail(orderDetail, orderDetailId);
     }
 
+    @GetMapping(path = PathResources.COUNTORDERDETAIL)
+    public int countOrderDetail() {
+        return orderDetailService.countOrderDetail();
+    }
 }

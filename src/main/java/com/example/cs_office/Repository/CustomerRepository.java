@@ -2,9 +2,11 @@ package com.example.cs_office.Repository;
 
 import com.example.cs_office.Model.Entity.Customer;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -26,4 +28,9 @@ public interface CustomerRepository extends JpaRepository<Customer, Integer> {
     @Query("select c from Customer c where c.firstName like %:firstname% and c.lastName like %:lastname%")
     List<Customer> findCustomerByName(@Param("firstname") String firstname,@Param("lastname") String lastname);
 
+    //update password
+    @Transactional
+    @Modifying
+    @Query("update Customer c set c.password = ?1 where c.id = ?2")
+    Optional<Customer> changePassword(String password, int id);
 }

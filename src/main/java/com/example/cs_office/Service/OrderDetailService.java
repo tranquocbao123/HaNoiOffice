@@ -69,4 +69,7 @@ public class OrderDetailService {
         return orderDetailRepository.saveAndFlush(orderDetail1);
     }
 
+    public int countOrderDetail() {
+        return orderDetailRepository.getCountOrderDetail();
+    }
 }

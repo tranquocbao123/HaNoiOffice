@@ -16,13 +16,13 @@ public class PathResources {
     public static final String FIND_BY_ID = "/find_by_id/{id}";
     public static final String FIND_BY_NAME = "/find_by_name/{name}";
     public static final String FIND_BY_FLNAME = "/find_by_name/{firstname}/{lastname}";
-    public static final String CUSTOMERLOGIN = "/customer/login";
-    public static final String STAFFLOGIN = "/staff/login";
-    public static final String LOGIN = "/login";
+    public static final String LOGIN = "/hanoioffice/login";
+    public static final String LOGOUT = "/hanoioffice/logout";
     public static final String REGISTER = "/register";
-    public static final String INSERTSTAFF = "/insertstaff";
+    public static final String INSERTSTAFF = "/staff/insert";
     public static final String FORGOTPASSWORD = "/forgotpassword/{email}";
-    public static final String CHANGEPASSWORD = "/changepassword";
+    public static final String CUSTOMERCHANGEPASSWORD = "/customer/changepassword/{customerId}";
+    public static final String STAFFCHANGEPASSWORD = "/staff/changepassword/{staffId}";
     public static final String BRANCH = "/branch";
     public static final String CUSTOMER = "/customer";
     public static final String DATEMASTER = "/datemaster";
@@ -40,5 +40,5 @@ public class PathResources {
     public static final String SERVICEDETAIL = "/servicedetail";
     public static final String STAFF = "/staff";
     public static final String TYPEROOM = "/typeroom";
-
+    public static final String COUNTORDERDETAIL = "/countorderdetail";
 }

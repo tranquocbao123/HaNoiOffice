@@ -1,6 +1,6 @@
 package com.example.cs_office.config;
 
-import com.example.cs_office.Service.JwtDetailsService;
+import com.example.cs_office.Service.JwtUserDetailsService;
 import io.jsonwebtoken.ExpiredJwtException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -20,7 +20,7 @@ import java.io.IOException;
 public class JwtRequestFilter extends OncePerRequestFilter {
 
 	@Autowired
-	private JwtDetailsService jwtUserDetailsService;
+	private JwtUserDetailsService jwtUserDetailsService;
 
 	@Autowired
 	private JwtTokenUtil jwtTokenUtil;
