@@ -3,7 +3,9 @@ package com.example.cs_office.Service;
 import com.example.cs_office.Mapper.CustomerMapperToDto;
 import com.example.cs_office.Mapper.StaffMapperToDto;
 import com.example.cs_office.Model.Dto.CustomerDto;
+import com.example.cs_office.Model.Dto.EmailDto;
 import com.example.cs_office.Model.Dto.StaffDto;
+import com.example.cs_office.Model.Dto.UserResetPassword;
 import com.example.cs_office.Model.Entity.Branch;
 import com.example.cs_office.Model.Entity.Customer;
 import com.example.cs_office.Model.Entity.Staff;
@@ -19,6 +21,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.mail.MessagingException;
 import java.util.ArrayList;
 import java.util.Optional;
 
@@ -34,6 +37,9 @@ public class JwtUserDetailsService implements UserDetailsService {
 
     @Autowired
     private PasswordEncoder bcryptEncoder;
+
+    @Autowired
+    private SendEmailService sendEmailService;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -88,8 +94,8 @@ public class JwtUserDetailsService implements UserDetailsService {
         return true;
     }
 
-    public boolean saveCustomer(CustomerDto user) {
-        if (customerRepository.findCustomerByEmail(user.getEmail()) != null || staffRepository.findStaffByEmail(user.getEmail())!= null) {
+    public boolean saveCustomer(CustomerDto user) throws MessagingException {
+        if (customerRepository.findCustomerByEmail(user.getEmail()) != null || staffRepository.findStaffByEmail(user.getEmail()) != null) {
             log.info("Email exits ");
             return false;
         } else {
@@ -98,12 +104,13 @@ public class JwtUserDetailsService implements UserDetailsService {
             CustomerMapperToDto customerMapperToDto = new CustomerMapperToDto();
             newUser = customerMapperToDto.customerMapperToDto(user);
             customerRepository.save(newUser);
+            sendEmailService.sendEmail(newUser.getEmail(), "Register Success", "Register HaNoioffice ");
             return true;
         }
     }
 
     public boolean saveStaff(StaffDto user) {
-        if (staffRepository.findStaffByEmail(user.getEmail()) != null || customerRepository.findCustomerByEmail(user.getEmail()) != null ) {
+        if (staffRepository.findStaffByEmail(user.getEmail()) != null || customerRepository.findCustomerByEmail(user.getEmail()) != null) {
             log.info("Email exits ");
             return false;
         } else {
@@ -113,6 +120,32 @@ public class JwtUserDetailsService implements UserDetailsService {
             newUser = staffMapperToDto.staffMapperToDto(user);
             staffRepository.save(newUser);
             return true;
+        }
+    }
+
+    public boolean forgotPassword(EmailDto email) throws MessagingException {
+        if (staffRepository.findStaffByEmail(email.getEmail()) != null || customerRepository.findCustomerByEmail(email.getEmail()) != null) {
+            sendEmailService.sendEmailPassword(email.getEmail(), "Forgot password my Account HaNoiOffice");
+            return true;
+        } else {
+            log.info("Email not exits ");
+            return false;
+        }
+    }
+
+    public void resetPassword(UserResetPassword user) {
+        if (staffRepository.findStaffByEmail(user.getEmail()) != null) {
+            Staff staff = staffRepository.findStaffByEmail(user.getEmail());
+            Staff staff1 = this.staffRepository.getOne(staff.getId());
+            BeanUtils.copyProperties(staff, staff1);
+            staff1.setPassword(bcryptEncoder.encode(user.getPassword()));
+            staffRepository.saveAndFlush(staff1);
+        } else {
+            Customer customer = customerRepository.findCustomerByEmail(user.getEmail());
+            Customer customer1 = this.customerRepository.getOne(customer.getId());
+            BeanUtils.copyProperties(customer,customer1);
+            customer1.setPassword(bcryptEncoder.encode(user.getPassword()));
+            customerRepository.saveAndFlush(customer1);
         }
     }
 }

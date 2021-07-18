@@ -28,9 +28,4 @@ public interface CustomerRepository extends JpaRepository<Customer, Integer> {
     @Query("select c from Customer c where c.firstName like %:firstname% and c.lastName like %:lastname%")
     List<Customer> findCustomerByName(@Param("firstname") String firstname,@Param("lastname") String lastname);
 
-    //update password
-    @Transactional
-    @Modifying
-    @Query("update Customer c set c.password = ?1 where c.id = ?2")
-    Optional<Customer> changePassword(String password, int id);
 }

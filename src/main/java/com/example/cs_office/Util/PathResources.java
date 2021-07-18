@@ -20,9 +20,10 @@ public class PathResources {
     public static final String LOGOUT = "/hanoioffice/logout";
     public static final String REGISTER = "/register";
     public static final String INSERTSTAFF = "/staff/insert";
-    public static final String FORGOTPASSWORD = "/forgotpassword/{email}";
+    public static final String FORGOTPASSWORD = "/forgotpassword";
     public static final String CUSTOMERCHANGEPASSWORD = "/customer/changepassword/{customerId}";
     public static final String STAFFCHANGEPASSWORD = "/staff/changepassword/{staffId}";
+    public static final String RESETPASSWORD = "/resetpassword";
     public static final String BRANCH = "/branch";
     public static final String CUSTOMER = "/customer";
     public static final String DATEMASTER = "/datemaster";

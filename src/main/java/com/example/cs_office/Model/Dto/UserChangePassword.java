@@ -1,4 +1,4 @@
-package com.example.cs_office.Model.Jwt;
+package com.example.cs_office.Model.Dto;
 
 import lombok.Getter;
 import lombok.Setter;

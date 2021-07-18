@@ -1,12 +1,9 @@
 package com.example.cs_office.Controller;
 
-import com.example.cs_office.Model.Dto.CustomerDto;
-import com.example.cs_office.Model.Dto.StaffDto;
-import com.example.cs_office.Model.Jwt.UserChangePassword;
+import com.example.cs_office.Model.Dto.*;
 import com.example.cs_office.Model.Jwt.JwtRequest;
 import com.example.cs_office.Model.Jwt.JwtResponse;
 import com.example.cs_office.Service.JwtUserDetailsService;
-import com.example.cs_office.Service.OrderDetailService;
 import com.example.cs_office.Util.PathResources;
 import com.example.cs_office.config.JwtTokenUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +14,8 @@ import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
+
+import javax.mail.MessagingException;
 
 @RestController
 @CrossOrigin
@@ -74,6 +73,16 @@ public class LoginController {
 //        System.out.println("jwtTokenUtil " + jwtTokenUtil );
 //        return ResponseEntity.ok(jwtUserDetailsService.logout());
 //    }
+
+    @RequestMapping(value = PathResources.FORGOTPASSWORD, method = RequestMethod.POST)
+    public ResponseEntity<?> forgotPassword(@RequestBody EmailDto email) throws MessagingException {
+        return ResponseEntity.ok(jwtUserDetailsService.forgotPassword(email));
+    }
+
+    @RequestMapping(value = PathResources.RESETPASSWORD, method = RequestMethod.POST)
+    public void resetPassword(@RequestBody UserResetPassword user){
+        jwtUserDetailsService.resetPassword(user);
+    }
 
     private void authenticate(String username, String password) throws Exception {
         try {

@@ -62,7 +62,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		httpSecurity.csrf().disable()
 				// dont authenticate this particular request
 				.authorizeRequests().antMatchers(PathResources.LOGIN,PathResources.REGISTER,PathResources.CUSTOMERCHANGEPASSWORD,
-				PathResources.LOGOUT,PathResources.STAFFCHANGEPASSWORD, PathResources.INSERTSTAFF,"/orderdetail/countorderdetail").permitAll().
+				PathResources.LOGOUT,PathResources.STAFFCHANGEPASSWORD, PathResources.INSERTSTAFF,"/orderdetail/countorderdetail",PathResources.FORGOTPASSWORD,
+				PathResources.RESETPASSWORD).permitAll().
 				// all other requests need to be authenticated
 						anyRequest().authenticated().and().
 				logout().permitAll().
