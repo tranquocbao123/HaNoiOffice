@@ -6,11 +6,9 @@ import com.example.cs_office.Model.Dto.CustomerDto;
 import com.example.cs_office.Model.Dto.EmailDto;
 import com.example.cs_office.Model.Dto.StaffDto;
 import com.example.cs_office.Model.Dto.UserResetPassword;
-import com.example.cs_office.Model.Entity.Branch;
 import com.example.cs_office.Model.Entity.Customer;
 import com.example.cs_office.Model.Entity.Staff;
 import com.example.cs_office.Repository.CustomerRepository;
-import com.example.cs_office.Repository.OrderRepository;
 import com.example.cs_office.Repository.StaffRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
@@ -25,6 +23,7 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.mail.MessagingException;
 import java.util.ArrayList;
 import java.util.Optional;
+import java.util.Random;
 
 @Service
 @Slf4j
@@ -41,6 +40,8 @@ public class JwtUserDetailsService implements UserDetailsService {
 
     @Autowired
     private SendEmailService sendEmailService;
+
+    private String token = "hanoioffice";
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -135,18 +136,18 @@ public class JwtUserDetailsService implements UserDetailsService {
     }
 
     public void resetPassword(UserResetPassword user) {
-        if (staffRepository.findStaffByEmail(user.getEmail()) != null) {
-            Staff staff = staffRepository.findStaffByEmail(user.getEmail());
-            Staff staff1 = this.staffRepository.getOne(staff.getId());
-            BeanUtils.copyProperties(staff, staff1);
-            staff1.setPassword(bcryptEncoder.encode(user.getPassword()));
-            staffRepository.saveAndFlush(staff1);
-        } else {
-            Customer customer = customerRepository.findCustomerByEmail(user.getEmail());
-            Customer customer1 = this.customerRepository.getOne(customer.getId());
-            BeanUtils.copyProperties(customer,customer1);
-            customer1.setPassword(bcryptEncoder.encode(user.getPassword()));
-            customerRepository.saveAndFlush(customer1);
-        }
+            if (staffRepository.findStaffByEmail(user.getEmail()) != null) {
+                Staff staff = staffRepository.findStaffByEmail(user.getEmail());
+                Staff staff1 = this.staffRepository.getOne(staff.getId());
+                BeanUtils.copyProperties(staff, staff1);
+                staff1.setPassword(bcryptEncoder.encode(user.getPassword()));
+                staffRepository.saveAndFlush(staff1);
+            } else {
+                Customer customer = customerRepository.findCustomerByEmail(user.getEmail());
+                Customer customer1 = this.customerRepository.getOne(customer.getId());
+                BeanUtils.copyProperties(customer, customer1);
+                customer1.setPassword(bcryptEncoder.encode(user.getPassword()));
+                customerRepository.saveAndFlush(customer1);
+            }
     }
 }
