@@ -40,6 +40,11 @@ public class StaffService {
         return staff;
     }
 
+    public List<Staff> getListStaff(int idRole, int idBranch, boolean gender, String nameStaff) {
+        List<Staff> listStaff = staffRepository.get_list_staff(idRole, idBranch, gender, nameStaff);
+        return listStaff;
+    }
+
     public void addNewStaff(Staff staff) {
         Optional<Staff> staffOptional =
                 staffRepository.findStaffById(staff.getId());

@@ -63,7 +63,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 				// dont authenticate this particular request
 				.authorizeRequests().antMatchers(PathResources.LOGIN,PathResources.REGISTER,PathResources.CUSTOMERCHANGEPASSWORD,
 				PathResources.LOGOUT,PathResources.STAFFCHANGEPASSWORD, PathResources.INSERTSTAFF,"/orderdetail/countorderdetail",PathResources.FORGOTPASSWORD,
-				PathResources.RESETPASSWORD).permitAll().
+				PathResources.RESETPASSWORD,"/staff/**").permitAll().
 				// all other requests need to be authenticated
 						anyRequest().authenticated().and().
 				logout().permitAll().

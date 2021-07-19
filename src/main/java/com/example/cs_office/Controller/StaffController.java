@@ -45,17 +45,17 @@ public class StaffController {
         return staffService.getById(staffId);
     }
 
-    /*// insert staff
-    @PostMapping(PathResources.SAVE)
-    public void insertStaff(@RequestBody Staff staff) {
-        staffService.addNewStaff(staff);
-    }*/
-
     //search staff by username
     @GetMapping(path = PathResources.FIND_BY_NAME)
     public List<Staff> getStaffByUserName(
             @PathVariable("name") String staffUsername) {
         return staffService.getStaffByUserName(staffUsername);
+    }
+
+    //search staff by idRole idBranch gender nameStaff
+    @GetMapping(path = PathResources.FIND_STAFF)
+    public List<Staff> getListStaff(@RequestBody com.example.cs_office.Model.Search.Staff staff) {
+        return staffService.getListStaff(staff.getIdRole(), staff.getIdBranch(), staff.isGender(), staff.getNameStaff());
     }
 
     //delete staff by id

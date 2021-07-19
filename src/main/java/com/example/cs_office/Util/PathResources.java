@@ -16,6 +16,7 @@ public class PathResources {
     public static final String FIND_BY_ID = "/find_by_id/{id}";
     public static final String FIND_BY_NAME = "/find_by_name/{name}";
     public static final String FIND_BY_FLNAME = "/find_by_name/{firstname}/{lastname}";
+    public static final String FIND_STAFF = "/find_staff";
     public static final String LOGIN = "/hanoioffice/login";
     public static final String LOGOUT = "/hanoioffice/logout";
     public static final String REGISTER = "/register";

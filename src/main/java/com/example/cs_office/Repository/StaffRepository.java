@@ -4,6 +4,7 @@ import com.example.cs_office.Model.Entity.Customer;
 import com.example.cs_office.Model.Entity.Staff;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.jpa.repository.query.Procedure;
 import org.springframework.data.repository.query.Param;
 
 import java.util.List;
@@ -26,4 +27,10 @@ public interface StaffRepository extends JpaRepository<Staff, Integer> {
     @Query("select c from Staff c where c.email = ?1")
     Staff findStaffByEmail(String email);
 
+    //stored procedure get_list_staff
+    @Query(value = "{CALL get_list_staff(:id_Role, :id_Branch, :GENDER, :pNameStaff)}" , nativeQuery = true)
+    List<Staff> get_list_staff(@Param("id_Role") int idRole,
+                               @Param("id_Branch") int idBranch,
+                               @Param("GENDER") boolean gender,
+                               @Param("pNameStaff") String nameStaff);
 }
