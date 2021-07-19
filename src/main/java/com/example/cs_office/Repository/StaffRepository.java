@@ -29,8 +29,8 @@ public interface StaffRepository extends JpaRepository<Staff, Integer> {
 
     //stored procedure get_list_staff
     @Query(value = "{CALL get_list_staff(:id_Role, :id_Branch, :GENDER, :pNameStaff)}" , nativeQuery = true)
-    List<Staff> get_list_staff(@Param("id_Role") int idRole,
-                               @Param("id_Branch") int idBranch,
+    List<Staff> get_list_staff(@Param("id_Role") String idRole,
+                               @Param("id_Branch") String idBranch,
                                @Param("GENDER") boolean gender,
                                @Param("pNameStaff") String nameStaff);
 }

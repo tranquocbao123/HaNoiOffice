@@ -40,7 +40,7 @@ public class StaffService {
         return staff;
     }
 
-    public List<Staff> getListStaff(int idRole, int idBranch, boolean gender, String nameStaff) {
+    public List<Staff> getListStaff(String idRole, String idBranch, boolean gender, String nameStaff) {
         List<Staff> listStaff = staffRepository.get_list_staff(idRole, idBranch, gender, nameStaff);
         return listStaff;
     }

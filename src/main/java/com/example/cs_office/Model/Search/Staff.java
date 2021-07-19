@@ -6,8 +6,8 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 public class Staff {
-    private int idRole;
-    private int idBranch;
+    private String idRole;
+    private String idBranch;
     private boolean gender;
     private String nameStaff;
 }
