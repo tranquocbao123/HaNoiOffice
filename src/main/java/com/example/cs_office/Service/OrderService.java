@@ -1,5 +1,6 @@
 package com.example.cs_office.Service;
 
+import com.example.cs_office.Model.Entity.OrderDetail;
 import com.example.cs_office.Model.Entity.Orders;
 import com.example.cs_office.Repository.OrderRepository;
 import org.springframework.beans.BeanUtils;
@@ -70,4 +71,15 @@ public class OrderService {
         BeanUtils.copyProperties(orders, orders1);
         return orderRepository.saveAndFlush(orders1);
     }
+
+    @Transactional
+    public int updateOrderByIdOrderDetail(int idOrder) {
+        return orderRepository.updateOrderByIdOrderDetail(idOrder);
+    }
+
+    @Transactional
+    public int updateStatusByIdOrderDetail(int idOrder) {
+        return orderRepository.updateStatusByIdOrderDetail(idOrder);
+    }
+
 }

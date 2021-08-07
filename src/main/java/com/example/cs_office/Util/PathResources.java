@@ -40,7 +40,19 @@ public class PathResources {
     public static final String SCHEDULE = "/schedule";
     public static final String SERVICE = "/service";
     public static final String SERVICEDETAIL = "/servicedetail";
+    public static final String SHIFT = "/shift";
     public static final String STAFF = "/staff";
     public static final String TYPEROOM = "/typeroom";
     public static final String COUNTORDERDETAIL = "/countorderdetail";
+    public static final String BOOK = "/book";
+    public static final String LISTROOM = "/listRoom/{idTypeRoom}/{idBranch}";
+    public static final String BOOKROOMLT = "/bookroomlt";
+    public static final String CHECKROOMBYID = "/checkroombyid/{idRoom}";
+    public static final String LISTBOOKROOM = "/listbookroom";
+    public static final String ACCEPT = "/accept/{idOrderDetail}";
+    public static final String CANCEL = "/cancel/{idOrderDetail}";
+    public static final String LISTROOMSALE = "/listRoomSale/{idTypeRoom}/{idBranch}";
+    public static final String ROOKBOOK = "/roomBook/{idCustomer}";
+    public static final String BOOKROOMKTL = "bookroomktl";
+    public static final String LISTIFBYENDSTART = "listifbyendstart";
 }

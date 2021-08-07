@@ -23,6 +23,8 @@ public class OrderDetail {
     private int id;
     private Date createDate = new Date();
     private boolean status = true;
+    private boolean acceptance;
+    private double total;
 
     @ManyToOne
     @JoinColumn(name = "idorder")
@@ -40,13 +42,7 @@ public class OrderDetail {
     @OneToMany (mappedBy = "orderDetail", cascade = CascadeType.ALL)
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
-    private List<ServiceDetail> serviceDetails;
-
-    @JsonIgnore
-    @OneToMany (mappedBy = "orderDetail1", cascade = CascadeType.ALL)
-    @EqualsAndHashCode.Exclude
-    @ToString.Exclude
-    private List<Scheduledetail> scheduledetails;
+    private List<Schedule> schedules;
 
     @JsonIgnore
     @OneToMany (mappedBy = "orderDetail2", cascade = CascadeType.ALL)

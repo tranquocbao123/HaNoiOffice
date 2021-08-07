@@ -17,6 +17,7 @@ public class ServiceDetail {
     private int id;
     private Date createDate = new Date();
     private boolean status = true;
+    private boolean acceptance;
 
     @ManyToOne
     @JoinColumn(name = "idService")
@@ -25,9 +26,9 @@ public class ServiceDetail {
     private Service service1;
 
     @ManyToOne
-    @JoinColumn(name = "idorderdetail")
+    @JoinColumn(name = "idSchedule")
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
-    private OrderDetail orderDetail;
+    private Schedule schedule;
 
 }

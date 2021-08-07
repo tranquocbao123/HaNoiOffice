@@ -24,17 +24,17 @@ public class ScheduledTasks {
     @Autowired
     private SendEmailService sendEmailService;
 
-    @Scheduled(fixedRate = 10000)
-    public void scheduleTaskWithFixedRate() {
-        int[] numbers = {4, 3, 5};
-        for (int i : numbers) {
-            if (5 == i) {
-                logger.info("Fixed Rate Task :: Execution Time - {}", dateTimeFormatter.format(LocalDateTime.now()));
-            }else{
-                logger.info("Fixed Rate Task 1 :: Execution Time - {}", dateTimeFormatter.format(LocalDateTime.now()));
-            }
-        }
-    }
+//    @Scheduled(fixedRate = 10000)
+//    public void scheduleTaskWithFixedRate() {
+//        int[] numbers = {4, 3, 5};
+//        for (int i : numbers) {
+//            if (5 == i) {
+//                logger.info("Fixed Rate Task :: Execution Time - {}", dateTimeFormatter.format(LocalDateTime.now()));
+//            }else{
+//                logger.info("Fixed Rate Task 1 :: Execution Time - {}", dateTimeFormatter.format(LocalDateTime.now()));
+//            }
+//        }
+//    }
 
 //    @Scheduled(fixedDelay = 2000)
 //    public void scheduleTaskWithFixedDelay() {

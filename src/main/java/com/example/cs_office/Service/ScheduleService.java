@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.sql.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -51,6 +52,14 @@ public class ScheduleService {
         scheduleRepository.deleteById(scheduleId);
     }
 
+    public List<Schedule> getListScheduleByIdOrderDetail(int idOrderDetail) {
+        return scheduleRepository.getListIdScheduleByIdOrderDetail(idOrderDetail);
+    }
+
+    public List<Schedule> getListScheduleByIdOrderDetail1(int idOrderDetail) {
+        return scheduleRepository.getListIdScheduleByIdOrderDetail1(idOrderDetail);
+    }
+
     @Transactional
     public Schedule updateScheduleStatus(Schedule schedule) {
         schedule.setStatus(false);
@@ -68,5 +77,24 @@ public class ScheduleService {
         Schedule schedule1 = this.scheduleRepository.getOne(scheduleId);
         BeanUtils.copyProperties(schedule,schedule1);
         return scheduleRepository.saveAndFlush(schedule1);
+    }
+
+    @Transactional
+    public int updateScheduleByIdOrderDetail(int idOrderDetail) {
+        return scheduleRepository.updateScheduleByIdOrderDetail(idOrderDetail);
+    }
+
+    @Transactional
+    public int updateStatusByIdOrderDetail(int idOrderDetail) {
+        return scheduleRepository.updateStatusByIdOrderDetail(idOrderDetail);
+    }
+
+    @Transactional
+    public int deleteScheduleByIdOrderDetail(int idOrderDetail) {
+        return scheduleRepository.deleteScheduleByIdOrderDetail(idOrderDetail);
+    }
+
+    public List<Schedule> listScheduleByEndStart(Date endDate, Date startDate, int idOrderDetail) {
+        return scheduleRepository.listScheduleByEndStart(endDate, startDate, idOrderDetail);
     }
 }

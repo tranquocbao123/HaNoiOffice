@@ -30,9 +30,6 @@ public class Branch {
     @NotNull(message = "Address may not be null")
     @Size(min = 10, max = 200, message = "Address must be between 10 and 200 characters")
     private String address;
-    @NotBlank(message = "Number staff may not be blank")
-    @Min(value = 0, message = " Number staff should not be less than 0")
-    private int numberStaff;
     @NotBlank(message = "Branch manager may not be blank")
     private String branchManager;
     @NotBlank(message = "Phone number manager may not be blank")
@@ -54,13 +51,5 @@ public class Branch {
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
     private Collection<Room> rooms;
-
-    public Branch(String name, String address, Date createDate, boolean status, Collection<Staff> staff) {
-        this.name = name;
-        this.address = address;
-        this.createDate = createDate;
-        this.status = status;
-        this.staff = staff;
-    }
 
 }

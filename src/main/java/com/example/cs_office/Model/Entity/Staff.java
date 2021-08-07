@@ -8,6 +8,8 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Data
@@ -25,7 +27,7 @@ public class Staff {
     @NotNull(message = "Gender may not be null")
     private boolean gender;
     @NotNull(message = "Birthday may not be null")
-    private Date birthDay;
+    private java.sql.Date birthDay;
     @NotBlank(message = "Phone number may not be blank")
     @Size(min = 10, max = 11, message = "Phone number must be between 10 and 11 characters")
     private String phoneNumber;
@@ -42,8 +44,6 @@ public class Staff {
     private String queQuan;
     @NotBlank(message = "Hktt may not be blank")
     private String hktt;
-    @NotBlank(message = "Image may not be blank")
-    private String image;
     @NotNull(message = "Description may not be null")
     private String description;
     private Date createDate = new Date();

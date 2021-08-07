@@ -1,5 +1,6 @@
 package com.example.cs_office.Service;
 
+import com.example.cs_office.Model.Entity.Scheduledetail;
 import com.example.cs_office.Model.Entity.ServiceDetail;
 import com.example.cs_office.Repository.ServiceDetailRepository;
 import org.springframework.beans.BeanUtils;
@@ -67,5 +68,23 @@ public class ServiceDetailService {
         ServiceDetail serviceDetail11 = this.serviceDetailRepository.getOne(serviceDetailId);
         BeanUtils.copyProperties(serviceDetail,serviceDetail11);
         return serviceDetailRepository.saveAndFlush(serviceDetail11);
+    }
+
+    public List<ServiceDetail> getServiceDetailByIdSchedule(int idSchedule) {
+        return serviceDetailRepository.getListIdServiceDetailByIdSchedule(idSchedule);
+    }
+
+    public List<ServiceDetail> getServiceDetailByIdSchedule1(int idSchedule) {
+        return serviceDetailRepository.getListIdServiceDetailByIdSchedule1(idSchedule);
+    }
+
+    @Transactional
+    public int updateServiceDetailByIdSchedule(int idSchedule) {
+        return serviceDetailRepository.updateServiceDetailByIdSchedule(idSchedule);
+    }
+
+    @Transactional
+    public int deleteServiceDetailByIdSchedule(int idSchedule) {
+        return serviceDetailRepository.deleteServiceDetailByIdSchedule(idSchedule);
     }
 }

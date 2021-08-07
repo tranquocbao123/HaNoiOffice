@@ -1,10 +1,12 @@
 package com.example.cs_office.Model.Entity;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import java.util.Collection;
 import java.util.Date;
 
 @Entity
@@ -16,25 +18,20 @@ public class Scheduledetail {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    @NotBlank(message = "Date may not be blank")
-    private Date date;
-    @NotBlank(message = "Start time may not be blank")
-    private String startTime;
-    @NotBlank(message = "End time may not be blank")
-    private String endTime;
     private Date createDate = new Date();
+    private java.sql.Date datePresent;
+    private boolean acceptance;
     private boolean status = true;
-    private Date editdate;
 
     @ManyToOne
-    @JoinColumn(name = "idOrderDetail")
-    @EqualsAndHashCode.Exclude
-    @ToString.Exclude
-    private OrderDetail orderDetail1;
-
-    @ManyToOne
-    @JoinColumn(name = "idShedule")
+    @JoinColumn(name = "idSchedule")
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
     private Schedule schedule;
+
+    @ManyToOne
+    @JoinColumn(name = "idShift")
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
+    private Shift shift;
 }

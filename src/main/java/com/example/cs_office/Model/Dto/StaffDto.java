@@ -4,7 +4,7 @@ import com.example.cs_office.Model.Entity.Branch;
 import com.example.cs_office.Model.Entity.Role;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import java.util.Date;
+import java.sql.Date;
 
 @Data
 @NoArgsConstructor
@@ -13,7 +13,7 @@ public class StaffDto {
     private String codeStaff;
     private String fullName;
     private boolean gender;
-    private Date birthDay;
+    private java.sql.Date birthDay;
     private String phoneNumber;
     private String address;
     private String email;
@@ -21,10 +21,9 @@ public class StaffDto {
     private String password;
     private String queQuan;
     private String hktt;
-    private String image;
     private String description;
-    private Date createDate = new Date();
+    private java.util.Date createDate = new java.util.Date();
     private boolean status = true;
-    private Branch branch;
     private Role role;
+    private Branch branch;
 }

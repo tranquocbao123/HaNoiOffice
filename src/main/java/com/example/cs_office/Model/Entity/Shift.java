@@ -10,28 +10,26 @@ import java.util.Date;
 
 @Entity
 @Data
+@AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "role")
-public class Role {
+@Table(name = "shift")
+public class Shift {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    @NotBlank(message = "Name may not be blank")
-    private String name;
+    @NotBlank(message = "Start time may not be blank")
+    private String startTime;
+    @NotBlank(message = "End time may not be blank")
+    private String endTime;
+    @NotBlank(message = "He so may not be blank")
+    private double heSo;
     private Date createDate = new Date();
     private boolean status = true;
 
     @JsonIgnore
-    @OneToMany (mappedBy = "role", cascade = CascadeType.ALL)
+    @OneToMany (mappedBy = "shift", cascade = CascadeType.ALL)
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
-    private Collection<Staff> staff;
-
-    public Role(int id, String name, Date createDate, boolean status, Collection<Staff> staff) {
-        this.id = id;
-        this.name = name;
-        this.createDate = createDate;
-        this.status = status;
-        this.staff = staff;
-    }
+    private Collection<Scheduledetail> scheduledetails;
 }

@@ -1,5 +1,6 @@
 package com.example.cs_office.Service;
 
+import com.example.cs_office.Model.Dto.CheckRoom;
 import com.example.cs_office.Model.Entity.Room;
 import com.example.cs_office.Repository.RoomRepository;
 import org.springframework.beans.BeanUtils;
@@ -39,12 +40,11 @@ public class RoomService {
         return room;
     }
 
+    public List<Room> getListRoomByTypeRoomAndBranch(String idTypeRoom, String idBranch) {
+        return roomRepository.getListRoomByTypeRoomAndBranch(idTypeRoom, idBranch);
+    }
+
     public void addNewRoom(Room room) {
-        Optional<Room> roomOptional =
-                roomRepository.findRoomById(room.getId());
-        if (roomOptional.isPresent()) {
-            throw new IllegalStateException("Id taken");
-        }
         roomRepository.save(room);
     }
 
@@ -69,9 +69,10 @@ public class RoomService {
     }
 
     @Transactional
-    public Room updateRoom(Room room, int roomId){
+    public Room updateRoom(Room room, int roomId) {
         Room room1 = this.roomRepository.getOne(roomId);
-        BeanUtils.copyProperties(room,room1);
+        BeanUtils.copyProperties(room, room1);
         return roomRepository.saveAndFlush(room1);
     }
+
 }

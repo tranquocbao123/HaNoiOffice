@@ -22,8 +22,7 @@ public class Room {
     private String codeRoom;
     @NotBlank(message = "Name may not be blank")
     private String name;
-    @NotBlank(message = "So cho ngoi may not be blank")
-
+    @NotNull(message = "Price Service may not be null")
     private int soChoNgoi;
     @NotNull(message = "Description may not be null")
     private String description;

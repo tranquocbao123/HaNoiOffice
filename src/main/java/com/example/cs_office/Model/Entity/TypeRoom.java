@@ -25,6 +25,8 @@ public class TypeRoom {
     private String name;
     @NotNull(message = "Description may not be null")
     private String description;
+    @NotNull(message = "Price Service may not be null")
+    private double priceTypeRoom;
     private Date createDate = new Date();
     private boolean status = true;
 
@@ -34,9 +36,4 @@ public class TypeRoom {
     @ToString.Exclude
     private Collection<Room> rooms;
 
-    @JsonIgnore
-    @OneToMany (mappedBy = "typeRoom1", cascade = CascadeType.ALL)
-    @EqualsAndHashCode.Exclude
-    @ToString.Exclude
-    private Collection<PriceTypeRoom> priceTypeRooms;
 }

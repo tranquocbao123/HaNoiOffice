@@ -19,6 +19,7 @@ public class Orders {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private boolean status = true;
+    private boolean acceptance;
     private Date createDate = new Date();
 
     @ManyToOne

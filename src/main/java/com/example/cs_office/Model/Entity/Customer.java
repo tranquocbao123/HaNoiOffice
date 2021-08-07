@@ -35,7 +35,7 @@ public class Customer {
     @NotNull(message = "Gender may not be null")
     private boolean gender;
     @NotNull(message = "Birthday may not be null")
-    private Date  birthDay;
+    private java.sql.Date birthDay;
     @NotBlank(message = "Password may not be empty")
     private String password;
     private Date createDate = new Date();

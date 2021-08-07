@@ -43,11 +43,6 @@ public class CustomerService {
     }
 
     public void addNewCustomer(Customer customer) {
-        Optional<Customer> customerOptional =
-                customerRepository.findCustomerById(customer.getId());
-        if (customerOptional.isPresent()) {
-            throw new IllegalStateException("Id taken");
-        }
         customerRepository.save(customer);
     }
 

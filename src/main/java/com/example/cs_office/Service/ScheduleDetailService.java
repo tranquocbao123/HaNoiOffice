@@ -1,6 +1,7 @@
 package com.example.cs_office.Service;
 
 
+import com.example.cs_office.Model.Entity.Schedule;
 import com.example.cs_office.Model.Entity.Scheduledetail;
 import com.example.cs_office.Repository.ScheduleDetailRepository;
 import org.springframework.beans.BeanUtils;
@@ -8,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.sql.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -69,5 +71,23 @@ public class ScheduleDetailService {
         Scheduledetail scheduledetail1 = this.scheduleDetailRepository.getOne(scheduledetailId);
         BeanUtils.copyProperties(scheduledetail,scheduledetail1);
         return scheduleDetailRepository.saveAndFlush(scheduledetail1);
+    }
+
+    @Transactional
+    public int updateScheduleByIdSchedule(int idSchedule) {
+        return scheduleDetailRepository.updateScheduleByIdSchedule(idSchedule);
+    }
+
+    public List<Scheduledetail> getListScheduleDetailByIdSchedule(int idOrderDetail) {
+        return scheduleDetailRepository.getListIdScheduleByIdSchedule(idOrderDetail);
+    }
+
+    public List<Scheduledetail> getListScheduleDetailByIdSchedule1(int idSchedule , Date startDate) {
+        return scheduleDetailRepository.getListIdScheduleByIdSchedule1(idSchedule, startDate);
+    }
+
+    @Transactional
+    public int deleteScheduledetailByIdSchedule(int idSchedule) {
+        return scheduleDetailRepository.deleteScheduleDetailByIdSchedule(idSchedule);
     }
 }

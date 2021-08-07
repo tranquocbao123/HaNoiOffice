@@ -16,7 +16,7 @@ public class CustomerDto {
     private String address;
     private String phoneNumber;
     private boolean gender;
-    private Date  birthDay;
+    private java.sql.Date birthDay;
     private String password;
     private Date createDate = new Date();
     private boolean status = true;

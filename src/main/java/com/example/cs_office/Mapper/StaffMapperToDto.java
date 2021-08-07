@@ -20,7 +20,6 @@ public class StaffMapperToDto {
         staff.setPassword(staffDto.getPassword());
         staff.setQueQuan(staffDto.getQueQuan());
         staff.setHktt(staffDto.getHktt());
-        staff.setImage(staffDto.getImage());
         staff.setDescription(staffDto.getDescription());
         staff.setCreateDate(new Date());
         staff.setStatus(true);
