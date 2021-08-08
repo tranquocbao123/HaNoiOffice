@@ -55,4 +55,5 @@ public class PathResources {
     public static final String ROOKBOOK = "/roomBook/{idCustomer}";
     public static final String BOOKROOMKTL = "bookroomktl";
     public static final String LISTIFBYENDSTART = "listifbyendstart";
+    public static final String TEST = "test";
 }

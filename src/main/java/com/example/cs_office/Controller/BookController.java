@@ -40,6 +40,13 @@ public class BookController {
         return roomService.getListRoomByTypeRoomAndBranch(idTypeRoom, idBranch);
     }
 
+    //get list room by id type room and id branch
+    @GetMapping(PathResources.TEST)
+    public List<Room> getTest(@Param("idTypeRoom") String idTypeRoom,
+                              @Param("idBranch") String idBranch) {
+        return roomService.getListRoomByTypeRoomAndBranch(idTypeRoom, idBranch);
+    }
+
     //book room lt not accept
     @PostMapping(PathResources.BOOKROOMLT)
     public boolean bookRoomNotAccept(@RequestBody RoomBookLT roomBookLT) {
