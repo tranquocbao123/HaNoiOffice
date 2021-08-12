@@ -115,7 +115,6 @@ public class BookService {
             orderDetail.setAcceptance(false);
             orderDetail.setRoom(room.get());
             orderDetail.setOrders2(orders);
-            orderDetail.setTotal(roomBookLT.getTotal());
             orderDetailService.addNewOrderDetail(orderDetail);
 
             //insert schedule
@@ -175,7 +174,6 @@ public class BookService {
             orderDetail.setAcceptance(false);
             orderDetail.setRoom(room.get());
             orderDetail.setOrders2(orders);
-            orderDetail.setTotal(roomBookKLT.getTotal());
             orderDetailService.addNewOrderDetail(orderDetail);
             for (ScheduleKLT obj : roomBookKLT.getSchedules()) {
 

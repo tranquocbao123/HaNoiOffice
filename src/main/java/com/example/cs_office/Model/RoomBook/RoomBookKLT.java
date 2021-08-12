@@ -12,5 +12,4 @@ public class RoomBookKLT {
     private int idCustomer;
     private String idRoom;
     List<ScheduleKLT> schedules;
-    private double total;
 }

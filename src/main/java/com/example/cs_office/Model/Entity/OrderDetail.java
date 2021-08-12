@@ -24,7 +24,6 @@ public class OrderDetail {
     private Date createDate = new Date();
     private boolean status = true;
     private boolean acceptance;
-    private double total;
 
     @ManyToOne
     @JoinColumn(name = "idorder")

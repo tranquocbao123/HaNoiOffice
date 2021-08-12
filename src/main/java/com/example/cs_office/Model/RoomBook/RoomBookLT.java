@@ -15,5 +15,4 @@ public class RoomBookLT {
     private List<Integer> listIdScheduleDetail;
     private Date startDate;
     private Date endDate;
-    private double total;
 }
