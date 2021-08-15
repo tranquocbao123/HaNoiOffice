@@ -9,6 +9,7 @@ import com.example.cs_office.Model.Entity.Room;
 import com.example.cs_office.Model.RoomBook.RoomBookKLT;
 import com.example.cs_office.Model.Search.SearchRoom;
 import com.example.cs_office.Service.*;
+import com.example.cs_office.Util.MessageReponse;
 import com.example.cs_office.Util.PathResources;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
@@ -50,13 +51,13 @@ public class BookController {
 
     //book room lt not accept
     @PostMapping(PathResources.BOOKROOMLT)
-    public boolean bookRoomNotAccept(@RequestBody RoomBookLT roomBookLT) {
+    public MessageReponse bookRoomNotAccept(@RequestBody RoomBookLT roomBookLT) {
         return bookService.bookRoomLTNotAccept(roomBookLT);
     }
 
     //book roon klt not accept
     @PostMapping(PathResources.BOOKROOMKTL)
-    public boolean roomBookKLT(@RequestBody RoomBookKLT roomBookKLT) {
+    public MessageReponse roomBookKLT(@RequestBody RoomBookKLT roomBookKLT) {
         return bookService.bookRookKLTNotAccept(roomBookKLT);
     }
 
@@ -80,6 +81,7 @@ public class BookController {
         return orderDetailService.getListOrderDetailByIdRoom(idRoom);
     }
 
+    //
     @GetMapping(PathResources.LISTBOOKROOM)
     public List<RoomBook> listRoomBook() {
         return orderDetailService.getListRoomBook();

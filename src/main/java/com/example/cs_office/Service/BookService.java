@@ -6,6 +6,8 @@ import com.example.cs_office.Model.Entity.*;
 import com.example.cs_office.Model.RoomBook.RoomBookKLT;
 import com.example.cs_office.Model.RoomBook.ScheduleKLT;
 import com.example.cs_office.Model.Search.SearchRoom;
+import com.example.cs_office.Util.Message;
+import com.example.cs_office.Util.MessageReponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -99,9 +101,10 @@ public class BookService {
         return result;
     }
 
-    public boolean bookRoomLTNotAccept(RoomBookLT roomBookLT) {
+    public MessageReponse bookRoomLTNotAccept(RoomBookLT roomBookLT) {
         Optional<Room> room = roomService.getRoomById(Integer.parseInt(roomBookLT.getIdRoom()));
         Optional<Customer> customer = customerService.getById(roomBookLT.getIdCustomer());
+        MessageReponse messageReponse = new MessageReponse();
         if (room.isPresent() && customer != null) {
 
             //insert orders
@@ -152,15 +155,18 @@ public class BookService {
                 serviceDetail.setService1(service.get());
                 serviceDetailService.addNewServiceDetail(serviceDetail);
             }
-            return true;
+            messageReponse.setMessage(Message.ORDERSUCCESS);
+            return messageReponse;
         } else {
-            return false;
+            messageReponse.setMessage(Message.ORDERNOTSUCCESS);
+            return messageReponse;
         }
     }
 
-    public boolean bookRookKLTNotAccept(RoomBookKLT roomBookKLT) {
+    public MessageReponse bookRookKLTNotAccept(RoomBookKLT roomBookKLT) {
         Optional<Room> room = roomService.getRoomById(Integer.parseInt(roomBookKLT.getIdRoom()));
         Optional<Customer> customer = customerService.getById(roomBookKLT.getIdCustomer());
+        MessageReponse messageReponse = new MessageReponse();
         if (room.isPresent() && customer != null ) {
 
             //insert orders
@@ -206,10 +212,12 @@ public class BookService {
                     serviceDetailService.addNewServiceDetail(serviceDetail);
                 }
             }
-            return true;
-        } else {
-            return false;
-        }
+                messageReponse.setMessage(Message.ORDERSUCCESS);
+                return messageReponse;
+            } else {
+                messageReponse.setMessage(Message.ORDERNOTSUCCESS);
+                return messageReponse;
+            }
     }
 
     public List<InFoRoomByStartEndTypeRomBranch> getListInfoRoom(SearchRoom searchRoom) {
