@@ -1,20 +1,19 @@
 package com.example.cs_office.Model.Dto;
 
+import com.example.cs_office.Model.Entity.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Date;
 import java.util.List;
 
 @Data
 @NoArgsConstructor
 public class RoomBook {
     private int idCustomer;
-    private int idRoom;
+    private String nameCustomer;
     private int idOrderDetail;
-    private String nameBranch;
-    private String nameTypeRoom;
-    private String nameRoom;
-    private String time;
-    private List<String> date;
-    private String service;
+    private Date createDate;
+    private boolean statusOrder;
+    private boolean statusPay;
 }

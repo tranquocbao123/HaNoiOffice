@@ -52,7 +52,7 @@ public class PathResources {
     public static final String ACCEPT = "/accept/{idOrderDetail}";
     public static final String CANCEL = "/cancel/{idOrderDetail}";
     public static final String LISTROOMSALE = "/listRoomSale/{idTypeRoom}/{idBranch}";
-    public static final String ROOKBOOK = "/roomBook/{idCustomer}";
+    public static final String ROOKBOOKDETAILSALE = "/roombookdetailsale";
     public static final String BOOKROOMKTL = "bookroomktl";
     public static final String LISTIFBYENDSTART = "listifbyendstart";
     public static final String TEST = "test";

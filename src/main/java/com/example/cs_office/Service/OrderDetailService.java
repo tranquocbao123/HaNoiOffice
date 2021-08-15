@@ -4,6 +4,7 @@ package com.example.cs_office.Service;
 import com.example.cs_office.Model.Dto.CheckRoom;
 import com.example.cs_office.Model.Dto.RoomBook;
 import com.example.cs_office.Model.Dto.RoomCustomer;
+import com.example.cs_office.Model.Dto.ScheduleCustomer;
 import com.example.cs_office.Model.Entity.*;
 import com.example.cs_office.Repository.*;
 import org.springframework.beans.BeanUtils;
@@ -107,54 +108,27 @@ public class OrderDetailService {
 
     public List<RoomBook> getListRoomBook() {
         List<RoomBook> listRoomBook = new ArrayList<>();
-        /*List<Orders> listOrders = orderRepository.findOrderByStatusAndAcceptance();
-        if (listOrders.size() > 0) {
-            for (int i = 0; i < listOrders.size(); i++) {
-                List<String> listTime = new ArrayList<>();
-                List<String> listService = new ArrayList<>();
-                List<Integer> listIdOrderDetail = new ArrayList<>();
+        List<OrderDetail> listOrderDetail = getOrderDetail();
+        if (listOrderDetail.size() == 0) {
+            return null;
+        } else {
+            for (OrderDetail orderDetail : listOrderDetail) {
                 RoomBook roomBook = new RoomBook();
-                roomBook.setIdCustomer(listOrders.get(i).getCustomer().getId());
-                List<OrderDetail> listOrderDetail = orderDetailRepository.findOrderDetailByStatusAndAcceptanceAndIdOrder(listOrders.get(i).getId());
-                for (OrderDetail orderDetail : listOrderDetail) {
-                    Room room = roomRepository.findRoomById(orderDetail.getRoom().getId());
-                    roomBook.setIdRoom(room.getId());
-                    roomBook.setNameRoom(room.getName());
-                    roomBook.setNameTypeRoom(room.getTypeRoom().getName());
-                    roomBook.setNameBranch(room.getBranch1().getName());
-                    roomBook.setIdOrderDetail(orderDetail.getId());
-                    listIdOrderDetail.add(orderDetail.getId());
-                    List<Schedule> listSchedule = scheduleRepository.getListScheduleByIdOrderDetailFalse(orderDetail.getId());
-                    for (Schedule schedule : listSchedule) {
-                        List<String> listDate = new ArrayList<>();
-                        String date = schedule.getStartDate() + "--->" + schedule.getEndDate();
-                        listDate.add(date);
-                        Optional<Scheduledetail> scheduledetail = scheduleDetailRepository.findById(schedule.getScheduledetail().getId());
-                        String time = scheduledetail.get().getStartTime() + "-" + scheduledetail.get().getEndTime();
-                        listTime.add(time);
-                        roomBook.setDate(listDate);
-                    }
-                    List<ServiceDetail> listServiceDetail = serviceDetailRepository.getListServiceDetailByIdOrderDetailFalse(orderDetail.getId());
-                    for (ServiceDetail serviceDetail : listServiceDetail) {
-                        Optional<com.example.cs_office.Model.Entity.Service> service = serviceRepository.findById(serviceDetail.getService1().getId());
-                        String sv = service.get().getName();
-                        listService.add(sv);
-                    }
+                Optional<Orders> orders = orderRepository.findOrderById(orderDetail.getOrders2().getId());
+                if (orders.isPresent()) {
+                    roomBook.setIdCustomer(orders.get().getCustomer().getId());
+                    roomBook.setNameCustomer(orders.get().getCustomer().getFirstName() + orders.get().getCustomer().getLastName());
+                } else {
+                    return null;
                 }
-                String time = null;
-                for (String j : listTime) {
-                    time += ", " + j;
-                }
-                String service = null;
-                for (String j : listService) {
-                    service += ", " + j;
-                }
-                roomBook.setTime(time.substring(6, time.length()));
-                roomBook.setService(service.substring(6, service.length()));
+                roomBook.setIdOrderDetail(orderDetail.getId());
+                roomBook.setCreateDate(orderDetail.getCreateDate());
+                roomBook.setStatusOrder(orderDetail.isAcceptance());
+                roomBook.setStatusPay(orderDetail.isStatus());
                 listRoomBook.add(roomBook);
             }
-        }*/
-        return listRoomBook;
+            return listRoomBook;
+        }
     }
 
     @Transactional
@@ -178,66 +152,51 @@ public class OrderDetailService {
         return listCheckRoom;
     }
 
-    public List<RoomCustomer> listRoomBook(int idCustomer) {
-        List<RoomCustomer> listRoomCustomer = new ArrayList<>();
-        /*List<Orders> listOrders = orderRepository.listOrderDetailByIdCustomer(idCustomer);
-        if (listOrders.size() > 0) {
-            for (Orders orders : listOrders) {
-                List<String> listTime = new ArrayList<>();
-                List<String> listService = new ArrayList<>();
-                double total = 0;
-                double priceRoom = 0;
-                double priceService = 0;
-                double countCa = 0 ;
-                double countDate = 0;
-                RoomCustomer roomCustomer = new RoomCustomer();
-                List<OrderDetail> listOrderDetail = orderDetailRepository.findOrderDetailByCustomer(orders.getId());
-                for(OrderDetail orderDetail : listOrderDetail) {
-                    roomCustomer.setIdOrderDetail(orderDetail.getId());
-                    roomCustomer.setIdRoom(orderDetail.getRoom().getId());
-                    Room room = roomRepository.findRoomById(orderDetail.getRoom().getId());
-                    priceRoom = typeRoomRepository.findTypeRoomById(room.getTypeRoom().getId()).get().getPriceTypeRoom();
-                    roomCustomer.setNameRoom(room.getName());
-                    roomCustomer.setNameTypeRoom(room.getTypeRoom().getName());
-                    roomCustomer.setNameBranch(room.getBranch1().getName());
-                    List<ServiceDetail> listServiceDetail = serviceDetailRepository.getListServiceDetailByIdOrderDetailCustomer(orderDetail.getId());
-                    for(ServiceDetail serviceDetail : listServiceDetail) {
-                        Optional<com.example.cs_office.Model.Entity.Service> service = serviceRepository.findById(serviceDetail.getService1().getId());
-                        String sv = service.get().getName();
-                        listService.add(sv);
-                        priceService += service.get().getPriceService();
+    public RoomCustomer listRoomBook(int idOrderDetail) {
+        RoomCustomer roomCustomer = new RoomCustomer();
+        Optional<OrderDetail> orderDetail = orderDetailRepository.findOrderDetailById(idOrderDetail);
+        if (orderDetail.isPresent()) {
+            Room room = roomRepository.findRoomById(orderDetail.get().getRoom().getId());
+            if (room != null) {
+                roomCustomer.setBranch(room.getBranch1());
+                roomCustomer.setTypeRoom(room.getTypeRoom());
+                List<Room> listRoom = roomRepository.getRoomBySo(room.getTypeRoom().getId(),room.getBranch1().getId(),room.getSoChoNgoi()-3, room.getSoChoNgoi() + 3);
+                if(listRoom.size() == 0) {
+                    return null;
+                }else {
+                    roomCustomer.setListRoom(listRoom);
+                    List<ScheduleCustomer> listScheduleCustomer = new ArrayList<>();
+                    List<Schedule> listSchedule = scheduleRepository.getScheduleByIdOrderDetail(orderDetail.get().getId());
+                    if(listSchedule.size() == 0) {
+                        roomCustomer.setListScheduleCustomer(null);
+                    }else{
+                        for (Schedule schedule : listSchedule) {
+                            ScheduleCustomer scheduleCustomer = new ScheduleCustomer();
+                            List<ServiceDetail> listServiceDetail = serviceDetailRepository.getServiceDetailByIdSchedule(schedule.getId());
+                            List<com.example.cs_office.Model.Entity.Service> listService = new ArrayList<>();
+                            for (ServiceDetail serviceDetail : listServiceDetail) {
+                                listService.add(serviceDetail.getService1());
+                                scheduleCustomer.setListService(listService);
+                            }
+                            List<Scheduledetail> listScheduleDetail = scheduleDetailRepository.getScheduleByIdSchedule(schedule.getId());
+                            List<Shift> listShift = new ArrayList<>();
+                            for(Scheduledetail scheduledetail : listScheduleDetail) {
+                                listShift.add(scheduledetail.getShift());
+                                scheduleCustomer.setListShift(listShift);
+                                scheduleCustomer.setDatePresent(scheduledetail.getDatePresent());
+                            }
+                            listScheduleCustomer.add(scheduleCustomer);
+                        }
                     }
-                    List<Schedule> listSchedule = scheduleRepository.getListScheduleByIdOrderDetailCustomer(orderDetail.getId());
-                    countCa = listSchedule.size();
-                    for (Schedule schedule : listSchedule) {
-                        List<String> listDate = new ArrayList<>();
-                        String date = schedule.getStartDate() + "--->" + schedule.getEndDate();
-                        listDate.add(date);
-                        Optional<Scheduledetail> scheduledetail = scheduleDetailRepository.findById(schedule.getScheduledetail().getId());
-                        String time = scheduledetail.get().getStartTime() + "-" + scheduledetail.get().getEndTime();
-                        listTime.add(time);
-                        roomCustomer.setDate(listDate);
-
-                        countDate = schedule.getEndDate().getTime() - schedule.getStartDate().getTime();
-                    }
-                    String time = null;
-                    for (String j : listTime) {
-                        time += ", " + j;
-                    }
-                    String service = null;
-                    for (String j : listService) {
-                        service += ", " + j;
-                    }
-                    int date = (int) (countDate / (1000 * 60 * 60 * 24));
-                    roomCustomer.setTotal((priceRoom+priceService)*date*countCa);
-                    roomCustomer.setTime(time.substring(6, time.length()));
-                    roomCustomer.setService(service.substring(6, service.length()));
-                    roomCustomer.setStatus(orderDetail.isStatus());
-                    listRoomCustomer.add(roomCustomer);
+                    roomCustomer.setListScheduleCustomer(listScheduleCustomer);
+                    return roomCustomer;
                 }
+            } else {
+                return null;
             }
-        }*/
-        return listRoomCustomer;
+        } else {
+            return null;
+        }
     }
 
     public List<OrderDetail> listOrderDetailByIdRoom(int idRoom) {

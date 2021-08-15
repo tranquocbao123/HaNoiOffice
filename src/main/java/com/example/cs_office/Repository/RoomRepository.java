@@ -31,4 +31,9 @@ public interface RoomRepository extends JpaRepository<Room,Integer> {
     List<Room> getListRoomByTypeRoomAndBranch(@Param("id_TypeRoom") String idTypeRoom,
                                @Param("id_Branch") String idBranch);
 
+    @Query(value = "{CALL get_list_room(:id_TypeRoom, :id_Branch, :min, :max)}" , nativeQuery = true)
+    List<Room> getRoomBySo(@Param("id_TypeRoom") int idTypeRoom,
+                           @Param("id_Branch") int idBranch,
+                           @Param("min") int min,
+                           @Param("max") int max);
 }

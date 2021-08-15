@@ -81,7 +81,7 @@ public class BookController {
         return orderDetailService.getListOrderDetailByIdRoom(idRoom);
     }
 
-    //
+    // lấy ra danh sách các phòng khách hàng đã đặt
     @GetMapping(PathResources.LISTBOOKROOM)
     public List<RoomBook> listRoomBook() {
         return orderDetailService.getListRoomBook();
@@ -93,9 +93,10 @@ public class BookController {
         return orderDetailService.listRoomSale(idTypeRoom, idBranch);
     }
 
-    @GetMapping(PathResources.ROOKBOOK)
-    public List<RoomCustomer> listRoomByIdCustomer(@PathVariable("idCustomer") int idCustomer) {
-        return orderDetailService.listRoomBook(idCustomer);
+    // lấy ra chi tiết phòng đã đặt theo id orderdetail
+    @GetMapping(PathResources.ROOKBOOKDETAILSALE)
+    public RoomCustomer getRoomDetailSale(@Param("idOrderDetail") int idOrderDetail) {
+        return orderDetailService.listRoomBook(idOrderDetail);
     }
 
     @GetMapping(PathResources.TOTALBYIDORDETAIL)
