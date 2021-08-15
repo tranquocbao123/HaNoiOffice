@@ -102,7 +102,7 @@ public class OrderDetailService {
 
     public CheckRoom getListOrderDetailByIdRoom(int idRoom) {
         CheckRoom checkRoom = new CheckRoom();
-            return checkRoom;
+        return checkRoom;
     }
 
     public List<RoomBook> getListRoomBook() {
@@ -167,10 +167,10 @@ public class OrderDetailService {
         return orderDetailRepository.updateStatusByIdOrderDetail(idOrderDetail);
     }
 
-    public List<CheckRoom> listRoomSale (String idTypeRoom, String idBranch) {
+    public List<CheckRoom> listRoomSale(String idTypeRoom, String idBranch) {
         List<CheckRoom> listCheckRoom = new ArrayList<>();
         List<Room> listRoom = roomRepository.getListRoomByTypeRoomAndBranch(idTypeRoom, idBranch);
-        if(listRoom.size() > 0 ) {
+        if (listRoom.size() > 0) {
             for (Room room : listRoom) {
                 listCheckRoom.add(getListOrderDetailByIdRoom(room.getId()));
             }
@@ -240,8 +240,23 @@ public class OrderDetailService {
         return listRoomCustomer;
     }
 
-    public List<OrderDetail> listOrderDetailByIdRoom (int idRoom) {
+    public List<OrderDetail> listOrderDetailByIdRoom(int idRoom) {
         return orderDetailRepository.listOrderDetailByIdRoom(idRoom);
     }
 
+    public double getTotalByIdOrderDetail(int idOrderDetail) {
+        if (orderDetailRepository.getTotalByIdOrderDetail(idOrderDetail) == null) {
+            return 0;
+        } else {
+            return Double.parseDouble(orderDetailRepository.getTotalByIdOrderDetail(idOrderDetail));
+        }
+    }
+
+    public double getTotal() {
+        if (orderDetailRepository.getTotal() == null) {
+            return 0;
+        } else {
+            return Double.parseDouble(orderDetailRepository.getTotal());
+        }
+    }
 }

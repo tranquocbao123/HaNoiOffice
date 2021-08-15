@@ -96,4 +96,14 @@ public class BookController {
         return orderDetailService.listRoomBook(idCustomer);
     }
 
+    @GetMapping(PathResources.TOTALBYIDORDETAIL)
+    public double totalByIdOrderDetail(@Param("idOrderDetail") int idOrderDetail) {
+        return orderDetailService.getTotalByIdOrderDetail(idOrderDetail);
+    }
+
+    @GetMapping(PathResources.TOTAL)
+    public double getTotal() {
+        return orderDetailService.getTotal();
+    }
+
 }

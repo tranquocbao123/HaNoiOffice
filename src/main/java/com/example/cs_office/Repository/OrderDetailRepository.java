@@ -56,4 +56,10 @@ public interface OrderDetailRepository extends JpaRepository<OrderDetail,Integer
 
     @Query("select  c from OrderDetail c where c.room.id = ?1 and c.status = true")
     List<OrderDetail> listOrderDetailByIdRoom(int idRoom);
+
+    @Query(value = "{CALL get_total_by_idOrderDetail(:id_Order)}" , nativeQuery = true)
+    String getTotalByIdOrderDetail (@Param("id_Order") int idOrderDetail);
+
+    @Query(value = "{CALL total_order}" , nativeQuery = true)
+    String getTotal ();
 }
