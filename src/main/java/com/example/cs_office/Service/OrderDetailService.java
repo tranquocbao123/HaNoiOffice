@@ -171,21 +171,21 @@ public class OrderDetailService {
                         roomCustomer.setListScheduleCustomer(null);
                     }else{
                         for (Schedule schedule : listSchedule) {
-                            ScheduleCustomer scheduleCustomer = new ScheduleCustomer();
                             List<ServiceDetail> listServiceDetail = serviceDetailRepository.getServiceDetailByIdSchedule(schedule.getId());
                             List<com.example.cs_office.Model.Entity.Service> listService = new ArrayList<>();
                             for (ServiceDetail serviceDetail : listServiceDetail) {
                                 listService.add(serviceDetail.getService1());
-                                scheduleCustomer.setListService(listService);
                             }
                             List<Scheduledetail> listScheduleDetail = scheduleDetailRepository.getScheduleByIdSchedule(schedule.getId());
-                            List<Shift> listShift = new ArrayList<>();
                             for(Scheduledetail scheduledetail : listScheduleDetail) {
+                                List<Shift> listShift = new ArrayList<>();
+                                ScheduleCustomer scheduleCustomer = new ScheduleCustomer();
                                 listShift.add(scheduledetail.getShift());
                                 scheduleCustomer.setListShift(listShift);
                                 scheduleCustomer.setDatePresent(scheduledetail.getDatePresent());
+                                scheduleCustomer.setListService(listService);
+                                listScheduleCustomer.add(scheduleCustomer);
                             }
-                            listScheduleCustomer.add(scheduleCustomer);
                         }
                     }
                     roomCustomer.setListScheduleCustomer(listScheduleCustomer);
