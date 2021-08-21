@@ -8,6 +8,7 @@ import com.example.cs_office.Model.Dto.RoomCustomer;
 import com.example.cs_office.Model.Entity.Room;
 import com.example.cs_office.Model.RoomBook.RoomBookKLT;
 import com.example.cs_office.Model.Search.SearchRoom;
+import com.example.cs_office.Model.Search.SearchRoomSale;
 import com.example.cs_office.Service.*;
 import com.example.cs_office.Util.MessageReponse;
 import com.example.cs_office.Util.PathResources;
@@ -72,7 +73,7 @@ public class BookController {
     }
 
     @GetMapping(PathResources.LISTIFBYENDSTART)
-    public List<InFoRoomByStartEndTypeRomBranch> list (@RequestBody SearchRoom searchRoom) {
+    public List<InFoRoomByStartEndTypeRomBranch> list(@RequestBody SearchRoom searchRoom) {
         return bookService.getListInfoRoom(searchRoom);
     }
 
@@ -87,6 +88,14 @@ public class BookController {
         return orderDetailService.getListRoomBook();
     }
 
+    // tìm kiếm phòng theo idTypeRoom, idBranch, số chỗ ngồi
+    @GetMapping(PathResources.SEARCHROOM)
+    public List<SearchRoomSale> listRoomSaleSearch(@Param("idTypeRoom") int idTypeRoom,
+                                                   @Param("idBranch") int idBranch,
+                                                   @Param("soChoNgoi") int soChoNgoi) {
+        return orderDetailService.listRoomSaleSearch(idTypeRoom, idBranch, soChoNgoi);
+    }
+
     @GetMapping(PathResources.LISTROOMSALE)
     public List<CheckRoom> listRoomSale(@PathVariable("idTypeRoom") String idTypeRoom,
                                         @PathVariable("idBranch") String idBranch) {
@@ -98,6 +107,12 @@ public class BookController {
     public RoomCustomer getRoomDetailSale(@Param("idOrderDetail") int idOrderDetail) {
         return orderDetailService.listRoomBook(idOrderDetail);
     }
+
+    /*// lấy ra chi tiết phòng đã đặt theo id orderdetail
+    @GetMapping(PathResources.ROOKBOOKLETAN)
+    public RoomCustomer getRoomLeTan() {
+        return orderDetailService.listRoomLeTan();
+    }*/
 
     @GetMapping(PathResources.TOTALBYIDORDETAIL)
     public double totalByIdOrderDetail(@Param("idOrderDetail") int idOrderDetail) {

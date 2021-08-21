@@ -53,8 +53,10 @@ public class PathResources {
     public static final String CANCEL = "/cancel/{idOrderDetail}";
     public static final String LISTROOMSALE = "/listRoomSale/{idTypeRoom}/{idBranch}";
     public static final String ROOKBOOKDETAILSALE = "/roombookdetailsale";
-    public static final String BOOKROOMKTL = "bookroomktl";
+    public static final String ROOKBOOKLETAN = "/roombookletan";
+    public static final String BOOKROOMKTL = "bookroomklt";
     public static final String LISTIFBYENDSTART = "listifbyendstart";
+    public static final String SEARCHROOM = "searchRoom";
     public static final String TEST = "test";
     public static final String TOTALBYIDORDETAIL = "totalbyid";
     public static final String TOTAL = "total";

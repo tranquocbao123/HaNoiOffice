@@ -6,6 +6,8 @@ import com.example.cs_office.Model.Dto.RoomBook;
 import com.example.cs_office.Model.Dto.RoomCustomer;
 import com.example.cs_office.Model.Dto.ScheduleCustomer;
 import com.example.cs_office.Model.Entity.*;
+import com.example.cs_office.Model.Search.ScheduleSale;
+import com.example.cs_office.Model.Search.SearchRoomSale;
 import com.example.cs_office.Repository.*;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
@@ -118,6 +120,7 @@ public class OrderDetailService {
                 if (orders.isPresent()) {
                     roomBook.setIdCustomer(orders.get().getCustomer().getId());
                     roomBook.setNameCustomer(orders.get().getCustomer().getFirstName() + orders.get().getCustomer().getLastName());
+                    roomBook.setNumberPhone(orders.get().getCustomer().getPhoneNumber());
                 } else {
                     return null;
                 }
@@ -160,16 +163,21 @@ public class OrderDetailService {
             if (room != null) {
                 roomCustomer.setBranch(room.getBranch1());
                 roomCustomer.setTypeRoom(room.getTypeRoom());
-                List<Room> listRoom = roomRepository.getRoomBySo(room.getTypeRoom().getId(),room.getBranch1().getId(),room.getSoChoNgoi()-3, room.getSoChoNgoi() + 3);
-                if(listRoom.size() == 0) {
+                int max = room.getSoChoNgoi() + 3;
+                int min = 0;
+                if (room.getSoChoNgoi() > 3) {
+                    min = room.getSoChoNgoi() - 3;
+                }
+                List<Room> listRoom = roomRepository.getRoomBySo(room.getTypeRoom().getId(), room.getBranch1().getId(), min, max);
+                if (listRoom.size() == 0) {
                     return null;
-                }else {
+                } else {
                     roomCustomer.setListRoom(listRoom);
                     List<ScheduleCustomer> listScheduleCustomer = new ArrayList<>();
                     List<Schedule> listSchedule = scheduleRepository.getScheduleByIdOrderDetail(orderDetail.get().getId());
-                    if(listSchedule.size() == 0) {
+                    if (listSchedule.size() == 0) {
                         roomCustomer.setListScheduleCustomer(null);
-                    }else{
+                    } else {
                         for (Schedule schedule : listSchedule) {
                             List<ServiceDetail> listServiceDetail = serviceDetailRepository.getServiceDetailByIdSchedule(schedule.getId());
                             List<com.example.cs_office.Model.Entity.Service> listService = new ArrayList<>();
@@ -177,11 +185,9 @@ public class OrderDetailService {
                                 listService.add(serviceDetail.getService1());
                             }
                             List<Scheduledetail> listScheduleDetail = scheduleDetailRepository.getScheduleByIdSchedule(schedule.getId());
-                            for(Scheduledetail scheduledetail : listScheduleDetail) {
-                                List<Shift> listShift = new ArrayList<>();
+                            for (Scheduledetail scheduledetail : listScheduleDetail) {
                                 ScheduleCustomer scheduleCustomer = new ScheduleCustomer();
-                                listShift.add(scheduledetail.getShift());
-                                scheduleCustomer.setListShift(listShift);
+                                scheduleCustomer.setShift(scheduledetail.getShift());
                                 scheduleCustomer.setDatePresent(scheduledetail.getDatePresent());
                                 scheduleCustomer.setListService(listService);
                                 listScheduleCustomer.add(scheduleCustomer);
@@ -196,6 +202,50 @@ public class OrderDetailService {
             }
         } else {
             return null;
+        }
+    }
+
+    public List<SearchRoomSale> listRoomSaleSearch(int idTypeRoom, int idBranch, int soChoNgoi) {
+        List<SearchRoomSale> listSearchRoomSale = new ArrayList<>();
+        int max = soChoNgoi + 3;
+        int min = 0;
+        if (soChoNgoi > 3) {
+            min = soChoNgoi - 3;
+        }
+        List<Room> listRoom = roomRepository.getRoomBySo(idTypeRoom, idBranch, min, max);
+        if (listRoom.size() > 0) {
+            for (Room room : listRoom) {
+                SearchRoomSale searchRoomSale = new SearchRoomSale();
+                List<OrderDetail> listOrderDetail = orderDetailRepository.findOrderDetailByIdRoom(room.getId());
+                if (listOrderDetail.size() > 0) {
+                    List<ScheduleSale> listScheduleSale = new ArrayList<>();
+                    for (OrderDetail orderDetail : listOrderDetail) {
+                        List<Schedule> listSchedule = scheduleRepository.getScheduleByIdOrderDetail(orderDetail.getId());
+                        if (listSchedule.size() == 0) {
+                            searchRoomSale.setListScheduleSale(null);
+                        } else {
+                            for (Schedule schedule : listSchedule) {
+                                List<Scheduledetail> listScheduleDetail = scheduleDetailRepository.getScheduleByIdSchedule(schedule.getId());
+                                for (Scheduledetail scheduledetail : listScheduleDetail) {
+                                    ScheduleSale scheduleSale = new ScheduleSale();
+                                    scheduleSale.setDatePresent(scheduledetail.getDatePresent());
+                                    scheduleSale.setShift(scheduledetail.getShift());
+                                    listScheduleSale.add(scheduleSale);
+                                }
+                            }
+                        }
+                    }
+                    searchRoomSale.setRoom(room);
+                    searchRoomSale.setListScheduleSale(listScheduleSale);
+                    listSearchRoomSale.add(searchRoomSale);
+                } else {
+                    searchRoomSale.setRoom(room);
+                    listSearchRoomSale.add(searchRoomSale);
+                }
+            }
+            return listSearchRoomSale;
+        } else {
+            return listSearchRoomSale;
         }
     }
 

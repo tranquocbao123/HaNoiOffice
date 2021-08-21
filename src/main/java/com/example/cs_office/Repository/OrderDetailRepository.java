@@ -21,6 +21,10 @@ public interface OrderDetailRepository extends JpaRepository<OrderDetail,Integer
     @Query("select s from OrderDetail s where s.id = ?1")
     Optional<OrderDetail> findOrderDetailById(Integer id);
 
+    //select Order Detail by id room
+    @Query("select s from OrderDetail s where s.room.id = ?1")
+    List<OrderDetail> findOrderDetailByIdRoom(Integer id);
+
     //select Order Detail by status
     @Query("select c from OrderDetail c where c.status = ?1")
     List<OrderDetail> findOrderDetailByStatus(boolean status);

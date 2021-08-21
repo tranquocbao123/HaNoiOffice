@@ -1,6 +1,5 @@
-package com.example.cs_office.Model.Dto;
+package com.example.cs_office.Model.Search;
 
-import com.example.cs_office.Model.Entity.Service;
 import com.example.cs_office.Model.Entity.Shift;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -10,8 +9,7 @@ import java.util.List;
 
 @Data
 @NoArgsConstructor
-public class ScheduleCustomer {
+public class ScheduleSale {
     private Date datePresent;
     private Shift shift;
-    private List<Service> listService;
 }
