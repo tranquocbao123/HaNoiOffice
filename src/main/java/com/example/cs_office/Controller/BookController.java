@@ -1,6 +1,7 @@
 package com.example.cs_office.Controller;
 
 import com.example.cs_office.Model.InFoRoom.InFoRoomByStartEndTypeRomBranch;
+import com.example.cs_office.Model.RoomBook.RoomBookAccecpSale;
 import com.example.cs_office.Model.RoomBook.RoomBookLT;
 import com.example.cs_office.Model.Dto.CheckRoom;
 import com.example.cs_office.Model.Dto.RoomBook;
@@ -107,6 +108,12 @@ public class BookController {
     public RoomCustomer getRoomDetailSale(@Param("idOrderDetail") int idOrderDetail) {
         return orderDetailService.listRoomBook(idOrderDetail);
     }
+
+    @PostMapping(PathResources.SALEACCEPT)
+    public RoomBookAccecpSale saleAccept(@Param("idOrderDetail") int idOrderDetail) {
+        return null;
+    }
+
 
     /*// lấy ra chi tiết phòng đã đặt theo id orderdetail
     @GetMapping(PathResources.ROOKBOOKLETAN)
