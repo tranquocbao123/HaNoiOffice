@@ -1,10 +1,8 @@
 package com.example.cs_office.Service;
 
 import com.example.cs_office.Model.InFoRoom.InFoRoomByStartEndTypeRomBranch;
-import com.example.cs_office.Model.RoomBook.RoomBookLT;
+import com.example.cs_office.Model.RoomBook.*;
 import com.example.cs_office.Model.Entity.*;
-import com.example.cs_office.Model.RoomBook.RoomBookKLT;
-import com.example.cs_office.Model.RoomBook.ScheduleKLT;
 import com.example.cs_office.Model.Search.SearchRoom;
 import com.example.cs_office.Util.Message;
 import com.example.cs_office.Util.MessageReponse;
@@ -167,7 +165,7 @@ public class BookService {
         Optional<Room> room = roomService.getRoomById(Integer.parseInt(roomBookKLT.getIdRoom()));
         Optional<Customer> customer = customerService.getById(roomBookKLT.getIdCustomer());
         MessageReponse messageReponse = new MessageReponse();
-        if (room.isPresent() && customer != null ) {
+        if (room.isPresent() && customer != null) {
 
             //insert orders
             Orders orders = new Orders();
@@ -212,12 +210,12 @@ public class BookService {
                     serviceDetailService.addNewServiceDetail(serviceDetail);
                 }
             }
-                messageReponse.setMessage(Message.ORDERSUCCESS);
-                return messageReponse;
-            } else {
-                messageReponse.setMessage(Message.ORDERNOTSUCCESS);
-                return messageReponse;
-            }
+            messageReponse.setMessage(Message.ORDERSUCCESS);
+            return messageReponse;
+        } else {
+            messageReponse.setMessage(Message.ORDERNOTSUCCESS);
+            return messageReponse;
+        }
     }
 
     public List<InFoRoomByStartEndTypeRomBranch> getListInfoRoom(SearchRoom searchRoom) {
@@ -250,11 +248,11 @@ public class BookService {
                                     }
                                 }
                                 List<Scheduledetail> listScheduleDetail = scheduleDetailService.getListScheduleDetailByIdSchedule1(schedule.getId(), schedule.getStartDate());
-                                if(listScheduleDetail.size() > 0) {
+                                if (listScheduleDetail.size() > 0) {
                                     String s;
                                     for (Scheduledetail scheduledetail : listScheduleDetail) {
                                         Optional<Shift> shift = shiftService.getShiftById(scheduledetail.getShift().getId());
-                                        if(shift.isPresent()) {
+                                        if (shift.isPresent()) {
                                             s = shift.get().getStartTime() + "-" + shift.get().getEndTime();
                                             listShift.add(s);
                                         }
@@ -293,5 +291,104 @@ public class BookService {
             return list;
         }
         return list;
+    }
+
+    public MessageReponse saleAccept(int idOrderDetail, RoomBookAccecpSale roomBookAccecpSale) {
+        MessageReponse messageReponse = new MessageReponse();
+        boolean result = deleteSchedule(idOrderDetail);
+        if (result) {
+            Optional<Room> room = roomService.getRoomById(Integer.parseInt(roomBookAccecpSale.getIdRoom()));
+            Optional<Customer> customer = customerService.getById(roomBookAccecpSale.getIdCustomer());
+            if (room.isPresent() && customer != null) {
+
+                //insert orders
+                Orders orders = new Orders();
+                orders.setAcceptance(true);
+                orders.setCustomer(customer.get());
+                orderService.addNewOrder(orders);
+
+                //insert orderDetail
+                OrderDetail orderDetail = new OrderDetail();
+                orderDetail.setAcceptance(true);
+                orderDetail.setRoom(room.get());
+                orderDetail.setOrders2(orders);
+                orderDetailService.addNewOrderDetail(orderDetail);
+
+                for (ScheduleSale obj : roomBookAccecpSale.getSchedules()) {
+
+                    //insert schedule
+                    Schedule schedule = new Schedule();
+                    schedule.setAcceptance(true);
+                    schedule.setStartDate(obj.getStartDate());
+                    schedule.setEndDate(obj.getEndDate());
+                    schedule.setOrderDetail(orderDetail);
+                    scheduleService.addNewSchedule(schedule);
+
+                    //insert schedule detail
+                    String startDate = String.valueOf(obj.getStartDate());
+                    String endDate = String.valueOf(obj.getEndDate());
+                    LocalDate start = LocalDate.parse(startDate),
+                            end = LocalDate.parse(endDate);
+                    LocalDate next = start.minusDays(1);
+                    while ((next = next.plusDays(1)).isBefore(end.plusDays(1))) {
+                        for (Integer i : obj.getListShift()) {
+                            Scheduledetail scheduledetail = new Scheduledetail();
+                            Optional<Shift> shift = shiftService.getShiftById(i);
+                            scheduledetail.setAcceptance(true);
+                            scheduledetail.setDatePresent(Date.valueOf(next));
+                            scheduledetail.setSchedule(schedule);
+                            scheduledetail.setShift(shift.get());
+                            scheduleDetailService.addNewScheduledetail(scheduledetail);
+                        }
+                    }
+
+                    //insert service detail
+                    for (Integer j : obj.getListService()) {
+                        ServiceDetail serviceDetail = new ServiceDetail();
+                        serviceDetail.setAcceptance(true);
+                        serviceDetail.setSchedule(schedule);
+                        Optional<com.example.cs_office.Model.Entity.Service> service = serService.getServiceById(j);
+                        serviceDetail.setService1(service.get());
+                        serviceDetailService.addNewServiceDetail(serviceDetail);
+                    }
+                }
+                messageReponse.setMessage(Message.ACCEPTSUCCESS);
+            }
+        } else {
+            messageReponse.setMessage(Message.ACCEPTFAIl);
+        }
+        return messageReponse;
+    }
+
+    public MessageReponse saleNotAccept(int idOrderDetail) {
+        MessageReponse messageReponse = new MessageReponse();
+        boolean result = deleteSchedule(idOrderDetail);
+        if (result) {
+            messageReponse.setMessage(Message.NOTACCEPTSUCCESS);
+        } else {
+            messageReponse.setMessage(Message.NOTACCEPTFAIl);
+        }
+        return messageReponse;
+    }
+
+    public boolean deleteSchedule(int idOrderDetail) {
+        Optional<OrderDetail> orderDetail = orderDetailService.getOrderDetailById(idOrderDetail);
+        if (orderDetail.isPresent()) {
+            List<Schedule> listSchedule = scheduleService.getListScheduleByIdOrderDetail2(idOrderDetail);
+            if (listSchedule.size() > 0) {
+                for (Schedule schedule : listSchedule) {
+                    scheduleDetailService.deleteScheduledetailByIdSchedule(schedule.getId());
+                    serviceDetailService.deleteServiceDetailByIdSchedule(schedule.getId());
+                    scheduleService.deleteSchedule(schedule.getId());
+                }
+            } else {
+                return false;
+            }
+            orderDetailService.deleteOrderDetail(idOrderDetail);
+            orderService.deleteOrder(orderDetail.get().getOrders2().getId());
+        } else {
+            return false;
+        }
+        return true;
     }
 }

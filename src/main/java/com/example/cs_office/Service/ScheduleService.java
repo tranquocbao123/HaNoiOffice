@@ -60,6 +60,10 @@ public class ScheduleService {
         return scheduleRepository.getListIdScheduleByIdOrderDetail1(idOrderDetail);
     }
 
+    public List<Schedule> getListScheduleByIdOrderDetail2(int idOrderDetail) {
+        return scheduleRepository.getListIdScheduleByIdOrderDetail2(idOrderDetail);
+    }
+
     @Transactional
     public Schedule updateScheduleStatus(Schedule schedule) {
         schedule.setStatus(false);

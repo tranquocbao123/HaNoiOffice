@@ -66,4 +66,7 @@ public interface OrderDetailRepository extends JpaRepository<OrderDetail,Integer
 
     @Query(value = "{CALL total_order}" , nativeQuery = true)
     String getTotal ();
+
+    @Query("select c from OrderDetail c order by createDate desc ")
+    List<OrderDetail> getOrderDetailOrderByCreateDate();
 }

@@ -109,9 +109,17 @@ public class BookController {
         return orderDetailService.listRoomBook(idOrderDetail);
     }
 
+    //sale accept
     @PostMapping(PathResources.SALEACCEPT)
-    public RoomBookAccecpSale saleAccept(@Param("idOrderDetail") int idOrderDetail) {
-        return null;
+    public MessageReponse saleAccept(@Param("idOrderDetail") int idOrderDetail,
+                                     @RequestBody RoomBookAccecpSale roomBookAccecpSale) {
+        return bookService.saleAccept(idOrderDetail,roomBookAccecpSale);
+    }
+
+    //sale not accept
+    @PostMapping(PathResources.SALENOTACCEPT)
+    public MessageReponse saleNotAccept(@Param("idOrderDetail") int idOrderDetail) {
+        return bookService.saleNotAccept(idOrderDetail);
     }
 
 

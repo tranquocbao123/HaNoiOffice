@@ -63,4 +63,8 @@ public interface ScheduleRepository extends JpaRepository<Schedule,Integer> {
     //select schedule by id orderdetail
     @Query("select c from Schedule c where c.orderDetail.id = ?1 and c.status = true")
     List<Schedule> getListIdScheduleByIdOrderDetail1(int idOrderDetail);
+
+    //select schedule by id orderdetail
+    @Query("select c from Schedule c where c.orderDetail.id = ?1")
+    List<Schedule> getListIdScheduleByIdOrderDetail2(int idOrderDetail);
 }

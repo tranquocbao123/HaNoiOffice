@@ -53,6 +53,10 @@ public class OrderDetailService {
         return orderDetailRepository.findAll();
     }
 
+    public List<OrderDetail> getOrderDetailOrderByCreateDate() {
+        return orderDetailRepository.getOrderDetailOrderByCreateDate();
+    }
+
     public List<OrderDetail> getOrderDetailByStatus(boolean status) {
 
         return orderDetailRepository.findOrderDetailByStatus(status);
@@ -110,7 +114,7 @@ public class OrderDetailService {
 
     public List<RoomBook> getListRoomBook() {
         List<RoomBook> listRoomBook = new ArrayList<>();
-        List<OrderDetail> listOrderDetail = getOrderDetail();
+        List<OrderDetail> listOrderDetail = getOrderDetailOrderByCreateDate();
         if (listOrderDetail.size() == 0) {
             return null;
         } else {
