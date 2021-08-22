@@ -11,5 +11,5 @@ import java.util.List;
 @NoArgsConstructor
 public class ScheduleSale {
     private Date datePresent;
-    private Shift shift;
+    private List<Shift> listShift;
 }

@@ -246,12 +246,27 @@ public class OrderDetailService {
                             searchRoomSale.setListScheduleSale(null);
                         } else {
                             for (Schedule schedule : listSchedule) {
-                                List<Scheduledetail> listScheduleDetail = scheduleDetailRepository.getScheduleByIdSchedule(schedule.getId());
-                                for (Scheduledetail scheduledetail : listScheduleDetail) {
+                                String startDate = String.valueOf(schedule.getStartDate());
+                                String endDate = String.valueOf(schedule.getEndDate());
+                                LocalDate start = LocalDate.parse(startDate),
+                                        end = LocalDate.parse(endDate);
+                                LocalDate next = start.minusDays(1);
+                                while ((next = next.plusDays(1)).isBefore(end.plusDays(1))) {
                                     ScheduleSale scheduleSale = new ScheduleSale();
-                                    scheduleSale.setDatePresent(scheduledetail.getDatePresent());
-                                    scheduleSale.setShift(scheduledetail.getShift());
-                                    listScheduleSale.add(scheduleSale);
+                                    List<Shift> listShift = new ArrayList<>();
+                                    List<Scheduledetail> listScheduleDetail = scheduleDetailRepository.getScheduleByIdScheduleAndDatePresent(schedule.getId(), Date.valueOf(next));
+                                    if (listScheduleDetail.size() == 0) {
+                                        scheduleSale.setListShift(null);
+                                        scheduleSale.setDatePresent(Date.valueOf(next));
+                                        listScheduleSale.add(scheduleSale);
+                                    } else {
+                                        for (Scheduledetail scheduledetail : listScheduleDetail) {
+                                            listShift.add(scheduledetail.getShift());
+                                        }
+                                        scheduleSale.setListShift(listShift);
+                                        scheduleSale.setDatePresent(Date.valueOf(next));
+                                        listScheduleSale.add(scheduleSale);
+                                    }
                                 }
                             }
                         }
