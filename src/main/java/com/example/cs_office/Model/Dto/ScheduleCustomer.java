@@ -12,6 +12,6 @@ import java.util.List;
 @NoArgsConstructor
 public class ScheduleCustomer {
     private Date datePresent;
-    private Shift shift;
     private List<Service> listService;
+    private List<Shift> listShift;
 }

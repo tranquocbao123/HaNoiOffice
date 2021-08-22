@@ -45,6 +45,9 @@ public interface ScheduleDetailRepository extends JpaRepository<Scheduledetail,I
     @Query("select c from Scheduledetail c where c.schedule.id = ?1")
     List<Scheduledetail> getScheduleByIdSchedule(int idSchedule);
 
+    @Query("select c from Scheduledetail c where c.schedule.id = ?1 and c.datePresent =?2")
+    List<Scheduledetail> getScheduleByIdScheduleAndDatePresent(int idSchedule, Date datePresent);
+
     @Query("select c from Scheduledetail c where c.schedule.id = ?1 and c.datePresent = ?2 and c.status = true")
     List<Scheduledetail> getListIdScheduleByIdSchedule1(int Schedule, Date startDate);
 

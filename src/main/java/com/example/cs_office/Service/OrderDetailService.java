@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.sql.Date;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -188,13 +189,29 @@ public class OrderDetailService {
                             for (ServiceDetail serviceDetail : listServiceDetail) {
                                 listService.add(serviceDetail.getService1());
                             }
-                            List<Scheduledetail> listScheduleDetail = scheduleDetailRepository.getScheduleByIdSchedule(schedule.getId());
-                            for (Scheduledetail scheduledetail : listScheduleDetail) {
+                            String startDate = String.valueOf(schedule.getStartDate());
+                            String endDate = String.valueOf(schedule.getEndDate());
+                            LocalDate start = LocalDate.parse(startDate),
+                                    end = LocalDate.parse(endDate);
+                            LocalDate next = start.minusDays(1);
+                            while ((next = next.plusDays(1)).isBefore(end.plusDays(1))) {
                                 ScheduleCustomer scheduleCustomer = new ScheduleCustomer();
-                                scheduleCustomer.setShift(scheduledetail.getShift());
-                                scheduleCustomer.setDatePresent(scheduledetail.getDatePresent());
-                                scheduleCustomer.setListService(listService);
-                                listScheduleCustomer.add(scheduleCustomer);
+                                List<Shift> listShift = new ArrayList<>();
+                                List<Scheduledetail> listScheduleDetail = scheduleDetailRepository.getScheduleByIdScheduleAndDatePresent(schedule.getId(), Date.valueOf(next));
+                                if (listScheduleDetail.size() == 0) {
+                                    scheduleCustomer.setListShift(null);
+                                    scheduleCustomer.setDatePresent(Date.valueOf(next));
+                                    scheduleCustomer.setListService(listService);
+                                    listScheduleCustomer.add(scheduleCustomer);
+                                } else {
+                                    for (Scheduledetail scheduledetail : listScheduleDetail) {
+                                        listShift.add(scheduledetail.getShift());
+                                    }
+                                    scheduleCustomer.setListShift(listShift);
+                                    scheduleCustomer.setDatePresent(Date.valueOf(next));
+                                    scheduleCustomer.setListService(listService);
+                                    listScheduleCustomer.add(scheduleCustomer);
+                                }
                             }
                         }
                     }
