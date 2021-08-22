@@ -27,6 +27,11 @@ public class ScheduleDetailService {
         return scheduleDetailRepository.findAll();
     }
 
+    public List<Scheduledetail> getScheduledetailByDate(Date datePresent) {
+
+        return scheduleDetailRepository.getScheduledetailByDate(datePresent);
+    }
+
     public List<Scheduledetail> getScheduledetailByStatus(boolean status) {
 
         return scheduleDetailRepository.findScheduledetailByStatus(status);
@@ -76,6 +81,11 @@ public class ScheduleDetailService {
     @Transactional
     public int updateScheduleByIdSchedule(int idSchedule) {
         return scheduleDetailRepository.updateScheduleByIdSchedule(idSchedule);
+    }
+
+    @Transactional
+    public int updateScheduleById(int idScheduleDetail) {
+        return scheduleDetailRepository.updateScheduleById(idScheduleDetail);
     }
 
     public List<Scheduledetail> getListScheduleDetailByIdSchedule(int idOrderDetail) {

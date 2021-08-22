@@ -22,6 +22,7 @@ public class Scheduledetail {
     private java.sql.Date datePresent;
     private boolean acceptance;
     private boolean status = true;
+    private boolean checkinout = true;
 
     @ManyToOne
     @JoinColumn(name = "idSchedule")

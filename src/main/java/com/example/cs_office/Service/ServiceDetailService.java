@@ -74,6 +74,10 @@ public class ServiceDetailService {
         return serviceDetailRepository.getListIdServiceDetailByIdSchedule(idSchedule);
     }
 
+    public List<ServiceDetail> getServiceDetailByIdSchedule2(int idSchedule) {
+        return serviceDetailRepository.getListIdServiceDetailByIdSchedule2(idSchedule);
+    }
+
     public List<ServiceDetail> getServiceDetailByIdSchedule1(int idSchedule) {
         return serviceDetailRepository.getListIdServiceDetailByIdSchedule1(idSchedule);
     }

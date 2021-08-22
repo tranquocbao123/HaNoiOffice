@@ -26,6 +26,9 @@ public interface ServiceDetailRepository extends JpaRepository<ServiceDetail,Int
     @Query("select c from ServiceDetail c where c.schedule.id = ?1 and c.acceptance = false")
     List<ServiceDetail> getListIdServiceDetailByIdSchedule(int idSchedule);
 
+    @Query("select c from ServiceDetail c where c.schedule.id = ?1")
+    List<ServiceDetail> getListIdServiceDetailByIdSchedule2(int idSchedule);
+
     @Query("select c from ServiceDetail c where c.schedule.id = ?1 and c.status = true")
     List<ServiceDetail> getListIdServiceDetailByIdSchedule1(int idSchedule);
 

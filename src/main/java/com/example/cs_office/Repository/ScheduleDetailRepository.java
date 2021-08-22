@@ -19,6 +19,10 @@ public interface ScheduleDetailRepository extends JpaRepository<Scheduledetail,I
     @Query("select s from Scheduledetail s where s.id = ?1")
     Optional<Scheduledetail> findScheduledetailById(Integer id);
 
+    //select schedule detail by datePresent
+    @Query("select s from Scheduledetail s where s.datePresent = ?1")
+    List<Scheduledetail> getScheduledetailByDate(Date datePresent);
+
     //select schedule detail by status
     @Query("select c from Scheduledetail c where c.status = ?1")
     List<Scheduledetail> findScheduledetailByStatus(boolean status);
@@ -28,6 +32,12 @@ public interface ScheduleDetailRepository extends JpaRepository<Scheduledetail,I
     @Modifying
     @Query("update Scheduledetail c set c.acceptance = true where c.schedule.id = :idSchedule")
     int updateScheduleByIdSchedule(@Param("idSchedule") int idSchedule);
+
+    //update inout = false by id idScheduleDetail
+    @Transactional
+    @Modifying
+    @Query("update Scheduledetail c set c.checkinout = false where c.id = :idScheduleDetail")
+    int updateScheduleById(@Param("idScheduleDetail") int idScheduleDetail);
 
     @Query("select c from Scheduledetail c where c.schedule.id = ?1 and c.acceptance = false")
     List<Scheduledetail> getListIdScheduleByIdSchedule(int idSchedule);

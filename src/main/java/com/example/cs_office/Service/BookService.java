@@ -143,15 +143,16 @@ public class BookService {
                     scheduleDetailService.addNewScheduledetail(scheduledetail);
                 }
             }
-
-            //insert service detail
-            for (Integer j : roomBookLT.getListIdServiceSelected()) {
-                Optional<com.example.cs_office.Model.Entity.Service> service = serService.getServiceById(j);
-                ServiceDetail serviceDetail = new ServiceDetail();
-                serviceDetail.setAcceptance(false);
-                serviceDetail.setSchedule(schedule);
-                serviceDetail.setService1(service.get());
-                serviceDetailService.addNewServiceDetail(serviceDetail);
+            if (roomBookLT.getListIdServiceSelected().size() > 0) {
+                //insert service detail
+                for (Integer j : roomBookLT.getListIdServiceSelected()) {
+                    Optional<com.example.cs_office.Model.Entity.Service> service = serService.getServiceById(j);
+                    ServiceDetail serviceDetail = new ServiceDetail();
+                    serviceDetail.setAcceptance(false);
+                    serviceDetail.setSchedule(schedule);
+                    serviceDetail.setService1(service.get());
+                    serviceDetailService.addNewServiceDetail(serviceDetail);
+                }
             }
             messageReponse.setMessage(Message.ORDERSUCCESS);
             return messageReponse;
@@ -199,15 +200,16 @@ public class BookService {
                     scheduledetail.setSchedule(schedule);
                     scheduleDetailService.addNewScheduledetail(scheduledetail);
                 }
-
-                //insert service detail
-                for (Integer j : obj.getListService()) {
-                    ServiceDetail serviceDetail = new ServiceDetail();
-                    serviceDetail.setAcceptance(false);
-                    serviceDetail.setSchedule(schedule);
-                    Optional<com.example.cs_office.Model.Entity.Service> service = serService.getServiceById(j);
-                    serviceDetail.setService1(service.get());
-                    serviceDetailService.addNewServiceDetail(serviceDetail);
+                if (obj.getListService().size() > 0) {
+                    //insert service detail
+                    for (Integer j : obj.getListService()) {
+                        ServiceDetail serviceDetail = new ServiceDetail();
+                        serviceDetail.setAcceptance(false);
+                        serviceDetail.setSchedule(schedule);
+                        Optional<com.example.cs_office.Model.Entity.Service> service = serService.getServiceById(j);
+                        serviceDetail.setService1(service.get());
+                        serviceDetailService.addNewServiceDetail(serviceDetail);
+                    }
                 }
             }
             messageReponse.setMessage(Message.ORDERSUCCESS);
@@ -341,15 +343,16 @@ public class BookService {
                             scheduleDetailService.addNewScheduledetail(scheduledetail);
                         }
                     }
-
-                    //insert service detail
-                    for (Integer j : obj.getListService()) {
-                        ServiceDetail serviceDetail = new ServiceDetail();
-                        serviceDetail.setAcceptance(true);
-                        serviceDetail.setSchedule(schedule);
-                        Optional<com.example.cs_office.Model.Entity.Service> service = serService.getServiceById(j);
-                        serviceDetail.setService1(service.get());
-                        serviceDetailService.addNewServiceDetail(serviceDetail);
+                    if (obj.getListService().size() > 0) {
+                        //insert service detail
+                        for (Integer j : obj.getListService()) {
+                            ServiceDetail serviceDetail = new ServiceDetail();
+                            serviceDetail.setAcceptance(true);
+                            serviceDetail.setSchedule(schedule);
+                            Optional<com.example.cs_office.Model.Entity.Service> service = serService.getServiceById(j);
+                            serviceDetail.setService1(service.get());
+                            serviceDetailService.addNewServiceDetail(serviceDetail);
+                        }
                     }
                 }
                 messageReponse.setMessage(Message.ACCEPTSUCCESS);
@@ -390,5 +393,58 @@ public class BookService {
             return false;
         }
         return true;
+    }
+
+    public List<RoomBookLeTan> listRoomLeTan(int idBranch, Date datePresent) {
+        List<RoomBookLeTan> listDataTrue = new ArrayList<>();
+        List<RoomBookLeTan> listData = new ArrayList<>();
+        List<Scheduledetail> listScheduleDetail = scheduleDetailService.getScheduledetailByDate(datePresent);
+        if (listScheduleDetail.size() == 0) {
+            return listDataTrue;
+        } else {
+            for (Scheduledetail scheduledetail : listScheduleDetail) {
+                RoomBookLeTan roomBookLeTan = new RoomBookLeTan();
+                roomBookLeTan.setIdScheduleDetail(scheduledetail.getId());
+                roomBookLeTan.setShift(scheduledetail.getShift().getStartTime() + " - " + scheduledetail.getShift().getEndTime());
+                roomBookLeTan.setStatus(scheduledetail.isCheckinout());
+                List<ServiceDetail> serviceDetailServices = serviceDetailService.getServiceDetailByIdSchedule2(scheduledetail.getSchedule().getId());
+                if (serviceDetailServices.size() == 0) {
+                    roomBookLeTan.setListService(null);
+                } else {
+                    List<String> listService = new ArrayList<>();
+                    for (ServiceDetail serviceDetail : serviceDetailServices) {
+                        Optional<com.example.cs_office.Model.Entity.Service> service = serService.getServiceById(serviceDetail.getService1().getId());
+                        listService.add(service.get().getName());
+                    }
+                    roomBookLeTan.setListService(listService);
+                }
+                Optional<Schedule> schedule = scheduleService.getScheduleById(scheduledetail.getSchedule().getId());
+                OrderDetail orderDetail = schedule.get().getOrderDetail();
+                Room room = orderDetail.getRoom();
+                roomBookLeTan.setNameRoom(room.getName());
+                Orders orders = orderDetail.getOrders2();
+                roomBookLeTan.setIdCustomer(orders.getCustomer().getId());
+                roomBookLeTan.setNameCustomer(orders.getCustomer().getFirstName() + " " + orders.getCustomer().getLastName());
+                roomBookLeTan.setIdBranch(room.getBranch1().getId());
+                listData.add(roomBookLeTan);
+            }
+            for (RoomBookLeTan roomBookLeTan : listData) {
+                if (roomBookLeTan.getIdBranch() == idBranch) {
+                    listDataTrue.add(roomBookLeTan);
+                }
+            }
+            return listDataTrue;
+        }
+    }
+
+    public MessageReponse updateCheckInOut(int idScheduleDetail) {
+        MessageReponse messageReponse = new MessageReponse();
+        int result = scheduleDetailService.updateScheduleById(idScheduleDetail);
+        if (result > 0) {
+            messageReponse.setMessage(Message.CHECKINOUTSUCCESS);
+        } else {
+            messageReponse.setMessage(Message.CHECKINOUTFAIL);
+        }
+        return messageReponse;
     }
 }

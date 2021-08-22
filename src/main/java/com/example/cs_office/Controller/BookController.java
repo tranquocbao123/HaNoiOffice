@@ -8,6 +8,7 @@ import com.example.cs_office.Model.Dto.RoomBook;
 import com.example.cs_office.Model.Dto.RoomCustomer;
 import com.example.cs_office.Model.Entity.Room;
 import com.example.cs_office.Model.RoomBook.RoomBookKLT;
+import com.example.cs_office.Model.RoomBook.RoomBookLeTan;
 import com.example.cs_office.Model.Search.SearchRoom;
 import com.example.cs_office.Model.Search.SearchRoomSale;
 import com.example.cs_office.Service.*;
@@ -17,6 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
 import org.springframework.web.bind.annotation.*;
 
+import java.sql.Date;
 import java.util.List;
 
 @RestController
@@ -123,11 +125,18 @@ public class BookController {
     }
 
 
-    /*// lấy ra chi tiết phòng đã đặt theo id orderdetail
+    // lấy ra thông tin check in/out phòng của lễ tân
     @GetMapping(PathResources.ROOKBOOKLETAN)
-    public RoomCustomer getRoomLeTan() {
-        return orderDetailService.listRoomLeTan();
-    }*/
+    public List<RoomBookLeTan> getRoomLeTan(@Param("idBranch") int idBranch,
+                                      @Param("datePresent") Date datePresent) {
+        return bookService.listRoomLeTan(idBranch, datePresent);
+    }
+
+    // cập nhật khách vào ra
+    @PostMapping(PathResources.CHECKINOUTLETAN)
+    public MessageReponse updateCheckInOut(@Param("idScheduleDetail") int idScheduleDetail) {
+        return bookService.updateCheckInOut(idScheduleDetail);
+    }
 
     @GetMapping(PathResources.TOTALBYIDORDETAIL)
     public double totalByIdOrderDetail(@Param("idOrderDetail") int idOrderDetail) {

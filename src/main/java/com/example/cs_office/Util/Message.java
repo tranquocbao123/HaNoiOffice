@@ -7,4 +7,6 @@ public class Message {
     public static final String ACCEPTFAIl = "accept_fail";
     public static final String NOTACCEPTSUCCESS = "not_accept_success";
     public static final String NOTACCEPTFAIl = "not_accept_fail";
+    public static final String CHECKINOUTSUCCESS = "check_in_out_success";
+    public static final String CHECKINOUTFAIL = "check_in_out_fail";
 }
