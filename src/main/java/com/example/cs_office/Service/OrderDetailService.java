@@ -226,7 +226,7 @@ public class OrderDetailService {
         }
     }
 
-    public List<SearchRoomSale> listRoomSaleSearch(int idTypeRoom, int idBranch, int soChoNgoi) {
+    public List<SearchRoomSale> listRoomSaleSearch(int idTypeRoom, int idBranch, int soChoNgoi, Date ngayBD, Date ngayKT) {
         List<SearchRoomSale> listSearchRoomSale = new ArrayList<>();
         int max = soChoNgoi + 3;
         int min = 0;
@@ -241,7 +241,7 @@ public class OrderDetailService {
                 if (listOrderDetail.size() > 0) {
                     List<ScheduleSale> listScheduleSale = new ArrayList<>();
                     for (OrderDetail orderDetail : listOrderDetail) {
-                        List<Schedule> listSchedule = scheduleRepository.getScheduleByIdOrderDetail(orderDetail.getId());
+                        List<Schedule> listSchedule = scheduleRepository.getScheduleBySearchSale(orderDetail.getId(), ngayBD, ngayKT);
                         if (listSchedule.size() == 0) {
                             searchRoomSale.setListScheduleSale(null);
                         } else {

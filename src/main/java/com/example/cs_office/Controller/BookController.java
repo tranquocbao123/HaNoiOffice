@@ -95,8 +95,10 @@ public class BookController {
     @GetMapping(PathResources.SEARCHROOM)
     public List<SearchRoomSale> listRoomSaleSearch(@Param("idTypeRoom") int idTypeRoom,
                                                    @Param("idBranch") int idBranch,
-                                                   @Param("soChoNgoi") int soChoNgoi) {
-        return orderDetailService.listRoomSaleSearch(idTypeRoom, idBranch, soChoNgoi);
+                                                   @Param("soChoNgoi") int soChoNgoi,
+                                                   @Param("startDate") Date startDate,
+                                                   @Param("endDate") Date endDate) {
+        return orderDetailService.listRoomSaleSearch(idTypeRoom, idBranch, soChoNgoi, startDate, endDate);
     }
 
     @GetMapping(PathResources.LISTROOMSALE)
