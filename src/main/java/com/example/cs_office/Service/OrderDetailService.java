@@ -231,31 +231,38 @@ public class OrderDetailService {
                 if (listOrderDetail.size() > 0) {
                     List<ScheduleSale> listScheduleSale = new ArrayList<>();
                     for (OrderDetail orderDetail : listOrderDetail) {
-                        List<Schedule> listSchedule = scheduleRepository.getScheduleBySearchSale(orderDetail.getId(), ngayBD, ngayKT);
+                        List<Schedule> listSchedule = scheduleRepository.getScheduleByIdOrderDetail(orderDetail.getId());
                         if (listSchedule.size() == 0) {
                             searchRoomSale.setListScheduleSale(null);
                         } else {
                             for (Schedule schedule : listSchedule) {
                                 String startDate = String.valueOf(schedule.getStartDate());
                                 String endDate = String.valueOf(schedule.getEndDate());
+                                String startDate1 = String.valueOf(ngayBD);
+                                String endDate1 = String.valueOf(ngayKT);
                                 LocalDate start = LocalDate.parse(startDate),
                                         end = LocalDate.parse(endDate);
+                                LocalDate start1 = LocalDate.parse(startDate1),
+                                        end1 = LocalDate.parse(endDate1).plusDays(1);
                                 LocalDate next = start.minusDays(1);
                                 while ((next = next.plusDays(1)).isBefore(end.plusDays(1))) {
-                                    ScheduleSale scheduleSale = new ScheduleSale();
-                                    List<Shift> listShift = new ArrayList<>();
-                                    List<Scheduledetail> listScheduleDetail = scheduleDetailRepository.getScheduleByIdScheduleAndDatePresent(schedule.getId(), Date.valueOf(next));
-                                    if (listScheduleDetail.size() == 0) {
-                                        scheduleSale.setListShift(null);
-                                        scheduleSale.setDatePresent(Date.valueOf(next));
-                                        listScheduleSale.add(scheduleSale);
-                                    } else {
-                                        for (Scheduledetail scheduledetail : listScheduleDetail) {
-                                            listShift.add(scheduledetail.getShift());
+                                    Boolean intervalContainsToday = (!next.isBefore(start1)) && next.isBefore(end1);
+                                    if (intervalContainsToday) {
+                                        ScheduleSale scheduleSale = new ScheduleSale();
+                                        List<Shift> listShift = new ArrayList<>();
+                                        List<Scheduledetail> listScheduleDetail = scheduleDetailRepository.getScheduleByIdScheduleAndDatePresent(schedule.getId(), Date.valueOf(next));
+                                        if (listScheduleDetail.size() == 0) {
+                                            scheduleSale.setListShift(null);
+                                            scheduleSale.setDatePresent(Date.valueOf(next));
+                                            listScheduleSale.add(scheduleSale);
+                                        } else {
+                                            for (Scheduledetail scheduledetail : listScheduleDetail) {
+                                                listShift.add(scheduledetail.getShift());
+                                            }
+                                            scheduleSale.setListShift(listShift);
+                                            scheduleSale.setDatePresent(Date.valueOf(next));
+                                            listScheduleSale.add(scheduleSale);
                                         }
-                                        scheduleSale.setListShift(listShift);
-                                        scheduleSale.setDatePresent(Date.valueOf(next));
-                                        listScheduleSale.add(scheduleSale);
                                     }
                                 }
                             }
