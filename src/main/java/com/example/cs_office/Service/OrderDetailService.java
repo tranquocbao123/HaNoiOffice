@@ -168,56 +168,46 @@ public class OrderDetailService {
             if (room != null) {
                 roomCustomer.setBranch(room.getBranch1());
                 roomCustomer.setTypeRoom(room.getTypeRoom());
-                int max = room.getSoChoNgoi() + 3;
-                int min = 0;
-                if (room.getSoChoNgoi() > 3) {
-                    min = room.getSoChoNgoi() - 3;
-                }
-                List<Room> listRoom = roomRepository.getRoomBySo(room.getTypeRoom().getId(), room.getBranch1().getId(), min, max);
-                if (listRoom.size() == 0) {
-                    return null;
+                roomCustomer.setRoom(room);
+                List<ScheduleCustomer> listScheduleCustomer = new ArrayList<>();
+                List<Schedule> listSchedule = scheduleRepository.getScheduleByIdOrderDetail(orderDetail.get().getId());
+                if (listSchedule.size() == 0) {
+                    roomCustomer.setListScheduleCustomer(null);
                 } else {
-                    roomCustomer.setListRoom(listRoom);
-                    List<ScheduleCustomer> listScheduleCustomer = new ArrayList<>();
-                    List<Schedule> listSchedule = scheduleRepository.getScheduleByIdOrderDetail(orderDetail.get().getId());
-                    if (listSchedule.size() == 0) {
-                        roomCustomer.setListScheduleCustomer(null);
-                    } else {
-                        for (Schedule schedule : listSchedule) {
-                            List<ServiceDetail> listServiceDetail = serviceDetailRepository.getServiceDetailByIdSchedule(schedule.getId());
-                            List<com.example.cs_office.Model.Entity.Service> listService = new ArrayList<>();
-                            for (ServiceDetail serviceDetail : listServiceDetail) {
-                                listService.add(serviceDetail.getService1());
-                            }
-                            String startDate = String.valueOf(schedule.getStartDate());
-                            String endDate = String.valueOf(schedule.getEndDate());
-                            LocalDate start = LocalDate.parse(startDate),
-                                    end = LocalDate.parse(endDate);
-                            LocalDate next = start.minusDays(1);
-                            while ((next = next.plusDays(1)).isBefore(end.plusDays(1))) {
-                                ScheduleCustomer scheduleCustomer = new ScheduleCustomer();
-                                List<Shift> listShift = new ArrayList<>();
-                                List<Scheduledetail> listScheduleDetail = scheduleDetailRepository.getScheduleByIdScheduleAndDatePresent(schedule.getId(), Date.valueOf(next));
-                                if (listScheduleDetail.size() == 0) {
-                                    scheduleCustomer.setListShift(null);
-                                    scheduleCustomer.setDatePresent(Date.valueOf(next));
-                                    scheduleCustomer.setListService(listService);
-                                    listScheduleCustomer.add(scheduleCustomer);
-                                } else {
-                                    for (Scheduledetail scheduledetail : listScheduleDetail) {
-                                        listShift.add(scheduledetail.getShift());
-                                    }
-                                    scheduleCustomer.setListShift(listShift);
-                                    scheduleCustomer.setDatePresent(Date.valueOf(next));
-                                    scheduleCustomer.setListService(listService);
-                                    listScheduleCustomer.add(scheduleCustomer);
+                    for (Schedule schedule : listSchedule) {
+                        List<ServiceDetail> listServiceDetail = serviceDetailRepository.getServiceDetailByIdSchedule(schedule.getId());
+                        List<com.example.cs_office.Model.Entity.Service> listService = new ArrayList<>();
+                        for (ServiceDetail serviceDetail : listServiceDetail) {
+                            listService.add(serviceDetail.getService1());
+                        }
+                        String startDate = String.valueOf(schedule.getStartDate());
+                        String endDate = String.valueOf(schedule.getEndDate());
+                        LocalDate start = LocalDate.parse(startDate),
+                                end = LocalDate.parse(endDate);
+                        LocalDate next = start.minusDays(1);
+                        while ((next = next.plusDays(1)).isBefore(end.plusDays(1))) {
+                            ScheduleCustomer scheduleCustomer = new ScheduleCustomer();
+                            List<Shift> listShift = new ArrayList<>();
+                            List<Scheduledetail> listScheduleDetail = scheduleDetailRepository.getScheduleByIdScheduleAndDatePresent(schedule.getId(), Date.valueOf(next));
+                            if (listScheduleDetail.size() == 0) {
+                                scheduleCustomer.setListShift(null);
+                                scheduleCustomer.setDatePresent(Date.valueOf(next));
+                                scheduleCustomer.setListService(listService);
+                                listScheduleCustomer.add(scheduleCustomer);
+                            } else {
+                                for (Scheduledetail scheduledetail : listScheduleDetail) {
+                                    listShift.add(scheduledetail.getShift());
                                 }
+                                scheduleCustomer.setListShift(listShift);
+                                scheduleCustomer.setDatePresent(Date.valueOf(next));
+                                scheduleCustomer.setListService(listService);
+                                listScheduleCustomer.add(scheduleCustomer);
                             }
                         }
                     }
-                    roomCustomer.setListScheduleCustomer(listScheduleCustomer);
-                    return roomCustomer;
                 }
+                roomCustomer.setListScheduleCustomer(listScheduleCustomer);
+                return roomCustomer;
             } else {
                 return null;
             }

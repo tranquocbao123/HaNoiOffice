@@ -13,6 +13,6 @@ import java.util.List;
 public class RoomCustomer {
     private TypeRoom typeRoom;
     private Branch branch;
-    private List<Room> listRoom;
+    private Room room;
     private List<ScheduleCustomer> listScheduleCustomer;
 }
