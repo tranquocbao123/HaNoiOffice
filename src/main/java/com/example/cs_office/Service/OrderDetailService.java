@@ -248,9 +248,7 @@ public class OrderDetailService {
                 if (listOrderDetail.size() > 0) {
                     for (OrderDetail orderDetail : listOrderDetail) {
                         List<Schedule> listSchedule = scheduleRepository.getScheduleByIdOrderDetail(orderDetail.getId());
-                        if (listSchedule.size() == 0) {
-                            listSearchRoomSale = null;
-                        } else {
+                        if (listSchedule.size() != 0) {
                             for (Schedule schedule : listSchedule) {
                                 String startDate = String.valueOf(schedule.getStartDate());
                                 String endDate = String.valueOf(schedule.getEndDate());
@@ -286,6 +284,12 @@ public class OrderDetailService {
                             }
                         }
                     }
+                } else {
+                    SearchRoomSale searchRoomSale = new SearchRoomSale();
+                    searchRoomSale.setRoom(room);
+                    searchRoomSale.setListShift(null);
+                    searchRoomSale.setDatePresent(null);
+                    listSearchRoomSale.add(searchRoomSale);
                 }
             }
             return listSearchRoomSale;
