@@ -20,7 +20,6 @@ public class Scheduledetail {
     private int id;
     private Date createDate = new Date();
     private java.sql.Date datePresent;
-    private boolean acceptance;
     private boolean status = true;
     private boolean checkinout = true;
 

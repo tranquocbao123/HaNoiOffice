@@ -49,6 +49,7 @@ public class PathResources {
     public static final String BOOKROOMLT = "/bookroomlt";
     public static final String CHECKROOMBYID = "/checkroombyid/{idRoom}";
     public static final String LISTBOOKROOM = "/listbookroom";
+    public static final String LISTBOOKROOMCUSTOMER = "/listbookroomcustomer";
     public static final String ACCEPT = "/accept/{idOrderDetail}";
     public static final String CANCEL = "/cancel/{idOrderDetail}";
     public static final String LISTROOMSALE = "/listRoomSale/{idTypeRoom}/{idBranch}";

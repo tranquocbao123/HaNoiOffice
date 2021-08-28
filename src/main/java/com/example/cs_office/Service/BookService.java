@@ -49,52 +49,43 @@ public class BookService {
         this.serService = serService;
     }
 
-    public int acceptBookRoom(int idOrderDetail) {
+    public MessageReponse acceptBookRoom(int idOrderDetail) {
         Optional<OrderDetail> orderDetail = orderDetailService.getOrderDetailById(idOrderDetail);
+        MessageReponse messageReponse = new MessageReponse();
         int result = 0;
         if (orderDetail != null) {
-            orderService.updateOrderByIdOrderDetail(orderDetail.get().getOrders2().getId());
-            orderDetailService.updateOrderDetailByIdOrderDetail(idOrderDetail);
-            List<Schedule> listSchedule = scheduleService.getListScheduleByIdOrderDetail(idOrderDetail);
-            for (Schedule obj : listSchedule) {
-                scheduleService.updateScheduleByIdOrderDetail(idOrderDetail);
-                List<Scheduledetail> listScheduleDetail = scheduleDetailService.getListScheduleDetailByIdSchedule(obj.getId());
-                for (Scheduledetail scheduledetail : listScheduleDetail) {
-                    scheduleDetailService.updateScheduleByIdSchedule(scheduledetail.getId());
-                }
-                List<ServiceDetail> listServiceDetail = serviceDetailService.getServiceDetailByIdSchedule(obj.getId());
-                for (ServiceDetail serviceDetail : listServiceDetail) {
-                    result = serviceDetailService.updateServiceDetailByIdSchedule(serviceDetail.getId());
-                }
-            }
+            result = orderDetailService.updateOrderDetailByIdOrderDetail(idOrderDetail);
         }
-        return result;
+       if(result != 0 ) {
+           messageReponse.setMessage(Message.ACCEPTBOOKROOMSUCCESS);
+        }else {
+           messageReponse.setMessage(Message.ACCEPTBOOKROOMFAIL);
+       }
+       return messageReponse;
     }
 
-    public int cancelBookRoom(int idOrderDetail) {
+    public MessageReponse cancelBookRoom(int idOrderDetail) {
         Optional<OrderDetail> orderDetail = orderDetailService.getOrderDetailById(idOrderDetail);
+        MessageReponse messageReponse = new MessageReponse();
         int result = 0;
         if (orderDetail != null) {
-            List<Schedule> listSchedule = scheduleService.getListScheduleByIdOrderDetail(idOrderDetail);
-            for (Schedule schedule : listSchedule) {
-                serviceDetailService.deleteServiceDetailByIdSchedule(schedule.getId());
-                scheduleDetailService.deleteScheduledetailByIdSchedule(schedule.getId());
-            }
-            scheduleService.deleteScheduleByIdOrderDetail(idOrderDetail);
             orderDetailService.deleteOrderDetail(idOrderDetail);
-            orderService.deleteOrder(orderDetail.get().getOrders2().getId());
         }
-        return result;
+        if(result != 0 ) {
+            messageReponse.setMessage(Message.NOTACCEPTBOOKROOMSUCCESS);
+        }else {
+            messageReponse.setMessage(Message.NOTACCEPTBOOKROOMFAIL);
+        }
+        return messageReponse;
     }
 
     public int paySuccess(int idOrderDetail) {
         Optional<OrderDetail> orderDetail = orderDetailService.getOrderDetailById(idOrderDetail);
+        MessageReponse messageReponse = new MessageReponse();
         int result = 0;
         if (orderDetail != null) {
-            orderService.updateStatusByIdOrderDetail(orderDetail.get().getOrders2().getId());
-            orderDetailService.updateStatusByIdOrderDetail(idOrderDetail);
-            scheduleService.updateStatusByIdOrderDetail(idOrderDetail);
-            result = 1;
+            result = orderDetailService.updateStatusByIdOrderDetail(idOrderDetail);
+
         }
         return result;
     }
@@ -107,7 +98,6 @@ public class BookService {
 
             //insert orders
             Orders orders = new Orders();
-            orders.setAcceptance(false);
             orders.setCustomer(customer.get());
             orderService.addNewOrder(orders);
 
@@ -120,7 +110,6 @@ public class BookService {
 
             //insert schedule
             Schedule schedule = new Schedule();
-            schedule.setAcceptance(false);
             schedule.setEndDate(roomBookLT.getEndDate());
             schedule.setStartDate(roomBookLT.getStartDate());
             schedule.setOrderDetail(orderDetail);
@@ -136,7 +125,6 @@ public class BookService {
                 for (Integer i : roomBookLT.getListIdScheduleDetail()) {
                     Scheduledetail scheduledetail = new Scheduledetail();
                     Optional<Shift> shift = shiftService.getShiftById(i);
-                    scheduledetail.setAcceptance(false);
                     scheduledetail.setDatePresent(Date.valueOf(next));
                     scheduledetail.setSchedule(schedule);
                     scheduledetail.setShift(shift.get());
@@ -148,7 +136,6 @@ public class BookService {
                 for (Integer j : roomBookLT.getListIdServiceSelected()) {
                     Optional<com.example.cs_office.Model.Entity.Service> service = serService.getServiceById(j);
                     ServiceDetail serviceDetail = new ServiceDetail();
-                    serviceDetail.setAcceptance(false);
                     serviceDetail.setSchedule(schedule);
                     serviceDetail.setService1(service.get());
                     serviceDetailService.addNewServiceDetail(serviceDetail);
@@ -170,7 +157,6 @@ public class BookService {
 
             //insert orders
             Orders orders = new Orders();
-            orders.setAcceptance(false);
             orders.setCustomer(customer.get());
             orderService.addNewOrder(orders);
 
@@ -184,7 +170,6 @@ public class BookService {
 
                 //insert schedule
                 Schedule schedule = new Schedule();
-                schedule.setAcceptance(false);
                 schedule.setStartDate(obj.getStartDate());
                 schedule.setEndDate(obj.getStartDate());
                 schedule.setOrderDetail(orderDetail);
@@ -193,7 +178,6 @@ public class BookService {
                 //insert schedule detail
                 for (Integer i : obj.getListShift()) {
                     Scheduledetail scheduledetail = new Scheduledetail();
-                    scheduledetail.setAcceptance(false);
                     scheduledetail.setDatePresent(obj.getStartDate());
                     Optional<Shift> shift = shiftService.getShiftById(i);
                     scheduledetail.setShift(shift.get());
@@ -204,7 +188,6 @@ public class BookService {
                     //insert service detail
                     for (Integer j : obj.getListService()) {
                         ServiceDetail serviceDetail = new ServiceDetail();
-                        serviceDetail.setAcceptance(false);
                         serviceDetail.setSchedule(schedule);
                         Optional<com.example.cs_office.Model.Entity.Service> service = serService.getServiceById(j);
                         serviceDetail.setService1(service.get());
@@ -305,7 +288,6 @@ public class BookService {
 
                 //insert orders
                 Orders orders = new Orders();
-                orders.setAcceptance(true);
                 orders.setCustomer(customer.get());
                 orderService.addNewOrder(orders);
 
@@ -320,7 +302,6 @@ public class BookService {
 
                     //insert schedule
                     Schedule schedule = new Schedule();
-                    schedule.setAcceptance(true);
                     schedule.setStartDate(obj.getStartDate());
                     schedule.setEndDate(obj.getEndDate());
                     schedule.setOrderDetail(orderDetail);
@@ -336,7 +317,6 @@ public class BookService {
                         for (Integer i : obj.getListShift()) {
                             Scheduledetail scheduledetail = new Scheduledetail();
                             Optional<Shift> shift = shiftService.getShiftById(i);
-                            scheduledetail.setAcceptance(true);
                             scheduledetail.setDatePresent(Date.valueOf(next));
                             scheduledetail.setSchedule(schedule);
                             scheduledetail.setShift(shift.get());
@@ -347,7 +327,6 @@ public class BookService {
                         //insert service detail
                         for (Integer j : obj.getListService()) {
                             ServiceDetail serviceDetail = new ServiceDetail();
-                            serviceDetail.setAcceptance(true);
                             serviceDetail.setSchedule(schedule);
                             Optional<com.example.cs_office.Model.Entity.Service> service = serService.getServiceById(j);
                             serviceDetail.setService1(service.get());

@@ -69,9 +69,9 @@ public class PaymentController {
     public String successPay(@RequestParam("paymentId") String paymentId, @RequestParam("PayerID") String payerId){
         try {
             if(idOrders != 0) {
-                System.out.println("idOrders " + idOrders);
                 Payment payment = paypalService.executePayment(paymentId, payerId);
                 if(payment.getState().equals("approved")){
+                    bookService.paySuccess(idOrders);
                     return "success";
                 }
             }

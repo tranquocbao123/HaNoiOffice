@@ -27,19 +27,13 @@ public interface ScheduleDetailRepository extends JpaRepository<Scheduledetail,I
     @Query("select c from Scheduledetail c where c.status = ?1")
     List<Scheduledetail> findScheduledetailByStatus(boolean status);
 
-    //update acceptance = true by id idSchedule
-    @Transactional
-    @Modifying
-    @Query("update Scheduledetail c set c.acceptance = true where c.schedule.id = :idSchedule")
-    int updateScheduleByIdSchedule(@Param("idSchedule") int idSchedule);
-
     //update inout = false by id idScheduleDetail
     @Transactional
     @Modifying
     @Query("update Scheduledetail c set c.checkinout = false where c.id = :idScheduleDetail")
     int updateScheduleById(@Param("idScheduleDetail") int idScheduleDetail);
 
-    @Query("select c from Scheduledetail c where c.schedule.id = ?1 and c.acceptance = false")
+    @Query("select c from Scheduledetail c where c.schedule.id = ?1")
     List<Scheduledetail> getListIdScheduleByIdSchedule(int idSchedule);
 
     @Query("select c from Scheduledetail c where c.schedule.id = ?1")

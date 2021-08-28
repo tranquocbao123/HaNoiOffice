@@ -1,5 +1,6 @@
 package com.example.cs_office.Controller;
 
+import com.example.cs_office.Model.Dto.RoomBookCustomer;
 import com.example.cs_office.Model.InFoRoom.InFoRoomByStartEndTypeRomBranch;
 import com.example.cs_office.Model.RoomBook.RoomBookAccecpSale;
 import com.example.cs_office.Model.RoomBook.RoomBookLT;
@@ -66,12 +67,12 @@ public class BookController {
     }
 
     @PutMapping(PathResources.ACCEPT)
-    public int acceptRoomBook(@PathVariable int idOrderDetail) {
+    public MessageReponse acceptRoomBook(@PathVariable int idOrderDetail) {
         return bookService.acceptBookRoom(idOrderDetail);
     }
 
     @DeleteMapping(PathResources.CANCEL)
-    public int cancelRoomBook(@PathVariable int idOrderDetail) {
+    public MessageReponse cancelRoomBook(@PathVariable int idOrderDetail) {
         return bookService.cancelBookRoom(idOrderDetail);
     }
 
@@ -89,6 +90,12 @@ public class BookController {
     @GetMapping(PathResources.LISTBOOKROOM)
     public List<RoomBook> listRoomBook() {
         return orderDetailService.getListRoomBook();
+    }
+
+    // lấy ra danh sách các phòng khách hàng đã đặt theo từng khách hàng
+    @GetMapping(PathResources.LISTBOOKROOMCUSTOMER)
+    public List<RoomBookCustomer> listRoomBookCustomer(@Param("idCustomer") int idCustomer) {
+        return orderDetailService.getListRoomBookCustomer(idCustomer);
     }
 
     // tìm kiếm phòng theo idTypeRoom, idBranch, số chỗ ngồi

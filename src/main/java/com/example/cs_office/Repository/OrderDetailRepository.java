@@ -22,8 +22,12 @@ public interface OrderDetailRepository extends JpaRepository<OrderDetail,Integer
     Optional<OrderDetail> findOrderDetailById(Integer id);
 
     //select Order Detail by id room
-    @Query("select s from OrderDetail s where s.room.id = ?1")
+    @Query("select s from OrderDetail s where s.room.id = ?1 ")
     List<OrderDetail> findOrderDetailByIdRoom(Integer id);
+
+    //select Order Detail by id room
+    @Query("select s from OrderDetail s where s.room.id = ?1 and acceptance = true")
+    List<OrderDetail> findOrderDetailByIdRoom1(Integer id);
 
     //select Order Detail by status
     @Query("select c from OrderDetail c where c.status = ?1")
@@ -36,6 +40,10 @@ public interface OrderDetailRepository extends JpaRepository<OrderDetail,Integer
     // select Order Detail by id order
     @Query("select c from OrderDetail c where c.orders2.id = ?1 and c.acceptance = true and c.status = true")
     List<OrderDetail> getListOrderDetailByIdOrder(int idOrder);
+
+    // select Order Detail by id order
+    @Query("select c from OrderDetail c where c.orders2.id = ?1 order by createDate desc")
+    List<OrderDetail> getListOrderDetailByIdOrder1(int idOrder);
 
     //select order Detail by status == true and acceptance = false and idOrder
     @Query("select c from OrderDetail c where c.orders2.id = ?1 and c.status = true and c.acceptance = false ")

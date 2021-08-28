@@ -17,7 +17,6 @@ public class ServiceDetail {
     private int id;
     private Date createDate = new Date();
     private boolean status = true;
-    private boolean acceptance;
 
     @ManyToOne
     @JoinColumn(name = "idService")

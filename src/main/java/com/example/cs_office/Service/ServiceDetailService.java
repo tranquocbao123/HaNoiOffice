@@ -83,11 +83,6 @@ public class ServiceDetailService {
     }
 
     @Transactional
-    public int updateServiceDetailByIdSchedule(int idSchedule) {
-        return serviceDetailRepository.updateServiceDetailByIdSchedule(idSchedule);
-    }
-
-    @Transactional
     public int deleteServiceDetailByIdSchedule(int idSchedule) {
         return serviceDetailRepository.deleteServiceDetailByIdSchedule(idSchedule);
     }

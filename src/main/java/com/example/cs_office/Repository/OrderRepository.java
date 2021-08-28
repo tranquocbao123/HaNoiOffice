@@ -22,18 +22,17 @@ public interface OrderRepository extends JpaRepository<Orders,Integer> {
     @Query("select c from Orders c where c.status = ?1")
     List<Orders> findOrderByStatus(boolean status);
 
+    //select order by id Customer
+    @Query("select c from Orders c where c.customer.id = ?1")
+    List<Orders> findOrderByIdCustomer(@Param("idCustomer") int idCustomer);
+
     //select order by status == true and acceptance = false
-    @Query("select c from Orders c where c.status = true and c.acceptance = false ")
+    @Query("select c from Orders c where c.status = true")
     List<Orders> findOrderByStatusAndAcceptance();
 
     //select order by status == true and acceptance = true and id customer
     @Query("select c from Orders c where c.status = true and c.customer.id = :idCustomer ")
     List<Orders> listOrderDetailByIdCustomer(@Param("idCustomer") int idCustomer);
-
-    @Transactional
-    @Modifying
-    @Query("update Orders c set c.acceptance = true where c.id = :idOrder")
-    int updateOrderByIdOrderDetail(@Param("idOrder") int idOrder);
 
     @Transactional
     @Modifying

@@ -73,11 +73,6 @@ public class OrderService {
     }
 
     @Transactional
-    public int updateOrderByIdOrderDetail(int idOrder) {
-        return orderRepository.updateOrderByIdOrderDetail(idOrder);
-    }
-
-    @Transactional
     public int updateStatusByIdOrderDetail(int idOrder) {
         return orderRepository.updateStatusByIdOrderDetail(idOrder);
     }

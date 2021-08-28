@@ -26,7 +26,6 @@ public class Schedule {
     private java.sql.Date endDate;
     private Date createDate = new Date();
     private boolean status = true;
-    private boolean acceptance;
 
     @ManyToOne
     @JoinColumn(name = "idOrderDetail")

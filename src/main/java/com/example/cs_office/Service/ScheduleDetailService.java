@@ -79,11 +79,6 @@ public class ScheduleDetailService {
     }
 
     @Transactional
-    public int updateScheduleByIdSchedule(int idSchedule) {
-        return scheduleDetailRepository.updateScheduleByIdSchedule(idSchedule);
-    }
-
-    @Transactional
     public int updateScheduleById(int idScheduleDetail) {
         return scheduleDetailRepository.updateScheduleById(idScheduleDetail);
     }

@@ -23,11 +23,11 @@ public interface ScheduleRepository extends JpaRepository<Schedule,Integer> {
     List<Schedule> findScheduleByStatus(boolean status);
 
     //select schedule by id orderdetail
-    @Query("select c from Schedule c where c.orderDetail.id = ?1 and c.acceptance = true and c.status = true")
+    @Query("select c from Schedule c where c.orderDetail.id = ?1 and c.status = true")
     List<Schedule> getListScheduleByIdOrderDetail(int idOrderDetail);
 
     //select schedule by id orderdetail
-    @Query("select c from Schedule c where c.orderDetail.id = ?1 and c.acceptance = false")
+    @Query("select c from Schedule c where c.orderDetail.id = ?1")
     List<Schedule> getListIdScheduleByIdOrderDetail(int idOrderDetail);
 
     @Query("select c from Schedule c where c.orderDetail.id = ?1")
@@ -37,17 +37,12 @@ public interface ScheduleRepository extends JpaRepository<Schedule,Integer> {
     List<Schedule> getScheduleBySearchSale(int idOrderDetail, Date startDate, Date endDate);
 
     //select schedule by id orderdetail
-    @Query("select c from Schedule c where c.orderDetail.id = ?1 and c.acceptance = false and c.status = true")
+    @Query("select c from Schedule c where c.orderDetail.id = ?1 and c.status = true")
     List<Schedule> getListScheduleByIdOrderDetailFalse(int idOrderDetail);
 
     //select schedule by id orderdetail
     @Query("select c from Schedule c where c.orderDetail.id = ?1 and c.status = true")
     List<Schedule> getListScheduleByIdOrderDetailCustomer(int idOrderDetail);
-
-    @Transactional
-    @Modifying
-    @Query("update Schedule c set c.acceptance = true where c.orderDetail.id = :idOrderDetail")
-    int updateScheduleByIdOrderDetail(@Param("idOrderDetail") int idOrderDetail);
 
     @Transactional
     @Modifying

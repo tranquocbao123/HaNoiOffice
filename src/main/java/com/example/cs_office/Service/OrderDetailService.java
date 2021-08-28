@@ -1,10 +1,7 @@
 package com.example.cs_office.Service;
 
 
-import com.example.cs_office.Model.Dto.CheckRoom;
-import com.example.cs_office.Model.Dto.RoomBook;
-import com.example.cs_office.Model.Dto.RoomCustomer;
-import com.example.cs_office.Model.Dto.ScheduleCustomer;
+import com.example.cs_office.Model.Dto.*;
 import com.example.cs_office.Model.Entity.*;
 import com.example.cs_office.Model.Search.ScheduleSale;
 import com.example.cs_office.Model.Search.SearchRoomSale;
@@ -139,6 +136,31 @@ public class OrderDetailService {
         }
     }
 
+    public List<RoomBookCustomer> getListRoomBookCustomer(int idCustomer ) {
+        List<RoomBookCustomer> listRoomBookCustomer = new ArrayList<>();
+        List<Orders> listOrder = orderRepository.findOrderByIdCustomer(idCustomer);
+        if(listOrder.size() == 0) {
+            return null;
+        } else {
+            for (Orders orders : listOrder) {
+                List<OrderDetail> listOrderDetail = orderDetailRepository.getListOrderDetailByIdOrder1(orders.getId());
+                if (listOrderDetail.size() == 0) {
+                    return null;
+                } else {
+                    for (OrderDetail orderDetail : listOrderDetail) {
+                        RoomBookCustomer roomBook = new RoomBookCustomer();
+                        roomBook.setIdOrderDetail(orderDetail.getId());
+                        roomBook.setCreateDate(orderDetail.getCreateDate());
+                        roomBook.setStatusOrder(orderDetail.isAcceptance());
+                        roomBook.setStatusPay(orderDetail.isStatus());
+                        listRoomBookCustomer.add(roomBook);
+                    }
+                }
+            }
+            return listRoomBookCustomer;
+        }
+    }
+
     @Transactional
     public int updateOrderDetailByIdOrderDetail(int idOrderDetail) {
         return orderDetailRepository.updateOrderDetailByIdOrderDetail(idOrderDetail);
@@ -227,7 +249,7 @@ public class OrderDetailService {
         if (listRoom.size() > 0) {
             for (Room room : listRoom) {
                 SearchRoomSale searchRoomSale = new SearchRoomSale();
-                List<OrderDetail> listOrderDetail = orderDetailRepository.findOrderDetailByIdRoom(room.getId());
+                List<OrderDetail> listOrderDetail = orderDetailRepository.findOrderDetailByIdRoom1(room.getId());
                 if (listOrderDetail.size() > 0) {
                     List<ScheduleSale> listScheduleSale = new ArrayList<>();
                     for (OrderDetail orderDetail : listOrderDetail) {
