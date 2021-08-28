@@ -241,21 +241,15 @@ public class OrderDetailService {
     public List<SearchRoomSale> listRoomSaleSearch(int idTypeRoom, int idBranch, int soChoNgoi, Date ngayBD, Date ngayKT) {
         List<SearchRoomSale> listSearchRoomSale = new ArrayList<>();
         int max = soChoNgoi + 3;
-        int min = 0;
-        if (soChoNgoi > 3) {
-            min = soChoNgoi - 3;
-        }
-        List<Room> listRoom = roomRepository.getRoomBySo(idTypeRoom, idBranch, min, max);
+        List<Room> listRoom = roomRepository.getRoomBySo(idTypeRoom, idBranch, soChoNgoi, max);
         if (listRoom.size() > 0) {
             for (Room room : listRoom) {
-                SearchRoomSale searchRoomSale = new SearchRoomSale();
                 List<OrderDetail> listOrderDetail = orderDetailRepository.findOrderDetailByIdRoom1(room.getId());
                 if (listOrderDetail.size() > 0) {
-                    List<ScheduleSale> listScheduleSale = new ArrayList<>();
                     for (OrderDetail orderDetail : listOrderDetail) {
                         List<Schedule> listSchedule = scheduleRepository.getScheduleByIdOrderDetail(orderDetail.getId());
                         if (listSchedule.size() == 0) {
-                            searchRoomSale.setListScheduleSale(null);
+                            listSearchRoomSale = null;
                         } else {
                             for (Schedule schedule : listSchedule) {
                                 String startDate = String.valueOf(schedule.getStartDate());
@@ -268,34 +262,30 @@ public class OrderDetailService {
                                         end1 = LocalDate.parse(endDate1).plusDays(1);
                                 LocalDate next = start.minusDays(1);
                                 while ((next = next.plusDays(1)).isBefore(end.plusDays(1))) {
+                                    SearchRoomSale searchRoomSale = new SearchRoomSale();
                                     Boolean intervalContainsToday = (!next.isBefore(start1)) && next.isBefore(end1);
                                     if (intervalContainsToday) {
-                                        ScheduleSale scheduleSale = new ScheduleSale();
                                         List<Shift> listShift = new ArrayList<>();
                                         List<Scheduledetail> listScheduleDetail = scheduleDetailRepository.getScheduleByIdScheduleAndDatePresent(schedule.getId(), Date.valueOf(next));
                                         if (listScheduleDetail.size() == 0) {
-                                            scheduleSale.setListShift(null);
-                                            scheduleSale.setDatePresent(Date.valueOf(next));
-                                            listScheduleSale.add(scheduleSale);
+                                            searchRoomSale.setRoom(room);
+                                            searchRoomSale.setListShift(null);
+                                            searchRoomSale.setDatePresent(Date.valueOf(next));
+                                            listSearchRoomSale.add(searchRoomSale);
                                         } else {
                                             for (Scheduledetail scheduledetail : listScheduleDetail) {
                                                 listShift.add(scheduledetail.getShift());
                                             }
-                                            scheduleSale.setListShift(listShift);
-                                            scheduleSale.setDatePresent(Date.valueOf(next));
-                                            listScheduleSale.add(scheduleSale);
+                                            searchRoomSale.setRoom(room);
+                                            searchRoomSale.setListShift(listShift);
+                                            searchRoomSale.setDatePresent(Date.valueOf(next));
+                                            listSearchRoomSale.add(searchRoomSale);
                                         }
                                     }
                                 }
                             }
                         }
                     }
-                    searchRoomSale.setRoom(room);
-                    searchRoomSale.setListScheduleSale(listScheduleSale);
-                    listSearchRoomSale.add(searchRoomSale);
-                } else {
-                    searchRoomSale.setRoom(room);
-                    listSearchRoomSale.add(searchRoomSale);
                 }
             }
             return listSearchRoomSale;
