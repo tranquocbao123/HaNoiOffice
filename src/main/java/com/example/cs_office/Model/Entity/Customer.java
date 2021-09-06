@@ -18,8 +18,6 @@ public class Customer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    @NotBlank(message = "Code Customer may not be blank")
-    private String codeCustomer;
     @NotNull(message = "First name may not be null")
     private String firstName;
     @NotNull(message = "Last name may not be null")

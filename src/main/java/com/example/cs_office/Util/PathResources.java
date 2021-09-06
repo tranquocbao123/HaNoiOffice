@@ -15,6 +15,7 @@ public class PathResources {
     public static final String FIND_BY_STATUSTRUE = "/find_by_status/true";
     public static final String FIND_BY_ID = "/find_by_id/{id}";
     public static final String FIND_BY_NAME = "/find_by_name/{name}";
+    public static final String FIND_BY_EMAIL = "/find_by_email";
     public static final String FIND_BY_FLNAME = "/find_by_name/{firstname}/{lastname}";
     public static final String FIND_STAFF = "/find_staff";
     public static final String LOGIN = "/hanoioffice/login";
@@ -50,6 +51,7 @@ public class PathResources {
     public static final String CHECKROOMBYID = "/checkroombyid/{idRoom}";
     public static final String LISTBOOKROOM = "/listbookroom";
     public static final String LISTBOOKROOMCUSTOMER = "/listbookroomcustomer";
+    public static final String LISTBOOKROOMCUSTOMERHISTORY = "/listbookroomcustomerhistory";
     public static final String ACCEPT = "/accept/{idOrderDetail}";
     public static final String CANCEL = "/cancel/{idOrderDetail}";
     public static final String LISTROOMSALE = "/listRoomSale/{idTypeRoom}/{idBranch}";
@@ -64,4 +66,5 @@ public class PathResources {
     public static final String TOTAL = "total";
     public static final String SALEACCEPT = "saleaccept";
     public static final String SALENOTACCEPT = "salenotaccept";
+    public static final String UPDATEDONE = "updatedone";
 }

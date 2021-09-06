@@ -9,7 +9,6 @@ import java.util.Date;
 @NoArgsConstructor
 public class CustomerDto {
 
-    private String codeCustomer;
     private String firstName;
     private String lastName;
     private String email;

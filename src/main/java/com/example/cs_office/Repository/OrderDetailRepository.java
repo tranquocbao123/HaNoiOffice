@@ -42,8 +42,12 @@ public interface OrderDetailRepository extends JpaRepository<OrderDetail,Integer
     List<OrderDetail> getListOrderDetailByIdOrder(int idOrder);
 
     // select Order Detail by id order
-    @Query("select c from OrderDetail c where c.orders2.id = ?1 order by createDate desc")
+    @Query("select c from OrderDetail c where c.done = false and c.orders2.id = ?1 order by createDate desc")
     List<OrderDetail> getListOrderDetailByIdOrder1(int idOrder);
+
+    // lich su order
+    @Query("select c from OrderDetail c where c.done = true and c.orders2.id = ?1 order by createDate desc")
+    List<OrderDetail> getListOrderDetailByIdOrder2(int idOrder);
 
     //select order Detail by status == true and acceptance = false and idOrder
     @Query("select c from OrderDetail c where c.orders2.id = ?1 and c.status = true and c.acceptance = false ")
@@ -66,6 +70,11 @@ public interface OrderDetailRepository extends JpaRepository<OrderDetail,Integer
     @Query("update OrderDetail c set c.status = false where c.id = :idOrderDetail")
     int updateStatusByIdOrderDetail(@Param("idOrderDetail") int idOrderDetail);
 
+    @Transactional
+    @Modifying
+    @Query("update OrderDetail c set c.done = true where c.id = :idOrderDetail")
+    int updateDone(@Param("idOrderDetail") int idOrderDetail);
+
     @Query("select  c from OrderDetail c where c.room.id = ?1 and c.status = true")
     List<OrderDetail> listOrderDetailByIdRoom(int idRoom);
 
@@ -75,6 +84,9 @@ public interface OrderDetailRepository extends JpaRepository<OrderDetail,Integer
     @Query(value = "{CALL total_order}" , nativeQuery = true)
     String getTotal ();
 
-    @Query("select c from OrderDetail c order by createDate desc ")
+    @Query("select c from OrderDetail c where c.done = false order by createDate desc")
     List<OrderDetail> getOrderDetailOrderByCreateDate();
+
+    @Query("select c from OrderDetail c where c.done = false order by createDate desc")
+    List<OrderDetail> getListOrderDetail();
 }

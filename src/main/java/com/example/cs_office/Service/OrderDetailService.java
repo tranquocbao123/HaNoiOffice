@@ -3,6 +3,7 @@ package com.example.cs_office.Service;
 
 import com.example.cs_office.Model.Dto.*;
 import com.example.cs_office.Model.Entity.*;
+import com.example.cs_office.Model.Entity.Room;
 import com.example.cs_office.Model.Search.ScheduleSale;
 import com.example.cs_office.Model.Search.SearchRoomSale;
 import com.example.cs_office.Repository.*;
@@ -49,6 +50,10 @@ public class OrderDetailService {
 
     public List<OrderDetail> getOrderDetail() {
         return orderDetailRepository.findAll();
+    }
+
+    public List<OrderDetail> getListOrderDetail() {
+        return orderDetailRepository.getListOrderDetail();
     }
 
     public List<OrderDetail> getOrderDetailOrderByCreateDate() {
@@ -136,16 +141,41 @@ public class OrderDetailService {
         }
     }
 
-    public List<RoomBookCustomer> getListRoomBookCustomer(int idCustomer ) {
+    public List<RoomBookCustomer> getListRoomBookCustomer(int idCustomer) {
         List<RoomBookCustomer> listRoomBookCustomer = new ArrayList<>();
         List<Orders> listOrder = orderRepository.findOrderByIdCustomer(idCustomer);
-        if(listOrder.size() == 0) {
+        if (listOrder.size() == 0) {
             return null;
         } else {
             for (Orders orders : listOrder) {
                 List<OrderDetail> listOrderDetail = orderDetailRepository.getListOrderDetailByIdOrder1(orders.getId());
                 if (listOrderDetail.size() == 0) {
-                    return null;
+                    System.out.println("Null");
+                } else {
+                    for (OrderDetail orderDetail : listOrderDetail) {
+                        RoomBookCustomer roomBook = new RoomBookCustomer();
+                        roomBook.setIdOrderDetail(orderDetail.getId());
+                        roomBook.setCreateDate(orderDetail.getCreateDate());
+                        roomBook.setStatusOrder(orderDetail.isAcceptance());
+                        roomBook.setStatusPay(orderDetail.isStatus());
+                        listRoomBookCustomer.add(roomBook);
+                    }
+                }
+            }
+            return listRoomBookCustomer;
+        }
+    }
+
+    public List<RoomBookCustomer> getListRoomBookCustomerHistory(int idCustomer) {
+        List<RoomBookCustomer> listRoomBookCustomer = new ArrayList<>();
+        List<Orders> listOrder = orderRepository.findOrderByIdCustomer(idCustomer);
+        if (listOrder.size() == 0) {
+            return null;
+        } else {
+            for (Orders orders : listOrder) {
+                List<OrderDetail> listOrderDetail = orderDetailRepository.getListOrderDetailByIdOrder2(orders.getId());
+                if (listOrderDetail.size() == 0) {
+                    System.out.println("Null");
                 } else {
                     for (OrderDetail orderDetail : listOrderDetail) {
                         RoomBookCustomer roomBook = new RoomBookCustomer();
@@ -169,6 +199,11 @@ public class OrderDetailService {
     @Transactional
     public int updateStatusByIdOrderDetail(int idOrderDetail) {
         return orderDetailRepository.updateStatusByIdOrderDetail(idOrderDetail);
+    }
+
+    @Transactional
+    public int updateDone(int idOrderDetail) {
+        return orderDetailRepository.updateDone(idOrderDetail);
     }
 
     public List<CheckRoom> listRoomSale(String idTypeRoom, String idBranch) {

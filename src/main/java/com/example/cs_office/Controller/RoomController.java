@@ -41,7 +41,7 @@ public class RoomController {
 
     // insert room
     @PostMapping(PathResources.SAVE)
-    public void insertRoom(@RequestBody Room room) {
+    public void insertRoom(@RequestBody com.example.cs_office.Model.Dto.Room room) {
         roomService.addNewRoom(room);
     }
 
@@ -85,7 +85,7 @@ public class RoomController {
     //update room by id
     @PutMapping(path = PathResources.UPDATEBYID)
     public Room updateRoom
-    (@RequestBody Room room,
+    (@RequestBody com.example.cs_office.Model.Dto.Room room,
      @PathVariable("id") int roomId) {
         return roomService.updateRoom(room, roomId);
     }

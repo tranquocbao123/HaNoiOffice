@@ -63,7 +63,7 @@ public class LoginController {
     }
 
     @RequestMapping(value = PathResources.INSERTSTAFF, method = RequestMethod.POST)
-    public ResponseEntity<?> saveStaff(@RequestBody StaffDto staffDto) throws Exception {
+    public ResponseEntity<?> saveStaff(@RequestBody Staff staffDto) throws Exception {
         return ResponseEntity.ok(jwtUserDetailsService.saveStaff(staffDto));
     }
 

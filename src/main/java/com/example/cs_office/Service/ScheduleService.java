@@ -56,6 +56,10 @@ public class ScheduleService {
         return scheduleRepository.getListIdScheduleByIdOrderDetail(idOrderDetail);
     }
 
+    public List<Schedule> getListScheduleUpdate(java.util.Date dateNow, int idOrderDetail) {
+        return scheduleRepository.getScheduleUpdate(idOrderDetail, dateNow);
+    }
+
     public List<Schedule> getListScheduleByIdOrderDetail1(int idOrderDetail) {
         return scheduleRepository.getListIdScheduleByIdOrderDetail1(idOrderDetail);
     }

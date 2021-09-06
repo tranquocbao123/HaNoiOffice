@@ -36,6 +36,9 @@ public interface ScheduleRepository extends JpaRepository<Schedule,Integer> {
     @Query("select c from Schedule c where c.orderDetail.id = ?1 and c.startDate >= ?2 and c.endDate <= ?3")
     List<Schedule> getScheduleBySearchSale(int idOrderDetail, Date startDate, Date endDate);
 
+    @Query("select c from Schedule c where c.orderDetail.id = ?1 and c.endDate < ?2")
+    List<Schedule> getScheduleUpdate(int idOrderDetail, java.util.Date dateNow);
+
     //select schedule by id orderdetail
     @Query("select c from Schedule c where c.orderDetail.id = ?1 and c.status = true")
     List<Schedule> getListScheduleByIdOrderDetailFalse(int idOrderDetail);

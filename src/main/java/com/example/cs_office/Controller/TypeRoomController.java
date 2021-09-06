@@ -86,6 +86,7 @@ public class TypeRoomController {
     public TypeRoom updateTyperoom
     (@RequestBody TypeRoom typeRoom,
      @PathVariable("id") int typeRoomId) {
+        System.out.println("typeRoom " + typeRoom);
         return typeRoomService.updateTyperoom(typeRoom, typeRoomId);
     }
 

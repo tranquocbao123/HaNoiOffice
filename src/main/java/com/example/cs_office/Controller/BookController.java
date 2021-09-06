@@ -98,6 +98,12 @@ public class BookController {
         return orderDetailService.getListRoomBookCustomer(idCustomer);
     }
 
+    // lấy ra danh sách lich su order by id customer
+    @GetMapping(PathResources.LISTBOOKROOMCUSTOMERHISTORY)
+    public List<RoomBookCustomer> listRoomBookCustomerHistory(@Param("idCustomer") int idCustomer) {
+        return orderDetailService.getListRoomBookCustomerHistory(idCustomer);
+    }
+
     // tìm kiếm phòng theo idTypeRoom, idBranch, số chỗ ngồi
     @GetMapping(PathResources.SEARCHROOM)
     public List<SearchRoomSale> listRoomSaleSearch(@Param("idTypeRoom") int idTypeRoom,

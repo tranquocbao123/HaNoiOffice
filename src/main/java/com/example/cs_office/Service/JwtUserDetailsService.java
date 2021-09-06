@@ -6,9 +6,13 @@ import com.example.cs_office.Model.Dto.CustomerDto;
 import com.example.cs_office.Model.Dto.EmailDto;
 import com.example.cs_office.Model.Dto.StaffDto;
 import com.example.cs_office.Model.Dto.UserResetPassword;
+import com.example.cs_office.Model.Entity.Branch;
 import com.example.cs_office.Model.Entity.Customer;
+import com.example.cs_office.Model.Entity.Role;
 import com.example.cs_office.Model.Entity.Staff;
+import com.example.cs_office.Repository.BranchRepotitory;
 import com.example.cs_office.Repository.CustomerRepository;
+import com.example.cs_office.Repository.RoleRepository;
 import com.example.cs_office.Repository.StaffRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
@@ -37,6 +41,12 @@ public class JwtUserDetailsService implements UserDetailsService {
 
     @Autowired
     private PasswordEncoder bcryptEncoder;
+
+    @Autowired
+    private RoleRepository roleRepository;
+
+    @Autowired
+    private BranchRepotitory branchRepotitory;
 
     @Autowired
     private SendEmailService sendEmailService;
@@ -111,11 +121,28 @@ public class JwtUserDetailsService implements UserDetailsService {
         }
     }
 
-    public boolean saveStaff(StaffDto user) {
-        if (staffRepository.findStaffByEmail(user.getEmail()) != null || customerRepository.findCustomerByEmail(user.getEmail()) != null) {
+    public boolean saveStaff(com.example.cs_office.Model.Dto.Staff staffDto) {
+        if (staffRepository.findStaffByEmail(staffDto.getEmail()) != null || customerRepository.findCustomerByEmail(staffDto.getEmail()) != null) {
             log.info("Email exits ");
             return false;
         } else {
+            StaffDto user = new StaffDto();
+            user.setCodeStaff(staffDto.getCodeStaff());
+            user.setFullName(staffDto.getFullName());
+            user.setGender(staffDto.isGender());
+            user.setBirthDay(staffDto.getBirthDay());
+            user.setPhoneNumber(staffDto.getPhoneNumber());
+            user.setAddress(staffDto.getAddress());
+            user.setEmail(staffDto.getEmail());
+            user.setUserName(staffDto.getUserName());
+            user.setPassword(staffDto.getPassword());
+            user.setQueQuan(staffDto.getQueQuan());
+            user.setHktt(staffDto.getHktt());
+            user.setDescription(staffDto.getDescription());
+            Optional<Role> role = roleRepository.findRoleById(staffDto.getRole());
+            user.setRole(role.get());
+            Optional<Branch> branch = branchRepotitory.findBranchById(staffDto.getBranch());
+            user.setBranch(branch.get());
             Staff newUser = new Staff();
             user.setPassword(bcryptEncoder.encode(user.getPassword()));
             StaffMapperToDto staffMapperToDto = new StaffMapperToDto();

@@ -4,6 +4,7 @@ import com.example.cs_office.Model.Entity.Staff;
 import com.example.cs_office.Service.StaffService;
 import com.example.cs_office.Util.PathResources;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -52,6 +53,13 @@ public class StaffController {
         return staffService.getStaffByUserName(staffUsername);
     }
 
+    //search staff by email
+    @GetMapping(path = PathResources.FIND_BY_EMAIL)
+    public Staff getStaffByEmail(
+            @Param("email") String email) {
+        return staffService.getStaffByEmail(email);
+    }
+
     //search staff by idRole idBranch gender nameStaff
     @GetMapping(path = PathResources.FIND_STAFF)
     public List<Staff> getListStaff(@RequestBody com.example.cs_office.Model.Search.Staff staff) {
@@ -83,7 +91,7 @@ public class StaffController {
 
     @PutMapping(path = PathResources.UPDATEBYID)
     public Staff updateStaff
-            (@RequestBody Staff staff,
+            (@RequestBody com.example.cs_office.Model.Dto.Staff staff,
              @PathVariable("id") int staffId) {
         return staffService.updateStaff(staff, staffId);
     }
