@@ -9,6 +9,6 @@ import java.util.List;
 @NoArgsConstructor
 public class RoomBookAccecpSale {
     private int idCustomer;
-    private String idRoom;
+    private int idRoom;
     List<ScheduleSale> schedules;
 }

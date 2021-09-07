@@ -282,7 +282,7 @@ public class BookService {
         MessageReponse messageReponse = new MessageReponse();
         boolean result = deleteSchedule(idOrderDetail);
         if (result) {
-            Optional<Room> room = roomService.getRoomById(Integer.parseInt(roomBookAccecpSale.getIdRoom()));
+            Optional<Room> room = roomService.getRoomById(roomBookAccecpSale.getIdRoom());
             Optional<Customer> customer = customerService.getById(roomBookAccecpSale.getIdCustomer());
             if (room.isPresent() && customer != null) {
 
@@ -295,6 +295,71 @@ public class BookService {
                 OrderDetail orderDetail = new OrderDetail();
                 orderDetail.setAcceptance(true);
                 orderDetail.setRoom(room.get());
+                orderDetail.setOrders2(orders);
+                orderDetailService.addNewOrderDetail(orderDetail);
+
+                for (ScheduleSale obj : roomBookAccecpSale.getSchedules()) {
+
+                    //insert schedule
+                    Schedule schedule = new Schedule();
+                    schedule.setStartDate(obj.getStartDate());
+                    schedule.setEndDate(obj.getEndDate());
+                    schedule.setOrderDetail(orderDetail);
+                    scheduleService.addNewSchedule(schedule);
+
+                    //insert schedule detail
+                    String startDate = String.valueOf(obj.getStartDate());
+                    String endDate = String.valueOf(obj.getEndDate());
+                    LocalDate start = LocalDate.parse(startDate),
+                            end = LocalDate.parse(endDate);
+                    LocalDate next = start.minusDays(1);
+                    while ((next = next.plusDays(1)).isBefore(end.plusDays(1))) {
+                        for (Integer i : obj.getListShift()) {
+                            Scheduledetail scheduledetail = new Scheduledetail();
+                            Optional<Shift> shift = shiftService.getShiftById(i);
+                            scheduledetail.setDatePresent(Date.valueOf(next));
+                            scheduledetail.setSchedule(schedule);
+                            scheduledetail.setShift(shift.get());
+                            scheduleDetailService.addNewScheduledetail(scheduledetail);
+                        }
+                    }
+                    if (obj.getListService().size() > 0) {
+                        //insert service detail
+                        for (Integer j : obj.getListService()) {
+                            ServiceDetail serviceDetail = new ServiceDetail();
+                            serviceDetail.setSchedule(schedule);
+                            Optional<com.example.cs_office.Model.Entity.Service> service = serService.getServiceById(j);
+                            serviceDetail.setService1(service.get());
+                            serviceDetailService.addNewServiceDetail(serviceDetail);
+                        }
+                    }
+                }
+                messageReponse.setMessage(Message.ACCEPTSUCCESS);
+            }
+        } else {
+            messageReponse.setMessage(Message.ACCEPTFAIl);
+        }
+        return messageReponse;
+    }
+
+    public MessageReponse saleAcceptUpdate(int idOrderDetail, RoomBookAccecpSale roomBookAccecpSale) {
+        MessageReponse messageReponse = new MessageReponse();
+        boolean result = deleteSchedule(idOrderDetail);
+        if (result) {
+            Optional<Room> room = roomService.getRoomById(roomBookAccecpSale.getIdRoom());
+            Optional<Customer> customer = customerService.getById(roomBookAccecpSale.getIdCustomer());
+            if (room.isPresent() && customer != null) {
+
+                //insert orders
+                Orders orders = new Orders();
+                orders.setCustomer(customer.get());
+                orderService.addNewOrder(orders);
+
+                //insert orderDetail
+                OrderDetail orderDetail = new OrderDetail();
+                orderDetail.setAcceptance(true);
+                orderDetail.setRoom(room.get());
+                orderDetail.setStatus(false);
                 orderDetail.setOrders2(orders);
                 orderDetailService.addNewOrderDetail(orderDetail);
 

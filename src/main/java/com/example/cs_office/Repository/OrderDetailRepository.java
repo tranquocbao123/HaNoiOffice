@@ -87,6 +87,18 @@ public interface OrderDetailRepository extends JpaRepository<OrderDetail,Integer
     @Query("select c from OrderDetail c where c.done = false order by createDate desc")
     List<OrderDetail> getOrderDetailOrderByCreateDate();
 
+    @Query("select c from OrderDetail c where c.done = false and c.acceptance = false order by createDate desc")
+    List<OrderDetail> getOrderDetailSale();
+
+    @Query("select c from OrderDetail c where c.done = false and c.acceptance = true order by createDate desc")
+    List<OrderDetail> getOrderDetailSaleTrue();
+
+    @Query("select c from OrderDetail c where c.done = false and c.acceptance = true order by createDate desc")
+    List<OrderDetail> getOrderAdmin();
+
+    @Query("select c from OrderDetail c where c.done = true and c.acceptance = true order by createDate desc")
+    List<OrderDetail> getOrderDetailHistory();
+
     @Query("select c from OrderDetail c where c.done = false order by createDate desc")
     List<OrderDetail> getListOrderDetail();
 }

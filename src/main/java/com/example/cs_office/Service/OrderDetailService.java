@@ -60,6 +60,10 @@ public class OrderDetailService {
         return orderDetailRepository.getOrderDetailOrderByCreateDate();
     }
 
+    public List<OrderDetail> getOrderDetailSale() {
+        return orderDetailRepository.getOrderDetailSale();
+    }
+
     public List<OrderDetail> getOrderDetailByStatus(boolean status) {
 
         return orderDetailRepository.findOrderDetailByStatus(status);
@@ -117,7 +121,85 @@ public class OrderDetailService {
 
     public List<RoomBook> getListRoomBook() {
         List<RoomBook> listRoomBook = new ArrayList<>();
-        List<OrderDetail> listOrderDetail = getOrderDetailOrderByCreateDate();
+        List<OrderDetail> listOrderDetail = getOrderDetailSale();
+        if (listOrderDetail.size() == 0) {
+            return null;
+        } else {
+            for (OrderDetail orderDetail : listOrderDetail) {
+                RoomBook roomBook = new RoomBook();
+                Optional<Orders> orders = orderRepository.findOrderById(orderDetail.getOrders2().getId());
+                if (orders.isPresent()) {
+                    roomBook.setIdCustomer(orders.get().getCustomer().getId());
+                    roomBook.setNameCustomer(orders.get().getCustomer().getFirstName() + orders.get().getCustomer().getLastName());
+                    roomBook.setNumberPhone(orders.get().getCustomer().getPhoneNumber());
+                } else {
+                    return null;
+                }
+                roomBook.setIdOrderDetail(orderDetail.getId());
+                roomBook.setCreateDate(orderDetail.getCreateDate());
+                roomBook.setStatusOrder(orderDetail.isAcceptance());
+                roomBook.setStatusPay(orderDetail.isStatus());
+                listRoomBook.add(roomBook);
+            }
+            return listRoomBook;
+        }
+    }
+
+    public List<RoomBook> getOrderDetailSaleTrue() {
+        List<RoomBook> listRoomBook = new ArrayList<>();
+        List<OrderDetail> listOrderDetail = orderDetailRepository.getOrderDetailSaleTrue();
+        if (listOrderDetail.size() == 0) {
+            return null;
+        } else {
+            for (OrderDetail orderDetail : listOrderDetail) {
+                RoomBook roomBook = new RoomBook();
+                Optional<Orders> orders = orderRepository.findOrderById(orderDetail.getOrders2().getId());
+                if (orders.isPresent()) {
+                    roomBook.setIdCustomer(orders.get().getCustomer().getId());
+                    roomBook.setNameCustomer(orders.get().getCustomer().getFirstName() + orders.get().getCustomer().getLastName());
+                    roomBook.setNumberPhone(orders.get().getCustomer().getPhoneNumber());
+                } else {
+                    return null;
+                }
+                roomBook.setIdOrderDetail(orderDetail.getId());
+                roomBook.setCreateDate(orderDetail.getCreateDate());
+                roomBook.setStatusOrder(orderDetail.isAcceptance());
+                roomBook.setStatusPay(orderDetail.isStatus());
+                listRoomBook.add(roomBook);
+            }
+            return listRoomBook;
+        }
+    }
+
+    public List<RoomBook> getListRoomBookHistory() {
+        List<RoomBook> listRoomBook = new ArrayList<>();
+        List<OrderDetail> listOrderDetail = orderDetailRepository.getOrderDetailHistory();
+        if (listOrderDetail.size() == 0) {
+            return null;
+        } else {
+            for (OrderDetail orderDetail : listOrderDetail) {
+                RoomBook roomBook = new RoomBook();
+                Optional<Orders> orders = orderRepository.findOrderById(orderDetail.getOrders2().getId());
+                if (orders.isPresent()) {
+                    roomBook.setIdCustomer(orders.get().getCustomer().getId());
+                    roomBook.setNameCustomer(orders.get().getCustomer().getFirstName() + orders.get().getCustomer().getLastName());
+                    roomBook.setNumberPhone(orders.get().getCustomer().getPhoneNumber());
+                } else {
+                    return null;
+                }
+                roomBook.setIdOrderDetail(orderDetail.getId());
+                roomBook.setCreateDate(orderDetail.getCreateDate());
+                roomBook.setStatusOrder(orderDetail.isAcceptance());
+                roomBook.setStatusPay(orderDetail.isStatus());
+                listRoomBook.add(roomBook);
+            }
+            return listRoomBook;
+        }
+    }
+
+    public List<RoomBook> getOrderAdmin() {
+        List<RoomBook> listRoomBook = new ArrayList<>();
+        List<OrderDetail> listOrderDetail = orderDetailRepository.getOrderAdmin();
         if (listOrderDetail.size() == 0) {
             return null;
         } else {

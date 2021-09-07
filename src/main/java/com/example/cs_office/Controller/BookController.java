@@ -92,6 +92,24 @@ public class BookController {
         return orderDetailService.getListRoomBook();
     }
 
+    // lấy ra danh sách các phòng khách hàng đã đặt đã được chấp thuận
+    @GetMapping(PathResources.LISTBOOKROOMACCEPT)
+    public List<RoomBook> getOrderDetailSaleTrue() {
+        return orderDetailService.getOrderDetailSaleTrue();
+    }
+
+    //lấy ra order history
+    @GetMapping(PathResources.LISTBOOKROOMHISTORY)
+    public List<RoomBook> listRoomBookHistory() {
+        return orderDetailService.getListRoomBookHistory();
+    }
+
+    //lấy ra order admin
+    @GetMapping(PathResources.LISTBOOKROOMADMIN)
+    public List<RoomBook> getOrderAdmin() {
+        return orderDetailService.getOrderAdmin();
+    }
+
     // lấy ra danh sách các phòng khách hàng đã đặt theo từng khách hàng
     @GetMapping(PathResources.LISTBOOKROOMCUSTOMER)
     public List<RoomBookCustomer> listRoomBookCustomer(@Param("idCustomer") int idCustomer) {
@@ -131,6 +149,13 @@ public class BookController {
     public MessageReponse saleAccept(@Param("idOrderDetail") int idOrderDetail,
                                      @RequestBody RoomBookAccecpSale roomBookAccecpSale) {
         return bookService.saleAccept(idOrderDetail,roomBookAccecpSale);
+    }
+
+    //sale accept update
+    @PostMapping(PathResources.SALEACCEPTUPDATE)
+    public MessageReponse saleAcceptUpdate(@Param("idOrderDetail") int idOrderDetail,
+                                     @RequestBody RoomBookAccecpSale roomBookAccecpSale) {
+        return bookService.saleAcceptUpdate(idOrderDetail,roomBookAccecpSale);
     }
 
     //sale not accept
