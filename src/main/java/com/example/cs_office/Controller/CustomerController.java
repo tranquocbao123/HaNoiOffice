@@ -1,9 +1,11 @@
 package com.example.cs_office.Controller;
 
 import com.example.cs_office.Model.Entity.Customer;
+import com.example.cs_office.Model.Entity.Staff;
 import com.example.cs_office.Service.CustomerService;
 import com.example.cs_office.Util.PathResources;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -43,6 +45,13 @@ public class CustomerController {
     public Optional<Customer> getById(
             @PathVariable("id") int customerId) {
         return customerService.getById(customerId);
+    }
+
+    //search staff by email
+    @GetMapping(path = PathResources.FIND_BY_EMAIL)
+    public Customer getCustomerByEmail(
+            @Param("email") String email) {
+        return customerService.getCustomerByEmail(email);
     }
 
     // insert customer

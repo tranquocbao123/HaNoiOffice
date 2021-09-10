@@ -1,6 +1,7 @@
 package com.example.cs_office.Service;
 
 import com.example.cs_office.Model.Entity.Customer;
+import com.example.cs_office.Model.Entity.Staff;
 import com.example.cs_office.Repository.CustomerRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
@@ -34,6 +35,11 @@ public class CustomerService {
 
     public Optional<Customer> getById(int userId) {
         Optional<Customer> customer = customerRepository.findById(userId);
+        return customer;
+    }
+
+    public Customer getCustomerByEmail(String email) {
+        Customer customer = customerRepository.findCustomerByEmail(email);
         return customer;
     }
 

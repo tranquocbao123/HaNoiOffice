@@ -240,6 +240,7 @@ public class OrderDetailService {
                         roomBook.setCreateDate(orderDetail.getCreateDate());
                         roomBook.setStatusOrder(orderDetail.isAcceptance());
                         roomBook.setStatusPay(orderDetail.isStatus());
+                        roomBook.setPrice(getTotalByIdOrderDetail(orderDetail.getId()));
                         listRoomBookCustomer.add(roomBook);
                     }
                 }
@@ -265,6 +266,7 @@ public class OrderDetailService {
                         roomBook.setCreateDate(orderDetail.getCreateDate());
                         roomBook.setStatusOrder(orderDetail.isAcceptance());
                         roomBook.setStatusPay(orderDetail.isStatus());
+                        roomBook.setPrice(getTotalByIdOrderDetail(orderDetail.getId()));
                         listRoomBookCustomer.add(roomBook);
                     }
                 }
