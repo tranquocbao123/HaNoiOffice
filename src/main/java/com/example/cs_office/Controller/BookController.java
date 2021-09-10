@@ -1,12 +1,9 @@
 package com.example.cs_office.Controller;
 
-import com.example.cs_office.Model.Dto.RoomBookCustomer;
+import com.example.cs_office.Model.Dto.*;
 import com.example.cs_office.Model.InFoRoom.InFoRoomByStartEndTypeRomBranch;
 import com.example.cs_office.Model.RoomBook.RoomBookAccecpSale;
 import com.example.cs_office.Model.RoomBook.RoomBookLT;
-import com.example.cs_office.Model.Dto.CheckRoom;
-import com.example.cs_office.Model.Dto.RoomBook;
-import com.example.cs_office.Model.Dto.RoomCustomer;
 import com.example.cs_office.Model.Entity.Room;
 import com.example.cs_office.Model.RoomBook.RoomBookKLT;
 import com.example.cs_office.Model.RoomBook.RoomBookLeTan;
@@ -183,8 +180,14 @@ public class BookController {
         return orderDetailService.getTotalByIdOrderDetail(idOrderDetail);
     }
 
+    @GetMapping(PathResources.TOTALBYDATE)
+    public List<ToTalDto> totalByDate(@Param("startDate") Date startDate,
+                                      @Param("endDate") Date endDate) {
+        return orderDetailService.getTotalByDate(startDate, endDate);
+    }
+
     @GetMapping(PathResources.TOTAL)
-    public double getTotal() {
+    public List<ToTalDto> getTotal() {
         return orderDetailService.getTotal();
     }
 

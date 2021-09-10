@@ -12,11 +12,12 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface OrderDetailRepository extends JpaRepository<OrderDetail,Integer> {
+public interface OrderDetailRepository extends JpaRepository<OrderDetail, Integer> {
     //select Order Detail by id
     @Query("select s from OrderDetail s where s.id = ?1")
     Optional<OrderDetail> findOrderDetailById(Integer id);
@@ -78,11 +79,21 @@ public interface OrderDetailRepository extends JpaRepository<OrderDetail,Integer
     @Query("select  c from OrderDetail c where c.room.id = ?1 and c.status = true")
     List<OrderDetail> listOrderDetailByIdRoom(int idRoom);
 
-    @Query(value = "{CALL get_total_by_idOrderDetail(:id_Order)}" , nativeQuery = true)
-    String getTotalByIdOrderDetail (@Param("id_Order") int idOrderDetail);
+    @Query(value = "{CALL get_total_by_idOrderDetail(:id_Order)}", nativeQuery = true)
+    String getTotalByIdOrderDetail(@Param("id_Order") int idOrderDetail);
 
-    @Query(value = "{CALL total_order}" , nativeQuery = true)
-    String getTotal ();
+    @Query(value = "{CALL total_order_by_date(:startDate, :endDate)}", nativeQuery = true)
+    String getTotalByDate(@Param("startDate") Date startDate,
+                          @Param("endDate") Date endDate);
+
+    @Query(value = "{CALL price_service_by_date(:idOrderDetail)}", nativeQuery = true)
+    String getPriceServiceByDate(@Param("idOrderDetail") int idOrderDetail);
+
+    @Query(value = "{CALL price_schedule_by_date(:idOrderDetail)}", nativeQuery = true)
+    String getPriceScheduleByDate(@Param("idOrderDetail") int idOrderDetail);
+
+    @Query(value = "{CALL total_order}", nativeQuery = true)
+    String getTotal();
 
     @Query("select c from OrderDetail c where c.done = false order by createDate desc")
     List<OrderDetail> getOrderDetailOrderByCreateDate();
@@ -101,4 +112,10 @@ public interface OrderDetailRepository extends JpaRepository<OrderDetail,Integer
 
     @Query("select c from OrderDetail c where c.done = false order by createDate desc")
     List<OrderDetail> getListOrderDetail();
+
+    @Query("select c from OrderDetail c where c.createDate >= ?1 and c.createDate <= ?2 and c.status = false")
+    List<OrderDetail> getListOrderDetailTotal(Date startDate, Date endDate);
+
+    @Query("select c from OrderDetail c where c.status = false")
+    List<OrderDetail> getListTotal();
 }

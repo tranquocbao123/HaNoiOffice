@@ -429,11 +429,49 @@ public class OrderDetailService {
         }
     }
 
-    public double getTotal() {
-        if (orderDetailRepository.getTotal() == null) {
-            return 0;
-        } else {
-            return Double.parseDouble(orderDetailRepository.getTotal());
+    public List<ToTalDto> getTotalByDate(Date startDate, Date endDate) {
+        List<ToTalDto> listToTalDto = new ArrayList<>();
+        List<OrderDetail> orderDetailList = orderDetailRepository.getListOrderDetailTotal(startDate, endDate);
+        if (orderDetailList.size() > 0) {
+            for (OrderDetail orderDetail : orderDetailList) {
+                ToTalDto totalDto = new ToTalDto();
+                double priceService = 0;
+                double priceSchedule = 0;
+                if (orderDetailRepository.getPriceServiceByDate(orderDetail.getId()) != null) {
+                    priceService = Double.parseDouble(orderDetailRepository.getPriceServiceByDate(orderDetail.getId()));
+                }
+                if (orderDetailRepository.getPriceScheduleByDate(orderDetail.getId()) != null) {
+                    priceSchedule = Double.parseDouble(orderDetailRepository.getPriceScheduleByDate(orderDetail.getId()));
+                }
+                totalDto.setIdOrderDetail(orderDetail.getId());
+                totalDto.setPriceSchedule(priceSchedule);
+                totalDto.setPriceService(priceService);
+                listToTalDto.add(totalDto);
+            }
         }
+        return listToTalDto;
+    }
+
+    public List<ToTalDto> getTotal() {
+        List<ToTalDto> listToTalDto = new ArrayList<>();
+        List<OrderDetail> orderDetailList = orderDetailRepository.getListTotal();
+        if(orderDetailList.size() > 0 ) {
+            for (OrderDetail orderDetail : orderDetailList) {
+                ToTalDto totalDto = new ToTalDto();
+                double priceService = 0;
+                double priceSchedule = 0;
+                if (orderDetailRepository.getPriceServiceByDate(orderDetail.getId()) != null) {
+                    priceService = Double.parseDouble(orderDetailRepository.getPriceServiceByDate(orderDetail.getId()));
+                }
+                if (orderDetailRepository.getPriceScheduleByDate(orderDetail.getId()) != null) {
+                    priceSchedule = Double.parseDouble(orderDetailRepository.getPriceScheduleByDate(orderDetail.getId()));
+                }
+                totalDto.setIdOrderDetail(orderDetail.getId());
+                totalDto.setPriceSchedule(priceSchedule);
+                totalDto.setPriceService(priceService);
+                listToTalDto.add(totalDto);
+            }
+        }
+        return listToTalDto;
     }
 }

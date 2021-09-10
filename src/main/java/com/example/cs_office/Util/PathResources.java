@@ -66,6 +66,7 @@ public class PathResources {
     public static final String SEARCHROOM = "searchRoom";
     public static final String TEST = "test";
     public static final String TOTALBYIDORDETAIL = "totalbyid";
+    public static final String TOTALBYDATE = "totalbydate";
     public static final String TOTAL = "total";
     public static final String SALEACCEPT = "saleaccept";
     public static final String SALEACCEPTUPDATE = "saleacceptupdate";
