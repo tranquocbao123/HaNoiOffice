@@ -64,6 +64,7 @@ public class PathResources {
     public static final String BOOKROOMKTL = "bookroomklt";
     public static final String LISTIFBYENDSTART = "listifbyendstart";
     public static final String SEARCHROOM = "searchRoom";
+    public static final String SEARCHR = "searchroom";
     public static final String TEST = "test";
     public static final String TOTALBYIDORDETAIL = "totalbyid";
     public static final String TOTALBYDATE = "totalbydate";

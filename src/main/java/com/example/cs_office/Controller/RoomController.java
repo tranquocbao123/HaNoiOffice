@@ -1,10 +1,13 @@
 package com.example.cs_office.Controller;
 
 
+import com.example.cs_office.Model.Dto.CheckRoom;
 import com.example.cs_office.Model.Entity.Room;
+import com.example.cs_office.Service.OrderDetailService;
 import com.example.cs_office.Service.RoomService;
 import com.example.cs_office.Util.PathResources;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -57,6 +60,12 @@ public class RoomController {
     public List<Room> getRoomByName(
             @PathVariable("name") String roomName) {
         return roomService.getRoomByName(roomName);
+    }
+
+    @GetMapping(PathResources.SEARCHR)
+    public List<Room> searchRoom(@Param("idTypeRoom") String idTypeRoom,
+                                      @Param("idBranch") String idBranch) {
+        return roomService.getListRoomByTypeRoomAndBranch(idTypeRoom, idBranch);
     }
 
     //delete room by id

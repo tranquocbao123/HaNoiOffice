@@ -22,7 +22,6 @@ public class Shift {
     private String startTime;
     @NotBlank(message = "End time may not be blank")
     private String endTime;
-    @NotBlank(message = "He so may not be blank")
     private double heSo;
     private Date createDate = new Date();
     private boolean status = true;
