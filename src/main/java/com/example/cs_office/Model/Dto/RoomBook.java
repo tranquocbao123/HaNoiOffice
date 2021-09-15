@@ -13,8 +13,10 @@ public class RoomBook {
     private int idCustomer;
     private String nameCustomer;
     private String numberPhone;
+    private String nameRoom;
     private int idOrderDetail;
     private Date createDate;
     private boolean statusOrder;
     private boolean statusPay;
+    private double total;
 }

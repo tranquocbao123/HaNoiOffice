@@ -191,4 +191,17 @@ public class BookController {
         return orderDetailService.getTotal();
     }
 
+    @PostMapping(PathResources.UPDATEPAY)
+    public boolean updatePay(@Param("idOrderDetail") int idOrderDetail) {
+        boolean result = false;
+        System.out.println("id " + idOrderDetail);
+        bookService.paySuccess(idOrderDetail);
+        if(bookService.paySuccess(idOrderDetail) != 0) {
+            result = true;
+        }else {
+            result = false;
+        }
+       return result;
+    }
+
 }

@@ -27,8 +27,12 @@ public interface OrderDetailRepository extends JpaRepository<OrderDetail, Intege
     List<OrderDetail> findOrderDetailByIdRoom(Integer id);
 
     //select Order Detail by id room
-    @Query("select s from OrderDetail s where s.room.id = ?1 and acceptance = true")
+    @Query("select s from OrderDetail s where s.room.id = ?1 and s.acceptance = true")
     List<OrderDetail> findOrderDetailByIdRoom1(Integer id);
+
+    //select Order Detail by id room
+    @Query("select s from OrderDetail s where s.room.id = ?1 and s.acceptance = true and s.done = false")
+    List<OrderDetail> findOrderDetailByIdRoom2(Integer id);
 
     //select Order Detail by status
     @Query("select c from OrderDetail c where c.status = ?1")

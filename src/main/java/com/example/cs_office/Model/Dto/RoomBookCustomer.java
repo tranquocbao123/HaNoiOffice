@@ -15,6 +15,7 @@ import java.util.List;
 public class RoomBookCustomer {
     private int idOrderDetail;
     private Date createDate;
+    private String nameRoom;
     private double price;
     private boolean statusOrder;
     private boolean statusPay;

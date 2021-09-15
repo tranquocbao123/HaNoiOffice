@@ -49,7 +49,7 @@ public class PathResources {
     public static final String LISTROOM = "/listRoom/{idTypeRoom}/{idBranch}";
     public static final String BOOKROOMLT = "/bookroomlt";
     public static final String CHECKROOMBYID = "/checkroombyid/{idRoom}";
-    public static final String LISTBOOKROOM = "/listbookroom";
+        public static final String LISTBOOKROOM = "/listbookroom";
     public static final String LISTBOOKROOMACCEPT = "/listbookroomaccept";
     public static final String LISTBOOKROOMHISTORY = "/listbookroomhistory";
     public static final String LISTBOOKROOMADMIN = "/listbookroomadmin";
@@ -73,4 +73,5 @@ public class PathResources {
     public static final String SALEACCEPTUPDATE = "saleacceptupdate";
     public static final String SALENOTACCEPT = "salenotaccept";
     public static final String UPDATEDONE = "updatedone";
+    public static final String UPDATEPAY = "updatepay";
 }

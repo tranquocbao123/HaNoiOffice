@@ -135,6 +135,8 @@ public class OrderDetailService {
                 } else {
                     return null;
                 }
+                Room room = roomRepository.findRoomById(orderDetail.getRoom().getId());
+                roomBook.setNameRoom(room.getName());
                 roomBook.setIdOrderDetail(orderDetail.getId());
                 roomBook.setCreateDate(orderDetail.getCreateDate());
                 roomBook.setStatusOrder(orderDetail.isAcceptance());
@@ -161,6 +163,8 @@ public class OrderDetailService {
                 } else {
                     return null;
                 }
+                Room room = roomRepository.findRoomById(orderDetail.getRoom().getId());
+                roomBook.setNameRoom(room.getName());
                 roomBook.setIdOrderDetail(orderDetail.getId());
                 roomBook.setCreateDate(orderDetail.getCreateDate());
                 roomBook.setStatusOrder(orderDetail.isAcceptance());
@@ -184,6 +188,8 @@ public class OrderDetailService {
                     roomBook.setIdCustomer(orders.get().getCustomer().getId());
                     roomBook.setNameCustomer(orders.get().getCustomer().getFirstName() + orders.get().getCustomer().getLastName());
                     roomBook.setNumberPhone(orders.get().getCustomer().getPhoneNumber());
+                    Room room = roomRepository.findRoomById(orderDetail.getRoom().getId());
+                    roomBook.setNameRoom(room.getName());
                 } else {
                     return null;
                 }
@@ -207,9 +213,13 @@ public class OrderDetailService {
                 RoomBook roomBook = new RoomBook();
                 Optional<Orders> orders = orderRepository.findOrderById(orderDetail.getOrders2().getId());
                 if (orders.isPresent()) {
+
                     roomBook.setIdCustomer(orders.get().getCustomer().getId());
                     roomBook.setNameCustomer(orders.get().getCustomer().getFirstName() + orders.get().getCustomer().getLastName());
                     roomBook.setNumberPhone(orders.get().getCustomer().getPhoneNumber());
+                    roomBook.setTotal(getTotalByIdOrderDetail(orderDetail.getId()));
+                    Room room = roomRepository.findRoomById(orderDetail.getRoom().getId());
+                    roomBook.setNameRoom(room.getName());
                 } else {
                     return null;
                 }
@@ -236,6 +246,8 @@ public class OrderDetailService {
                 } else {
                     for (OrderDetail orderDetail : listOrderDetail) {
                         RoomBookCustomer roomBook = new RoomBookCustomer();
+                        Room room = roomRepository.findRoomById(orderDetail.getRoom().getId());
+                        roomBook.setNameRoom(room.getName());
                         roomBook.setIdOrderDetail(orderDetail.getId());
                         roomBook.setCreateDate(orderDetail.getCreateDate());
                         roomBook.setStatusOrder(orderDetail.isAcceptance());
@@ -262,6 +274,8 @@ public class OrderDetailService {
                 } else {
                     for (OrderDetail orderDetail : listOrderDetail) {
                         RoomBookCustomer roomBook = new RoomBookCustomer();
+                        Room room = roomRepository.findRoomById(orderDetail.getRoom().getId());
+                        roomBook.setNameRoom(room.getName());
                         roomBook.setIdOrderDetail(orderDetail.getId());
                         roomBook.setCreateDate(orderDetail.getCreateDate());
                         roomBook.setStatusOrder(orderDetail.isAcceptance());
@@ -361,9 +375,10 @@ public class OrderDetailService {
         List<SearchRoomSale> listSearchRoomSale = new ArrayList<>();
         int max = soChoNgoi + 3;
         List<Room> listRoom = roomRepository.getRoomBySo(idTypeRoom, idBranch, soChoNgoi, max);
+
         if (listRoom.size() > 0) {
             for (Room room : listRoom) {
-                List<OrderDetail> listOrderDetail = orderDetailRepository.findOrderDetailByIdRoom1(room.getId());
+                List<OrderDetail> listOrderDetail = orderDetailRepository.findOrderDetailByIdRoom2(room.getId());
                 if (listOrderDetail.size() > 0) {
                     for (OrderDetail orderDetail : listOrderDetail) {
                         List<Schedule> listSchedule = scheduleRepository.getScheduleByIdOrderDetail(orderDetail.getId());
